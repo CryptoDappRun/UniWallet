@@ -1,7 +1,7 @@
 # UniWallet
- A non-custodial multi-wallet designed to support Bitcoin, Ethereum, Binance Smart Chain, Avalanche, Cronos and various other blockchains. It offers non-custodial storage for cryptocurrencies,Send Base Coin and Tokens.
+ A non-custodial multi-wallet designed to support Bitcoin,Dogecoin,Ethereum,Litecoin, Binance Smart Chain, Avalanche, Cronos and various other blockchains. It offers non-custodial storage for cryptocurrencies,Send Base Coin and Tokens.
 
- Current support Blockchain networks:<br>
+Support Blockchains:<br>
 Bitcoin,Dogecoin,Litecoin,Ethereum,Binance,Huobi,Fantom,Polygon,Avalanche,Cronos,Moonbeam,Moonriver.<br><br>
 <img src="img/BTC.png" width="25" height="25" > 
 <img src="img/DOGE.png" width="25" height="25" > 
@@ -14,7 +14,18 @@ Bitcoin,Dogecoin,Litecoin,Ethereum,Binance,Huobi,Fantom,Polygon,Avalanche,Cronos
 <img src="img/25.png" width="25" height="25" alt="matic">
 
 
-<img src="screen.png" width="25" height="25" alt="matic">
+<img src="screen.png" >
+
+Features:
+- Non-custodial
+- Send Bitcoin and Bitcoin-like coin.
+- Send EVM base coin and tokens
+- Import Private key
+- Import Private key without save to device
+- Encrypt the private key to the local device.
+- 24-word Mnemonic
+- 0.5% fee
+
 
 ### How to run
 Download,unzip,run index.html
