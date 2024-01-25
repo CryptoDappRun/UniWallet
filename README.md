@@ -24,7 +24,7 @@ Features:
 - Send EVM base coin and tokens
 - Import Private key
 - Import Private key without save to device
-- Encrypt the private key to the local device.
+- All private keys are encrypted and stored on your device.
 - 24-word Mnemonic
 - 0.5% fee
 
