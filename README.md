@@ -13,7 +13,7 @@ Bitcoin,Dogecoin,Litecoin,Ethereum,Binance,Huobi,Fantom,Polygon,Avalanche,Cronos
 <img src="img/43114.png" width="25" height="25" alt="matic">
 <img src="img/25.png" width="25" height="25" alt="matic">
 
-### Demo:
+### Web version:
 https://cryptodapprun.github.io/UniWallet/
 
 <img src="screen.png" >
