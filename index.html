@@ -241,7 +241,7 @@ width: 200px;
 
 
     <div class="network-selector">
-        <label for="network">BlockChain:</label>
+        <label for="network" class="d-none d-md-block">BlockChain:</label>
         <select id="MainBlockchainSelector" onchange="updateMainAccountSelector()" class="form-control">
         </select>
     </div>
@@ -251,7 +251,7 @@ d-none d-md-block
 -->
 
 <div class="account-selector">
-  <label for="account">Account:</label>
+  <label for="account" class="d-none d-md-block">Account:</label>
   <div class="selector-and-button">
     <select id="MainAccountSelector" class="form-control" onchange="OnChangeSelector2()">
       <!-- Your select options go here -->
@@ -263,6 +263,7 @@ d-none d-md-block
     </button>
   </div>
 </div>
+
 
 
 
