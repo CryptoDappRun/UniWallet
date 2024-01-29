@@ -14,6 +14,7 @@ Bitcoin,Dogecoin,Litecoin,Ethereum,Tron,Binance,Huobi,Fantom,Polygon,Avalanche,C
 <img src="img/43114.png" width="25" height="25" alt="matic">
 <img src="img/25.png" width="25" height="25" alt="matic">
 
+<img src="img/windows.png?raw=true"><img src="img/macos.png?raw=true"><img src="img/ios.png?raw=true"><img src="img/android.png?raw=true"><img src="img/linux.png?raw=true">
 ### Web version:
 https://cryptodapprun.github.io/UniWallet/
 
@@ -31,4 +32,4 @@ Features:
 
 
 ### How to run
-Download,unzip,run index.html
+Use Web version or download project,run index.html
