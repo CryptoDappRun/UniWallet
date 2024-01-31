@@ -2,7 +2,7 @@
  A non-custodial multi-wallet designed to support Bitcoin,Dogecoin,Ethereum,Litecoin, Binance Smart Chain, Avalanche, Cronos and various other blockchains. It offers non-custodial storage for cryptocurrencies,Send Base Coin and Tokens.
 
 Support Blockchains:<br>
-Bitcoin,Dogecoin,Litecoin,Ethereum,Tron,Binance,Huobi,Fantom,Polygon,Avalanche,Cronos,Moonbeam,Moonriver.<br><br>
+Bitcoin,Dogecoin,Litecoin,Ethereum,Solana,Tron,Binance,Huobi,Fantom,Polygon,Avalanche,Cronos,Moonbeam,Moonriver.<br><br>
 <img src="img/BTC.png" width="25" height="25" > 
 <img src="img/DOGE.png" width="25" height="25" > 
 <img src="img/LTC.png" width="25" height="25" > 
