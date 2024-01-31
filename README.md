@@ -22,7 +22,7 @@ https://cryptodapprun.github.io/UniWallet/
 <img src="screen.png" >
 
 Features:
-- Non-custodial
+- Non-custodial-You hold your own private key.
 - Send Bitcoin and Bitcoin-like coin.
 - Send EVM base coin and tokens
 - Import Private key
