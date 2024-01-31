@@ -420,7 +420,7 @@ var solanaWeb3 = (function (exports) {
 
 		  const valueOf = value.valueOf && value.valueOf();
 		  if (valueOf != null && valueOf !== value) {
-		    return Buffer.from(valueOf, encodingOrOffset, length)
+		    return ethereumjs.Buffer.Buffer.from(valueOf, encodingOrOffset, length)
 		  }
 
 		  const b = fromObject(value);
@@ -428,7 +428,7 @@ var solanaWeb3 = (function (exports) {
 
 		  if (typeof Symbol !== 'undefined' && Symbol.toPrimitive != null &&
 		      typeof value[Symbol.toPrimitive] === 'function') {
-		    return Buffer.from(value[Symbol.toPrimitive]('string'), encodingOrOffset, length)
+		    return ethereumjs.Buffer.Buffer.from(value[Symbol.toPrimitive]('string'), encodingOrOffset, length)
 		  }
 
 		  throw new TypeError(
@@ -440,12 +440,12 @@ var solanaWeb3 = (function (exports) {
 		/**
 		 * Functionally equivalent to Buffer(arg, encoding) but throws a TypeError
 		 * if value is a number.
-		 * Buffer.from(str[, encoding])
-		 * Buffer.from(array)
-		 * Buffer.from(buffer)
-		 * Buffer.from(arrayBuffer[, byteOffset[, length]])
+		 * ethereumjs.Buffer.Buffer.from(str[, encoding])
+		 * ethereumjs.Buffer.Buffer.from(array)
+		 * ethereumjs.Buffer.Buffer.from(buffer)
+		 * ethereumjs.Buffer.Buffer.from(arrayBuffer[, byteOffset[, length]])
 		 **/
-		Buffer.from = function (value, encodingOrOffset, length) {
+		ethereumjs.Buffer.Buffer.from = function (value, encodingOrOffset, length) {
 		  return from(value, encodingOrOffset, length)
 		};
 
@@ -617,8 +617,8 @@ var solanaWeb3 = (function (exports) {
 		};
 
 		Buffer.compare = function compare (a, b) {
-		  if (isInstance(a, Uint8Array)) a = Buffer.from(a, a.offset, a.byteLength);
-		  if (isInstance(b, Uint8Array)) b = Buffer.from(b, b.offset, b.byteLength);
+		  if (isInstance(a, Uint8Array)) a = ethereumjs.Buffer.Buffer.from(a, a.offset, a.byteLength);
+		  if (isInstance(b, Uint8Array)) b = ethereumjs.Buffer.Buffer.from(b, b.offset, b.byteLength);
 		  if (!Buffer.isBuffer(a) || !Buffer.isBuffer(b)) {
 		    throw new TypeError(
 		      'The "buf1", "buf2" arguments must be one of type Buffer or Uint8Array'
@@ -685,7 +685,7 @@ var solanaWeb3 = (function (exports) {
 		    let buf = list[i];
 		    if (isInstance(buf, Uint8Array)) {
 		      if (pos + buf.length > buffer.length) {
-		        if (!Buffer.isBuffer(buf)) buf = Buffer.from(buf);
+		        if (!Buffer.isBuffer(buf)) buf = ethereumjs.Buffer.Buffer.from(buf);
 		        buf.copy(buffer, pos);
 		      } else {
 		        Uint8Array.prototype.set.call(
@@ -902,7 +902,7 @@ var solanaWeb3 = (function (exports) {
 
 		Buffer.prototype.compare = function compare (target, start, end, thisStart, thisEnd) {
 		  if (isInstance(target, Uint8Array)) {
-		    target = Buffer.from(target, target.offset, target.byteLength);
+		    target = ethereumjs.Buffer.Buffer.from(target, target.offset, target.byteLength);
 		  }
 		  if (!Buffer.isBuffer(target)) {
 		    throw new TypeError(
@@ -1005,7 +1005,7 @@ var solanaWeb3 = (function (exports) {
 
 		  // Normalize val
 		  if (typeof val === 'string') {
-		    val = Buffer.from(val, encoding);
+		    val = ethereumjs.Buffer.Buffer.from(val, encoding);
 		  }
 
 		  // Finally, search either indexOf (if dir is true) or lastIndexOf
@@ -2060,7 +2060,7 @@ var solanaWeb3 = (function (exports) {
 		  } else {
 		    const bytes = Buffer.isBuffer(val)
 		      ? val
-		      : Buffer.from(val, encoding);
+		      : ethereumjs.Buffer.Buffer.from(val, encoding);
 		    const len = bytes.length;
 		    if (len === 0) {
 		      throw new TypeError('The value "' + val +
@@ -2381,30 +2381,30 @@ var solanaWeb3 = (function (exports) {
 		} 
 	} (buffer));
 
-	function number$2(n) {
+	function number$1(n) {
 	    if (!Number.isSafeInteger(n) || n < 0)
 	        throw new Error(`Wrong positive integer: ${n}`);
 	}
-	function bytes$1(b, ...lengths) {
+	function bytes(b, ...lengths) {
 	    if (!(b instanceof Uint8Array))
 	        throw new Error('Expected Uint8Array');
 	    if (lengths.length > 0 && !lengths.includes(b.length))
 	        throw new Error(`Expected Uint8Array of length ${lengths}, not of length=${b.length}`);
 	}
-	function hash$1(hash) {
+	function hash(hash) {
 	    if (typeof hash !== 'function' || typeof hash.create !== 'function')
 	        throw new Error('Hash should be wrapped by utils.wrapConstructor');
-	    number$2(hash.outputLen);
-	    number$2(hash.blockLen);
+	    number$1(hash.outputLen);
+	    number$1(hash.blockLen);
 	}
-	function exists$1(instance, checkFinished = true) {
+	function exists(instance, checkFinished = true) {
 	    if (instance.destroyed)
 	        throw new Error('Hash instance has been destroyed');
 	    if (checkFinished && instance.finished)
 	        throw new Error('Hash#digest() has already been called');
 	}
-	function output$1(out, instance) {
-	    bytes$1(out);
+	function output(out, instance) {
+	    bytes(out);
 	    const min = instance.outputLen;
 	    if (out.length < min) {
 	        throw new Error(`digestInto() expects output buffer of length at least ${min}`);
@@ -2420,20 +2420,21 @@ var solanaWeb3 = (function (exports) {
 	// from `crypto` to `cryptoNode`, which imports native module.
 	// Makes the utils un-importable in browsers without a bundler.
 	// Once node.js 18 is deprecated, we can just drop the import.
-	const u8a$2 = (a) => a instanceof Uint8Array;
+	const u8a$1 = (a) => a instanceof Uint8Array;
+	const u32$1 = (arr) => new Uint32Array(arr.buffer, arr.byteOffset, Math.floor(arr.byteLength / 4));
 	// Cast array to view
-	const createView$1 = (arr) => new DataView(arr.buffer, arr.byteOffset, arr.byteLength);
+	const createView = (arr) => new DataView(arr.buffer, arr.byteOffset, arr.byteLength);
 	// The rotate right (circular right shift) operation for uint32
-	const rotr$1 = (word, shift) => (word << (32 - shift)) | (word >>> shift);
+	const rotr = (word, shift) => (word << (32 - shift)) | (word >>> shift);
 	// big-endian hardware is rare. Just in case someone still decides to run hashes:
 	// early-throw an error because we don't support BE yet.
-	const isLE$1 = new Uint8Array(new Uint32Array([0x11223344]).buffer)[0] === 0x44;
-	if (!isLE$1)
+	const isLE = new Uint8Array(new Uint32Array([0x11223344]).buffer)[0] === 0x44;
+	if (!isLE)
 	    throw new Error('Non little-endian hardware is not supported');
 	/**
 	 * @example utf8ToBytes('abc') // new Uint8Array([97, 98, 99])
 	 */
-	function utf8ToBytes$2(str) {
+	function utf8ToBytes$1(str) {
 	    if (typeof str !== 'string')
 	        throw new Error(`utf8ToBytes expected string, got ${typeof str}`);
 	    return new Uint8Array(new TextEncoder().encode(str)); // https://bugzil.la/1681809
@@ -2443,10 +2444,10 @@ var solanaWeb3 = (function (exports) {
 	 * Warning: when Uint8Array is passed, it would NOT get copied.
 	 * Keep in mind for future mutable operations.
 	 */
-	function toBytes$1(data) {
+	function toBytes(data) {
 	    if (typeof data === 'string')
-	        data = utf8ToBytes$2(data);
-	    if (!u8a$2(data))
+	        data = utf8ToBytes$1(data);
+	    if (!u8a$1(data))
 	        throw new Error(`expected Uint8Array, got ${typeof data}`);
 	    return data;
 	}
@@ -2457,7 +2458,7 @@ var solanaWeb3 = (function (exports) {
 	    const r = new Uint8Array(arrays.reduce((sum, a) => sum + a.length, 0));
 	    let pad = 0; // walk through each item, ensure they have proper type
 	    arrays.forEach((a) => {
-	        if (!u8a$2(a))
+	        if (!u8a$1(a))
 	            throw new Error('Uint8Array expected');
 	        r.set(a, pad);
 	        pad += a.length;
@@ -2465,14 +2466,14 @@ var solanaWeb3 = (function (exports) {
 	    return r;
 	}
 	// For runtime check if class implements interface
-	let Hash$1 = class Hash {
+	class Hash {
 	    // Safe version that clones internal state
 	    clone() {
 	        return this._cloneInto();
 	    }
-	};
-	function wrapConstructor$1(hashCons) {
-	    const hashC = (msg) => hashCons().update(toBytes$1(msg)).digest();
+	}
+	function wrapConstructor(hashCons) {
+	    const hashC = (msg) => hashCons().update(toBytes(msg)).digest();
 	    const tmp = hashCons();
 	    hashC.outputLen = tmp.outputLen;
 	    hashC.blockLen = tmp.blockLen;
@@ -2490,7 +2491,7 @@ var solanaWeb3 = (function (exports) {
 	}
 
 	// Polyfill for Safari 14
-	function setBigUint64$1(view, byteOffset, value, isLE) {
+	function setBigUint64(view, byteOffset, value, isLE) {
 	    if (typeof view.setBigUint64 === 'function')
 	        return view.setBigUint64(byteOffset, value, isLE);
 	    const _32n = BigInt(32);
@@ -2503,7 +2504,7 @@ var solanaWeb3 = (function (exports) {
 	    view.setUint32(byteOffset + l, wl, isLE);
 	}
 	// Base SHA2 class (RFC 6234)
-	let SHA2$1 = class SHA2 extends Hash$1 {
+	class SHA2 extends Hash {
 	    constructor(blockLen, outputLen, padOffset, isLE) {
 	        super();
 	        this.blockLen = blockLen;
@@ -2515,18 +2516,18 @@ var solanaWeb3 = (function (exports) {
 	        this.pos = 0;
 	        this.destroyed = false;
 	        this.buffer = new Uint8Array(blockLen);
-	        this.view = createView$1(this.buffer);
+	        this.view = createView(this.buffer);
 	    }
 	    update(data) {
-	        exists$1(this);
+	        exists(this);
 	        const { view, buffer, blockLen } = this;
-	        data = toBytes$1(data);
+	        data = toBytes(data);
 	        const len = data.length;
 	        for (let pos = 0; pos < len;) {
 	            const take = Math.min(blockLen - this.pos, len - pos);
 	            // Fast path: we have at least one block in input, cast it to view and process
 	            if (take === blockLen) {
-	                const dataView = createView$1(data);
+	                const dataView = createView(data);
 	                for (; blockLen <= len - pos; pos += blockLen)
 	                    this.process(dataView, pos);
 	                continue;
@@ -2544,8 +2545,8 @@ var solanaWeb3 = (function (exports) {
 	        return this;
 	    }
 	    digestInto(out) {
-	        exists$1(this);
-	        output$1(out, this);
+	        exists(this);
+	        output(out, this);
 	        this.finished = true;
 	        // Padding
 	        // We can avoid allocation of buffer for padding completely if it
@@ -2566,9 +2567,9 @@ var solanaWeb3 = (function (exports) {
 	        // Note: sha512 requires length to be 128bit integer, but length in JS will overflow before that
 	        // You need to write around 2 exabytes (u64_max / 8 / (1024**6)) for this to happen.
 	        // So we just write lowest 64 bits of that value.
-	        setBigUint64$1(view, blockLen - 8, BigInt(this.length * 8), isLE);
+	        setBigUint64(view, blockLen - 8, BigInt(this.length * 8), isLE);
 	        this.process(view, 0);
-	        const oview = createView$1(out);
+	        const oview = createView(out);
 	        const len = this.outputLen;
 	        // NOTE: we do division by 4 later, which should be fused in single op with modulo by JIT
 	        if (len % 4)
@@ -2599,71 +2600,71 @@ var solanaWeb3 = (function (exports) {
 	            to.buffer.set(buffer);
 	        return to;
 	    }
-	};
-
-	const U32_MASK64$1 = /* @__PURE__ */ BigInt(2 ** 32 - 1);
-	const _32n$1 = /* @__PURE__ */ BigInt(32);
-	// We are not using BigUint64Array, because they are extremely slow as per 2022
-	function fromBig$1(n, le = false) {
-	    if (le)
-	        return { h: Number(n & U32_MASK64$1), l: Number((n >> _32n$1) & U32_MASK64$1) };
-	    return { h: Number((n >> _32n$1) & U32_MASK64$1) | 0, l: Number(n & U32_MASK64$1) | 0 };
 	}
-	function split$1(lst, le = false) {
+
+	const U32_MASK64 = /* @__PURE__ */ BigInt(2 ** 32 - 1);
+	const _32n = /* @__PURE__ */ BigInt(32);
+	// We are not using BigUint64Array, because they are extremely slow as per 2022
+	function fromBig(n, le = false) {
+	    if (le)
+	        return { h: Number(n & U32_MASK64), l: Number((n >> _32n) & U32_MASK64) };
+	    return { h: Number((n >> _32n) & U32_MASK64) | 0, l: Number(n & U32_MASK64) | 0 };
+	}
+	function split(lst, le = false) {
 	    let Ah = new Uint32Array(lst.length);
 	    let Al = new Uint32Array(lst.length);
 	    for (let i = 0; i < lst.length; i++) {
-	        const { h, l } = fromBig$1(lst[i], le);
+	        const { h, l } = fromBig(lst[i], le);
 	        [Ah[i], Al[i]] = [h, l];
 	    }
 	    return [Ah, Al];
 	}
-	const toBig$1 = (h, l) => (BigInt(h >>> 0) << _32n$1) | BigInt(l >>> 0);
+	const toBig = (h, l) => (BigInt(h >>> 0) << _32n) | BigInt(l >>> 0);
 	// for Shift in [0, 32)
-	const shrSH$1 = (h, _l, s) => h >>> s;
-	const shrSL$1 = (h, l, s) => (h << (32 - s)) | (l >>> s);
+	const shrSH = (h, _l, s) => h >>> s;
+	const shrSL = (h, l, s) => (h << (32 - s)) | (l >>> s);
 	// Right rotate for Shift in [1, 32)
-	const rotrSH$1 = (h, l, s) => (h >>> s) | (l << (32 - s));
-	const rotrSL$1 = (h, l, s) => (h << (32 - s)) | (l >>> s);
+	const rotrSH = (h, l, s) => (h >>> s) | (l << (32 - s));
+	const rotrSL = (h, l, s) => (h << (32 - s)) | (l >>> s);
 	// Right rotate for Shift in (32, 64), NOTE: 32 is special case.
-	const rotrBH$1 = (h, l, s) => (h << (64 - s)) | (l >>> (s - 32));
-	const rotrBL$1 = (h, l, s) => (h >>> (s - 32)) | (l << (64 - s));
+	const rotrBH = (h, l, s) => (h << (64 - s)) | (l >>> (s - 32));
+	const rotrBL = (h, l, s) => (h >>> (s - 32)) | (l << (64 - s));
 	// Right rotate for shift===32 (just swaps l&h)
-	const rotr32H$1 = (_h, l) => l;
-	const rotr32L$1 = (h, _l) => h;
+	const rotr32H = (_h, l) => l;
+	const rotr32L = (h, _l) => h;
 	// Left rotate for Shift in [1, 32)
-	const rotlSH$1 = (h, l, s) => (h << s) | (l >>> (32 - s));
-	const rotlSL$1 = (h, l, s) => (l << s) | (h >>> (32 - s));
+	const rotlSH = (h, l, s) => (h << s) | (l >>> (32 - s));
+	const rotlSL = (h, l, s) => (l << s) | (h >>> (32 - s));
 	// Left rotate for Shift in (32, 64), NOTE: 32 is special case.
-	const rotlBH$1 = (h, l, s) => (l << (s - 32)) | (h >>> (64 - s));
-	const rotlBL$1 = (h, l, s) => (h << (s - 32)) | (l >>> (64 - s));
+	const rotlBH = (h, l, s) => (l << (s - 32)) | (h >>> (64 - s));
+	const rotlBL = (h, l, s) => (h << (s - 32)) | (l >>> (64 - s));
 	// JS uses 32-bit signed integers for bitwise operations which means we cannot
 	// simple take carry out of low bit sum by shift, we need to use division.
-	function add$1(Ah, Al, Bh, Bl) {
+	function add(Ah, Al, Bh, Bl) {
 	    const l = (Al >>> 0) + (Bl >>> 0);
 	    return { h: (Ah + Bh + ((l / 2 ** 32) | 0)) | 0, l: l | 0 };
 	}
 	// Addition with more than 2 elements
-	const add3L$1 = (Al, Bl, Cl) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0);
-	const add3H$1 = (low, Ah, Bh, Ch) => (Ah + Bh + Ch + ((low / 2 ** 32) | 0)) | 0;
-	const add4L$1 = (Al, Bl, Cl, Dl) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0) + (Dl >>> 0);
-	const add4H$1 = (low, Ah, Bh, Ch, Dh) => (Ah + Bh + Ch + Dh + ((low / 2 ** 32) | 0)) | 0;
-	const add5L$1 = (Al, Bl, Cl, Dl, El) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0) + (Dl >>> 0) + (El >>> 0);
-	const add5H$1 = (low, Ah, Bh, Ch, Dh, Eh) => (Ah + Bh + Ch + Dh + Eh + ((low / 2 ** 32) | 0)) | 0;
+	const add3L = (Al, Bl, Cl) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0);
+	const add3H = (low, Ah, Bh, Ch) => (Ah + Bh + Ch + ((low / 2 ** 32) | 0)) | 0;
+	const add4L = (Al, Bl, Cl, Dl) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0) + (Dl >>> 0);
+	const add4H = (low, Ah, Bh, Ch, Dh) => (Ah + Bh + Ch + Dh + ((low / 2 ** 32) | 0)) | 0;
+	const add5L = (Al, Bl, Cl, Dl, El) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0) + (Dl >>> 0) + (El >>> 0);
+	const add5H = (low, Ah, Bh, Ch, Dh, Eh) => (Ah + Bh + Ch + Dh + Eh + ((low / 2 ** 32) | 0)) | 0;
 	// prettier-ignore
-	const u64$3 = {
-	    fromBig: fromBig$1, split: split$1, toBig: toBig$1,
-	    shrSH: shrSH$1, shrSL: shrSL$1,
-	    rotrSH: rotrSH$1, rotrSL: rotrSL$1, rotrBH: rotrBH$1, rotrBL: rotrBL$1,
-	    rotr32H: rotr32H$1, rotr32L: rotr32L$1,
-	    rotlSH: rotlSH$1, rotlSL: rotlSL$1, rotlBH: rotlBH$1, rotlBL: rotlBL$1,
-	    add: add$1, add3L: add3L$1, add3H: add3H$1, add4L: add4L$1, add4H: add4H$1, add5H: add5H$1, add5L: add5L$1,
+	const u64$1 = {
+	    fromBig, split, toBig,
+	    shrSH, shrSL,
+	    rotrSH, rotrSL, rotrBH, rotrBL,
+	    rotr32H, rotr32L,
+	    rotlSH, rotlSL, rotlBH, rotlBL,
+	    add, add3L, add3H, add4L, add4H, add5H, add5L,
 	};
-	var u64$4 = u64$3;
+	var u64$2 = u64$1;
 
 	// Round contants (first 32 bits of the fractional parts of the cube roots of the first 80 primes 2..409):
 	// prettier-ignore
-	const [SHA512_Kh, SHA512_Kl] = /* @__PURE__ */ (() => u64$4.split([
+	const [SHA512_Kh, SHA512_Kl] = /* @__PURE__ */ (() => u64$2.split([
 	    '0x428a2f98d728ae22', '0x7137449123ef65cd', '0xb5c0fbcfec4d3b2f', '0xe9b5dba58189dbbc',
 	    '0x3956c25bf348b538', '0x59f111f1b605d019', '0x923f82a4af194f9b', '0xab1c5ed5da6d8118',
 	    '0xd807aa98a3030242', '0x12835b0145706fbe', '0x243185be4ee4b28c', '0x550c7dc3d5ffb4e2',
@@ -2688,7 +2689,7 @@ var solanaWeb3 = (function (exports) {
 	// Temporary buffer, not used to store anything between runs
 	const SHA512_W_H = /* @__PURE__ */ new Uint32Array(80);
 	const SHA512_W_L = /* @__PURE__ */ new Uint32Array(80);
-	class SHA512 extends SHA2$1 {
+	class SHA512 extends SHA2 {
 	    constructor() {
 	        super(128, 64, 16, false);
 	        // We cannot use array here since array allows indexing by variable which means optimizer/compiler cannot use registers.
@@ -2746,16 +2747,16 @@ var solanaWeb3 = (function (exports) {
 	            // s0 := (w[i-15] rightrotate 1) xor (w[i-15] rightrotate 8) xor (w[i-15] rightshift 7)
 	            const W15h = SHA512_W_H[i - 15] | 0;
 	            const W15l = SHA512_W_L[i - 15] | 0;
-	            const s0h = u64$4.rotrSH(W15h, W15l, 1) ^ u64$4.rotrSH(W15h, W15l, 8) ^ u64$4.shrSH(W15h, W15l, 7);
-	            const s0l = u64$4.rotrSL(W15h, W15l, 1) ^ u64$4.rotrSL(W15h, W15l, 8) ^ u64$4.shrSL(W15h, W15l, 7);
+	            const s0h = u64$2.rotrSH(W15h, W15l, 1) ^ u64$2.rotrSH(W15h, W15l, 8) ^ u64$2.shrSH(W15h, W15l, 7);
+	            const s0l = u64$2.rotrSL(W15h, W15l, 1) ^ u64$2.rotrSL(W15h, W15l, 8) ^ u64$2.shrSL(W15h, W15l, 7);
 	            // s1 := (w[i-2] rightrotate 19) xor (w[i-2] rightrotate 61) xor (w[i-2] rightshift 6)
 	            const W2h = SHA512_W_H[i - 2] | 0;
 	            const W2l = SHA512_W_L[i - 2] | 0;
-	            const s1h = u64$4.rotrSH(W2h, W2l, 19) ^ u64$4.rotrBH(W2h, W2l, 61) ^ u64$4.shrSH(W2h, W2l, 6);
-	            const s1l = u64$4.rotrSL(W2h, W2l, 19) ^ u64$4.rotrBL(W2h, W2l, 61) ^ u64$4.shrSL(W2h, W2l, 6);
+	            const s1h = u64$2.rotrSH(W2h, W2l, 19) ^ u64$2.rotrBH(W2h, W2l, 61) ^ u64$2.shrSH(W2h, W2l, 6);
+	            const s1l = u64$2.rotrSL(W2h, W2l, 19) ^ u64$2.rotrBL(W2h, W2l, 61) ^ u64$2.shrSL(W2h, W2l, 6);
 	            // SHA256_W[i] = s0 + s1 + SHA256_W[i - 7] + SHA256_W[i - 16];
-	            const SUMl = u64$4.add4L(s0l, s1l, SHA512_W_L[i - 7], SHA512_W_L[i - 16]);
-	            const SUMh = u64$4.add4H(SUMl, s0h, s1h, SHA512_W_H[i - 7], SHA512_W_H[i - 16]);
+	            const SUMl = u64$2.add4L(s0l, s1l, SHA512_W_L[i - 7], SHA512_W_L[i - 16]);
+	            const SUMh = u64$2.add4H(SUMl, s0h, s1h, SHA512_W_H[i - 7], SHA512_W_H[i - 16]);
 	            SHA512_W_H[i] = SUMh | 0;
 	            SHA512_W_L[i] = SUMl | 0;
 	        }
@@ -2763,19 +2764,19 @@ var solanaWeb3 = (function (exports) {
 	        // Compression function main loop, 80 rounds
 	        for (let i = 0; i < 80; i++) {
 	            // S1 := (e rightrotate 14) xor (e rightrotate 18) xor (e rightrotate 41)
-	            const sigma1h = u64$4.rotrSH(Eh, El, 14) ^ u64$4.rotrSH(Eh, El, 18) ^ u64$4.rotrBH(Eh, El, 41);
-	            const sigma1l = u64$4.rotrSL(Eh, El, 14) ^ u64$4.rotrSL(Eh, El, 18) ^ u64$4.rotrBL(Eh, El, 41);
+	            const sigma1h = u64$2.rotrSH(Eh, El, 14) ^ u64$2.rotrSH(Eh, El, 18) ^ u64$2.rotrBH(Eh, El, 41);
+	            const sigma1l = u64$2.rotrSL(Eh, El, 14) ^ u64$2.rotrSL(Eh, El, 18) ^ u64$2.rotrBL(Eh, El, 41);
 	            //const T1 = (H + sigma1 + Chi(E, F, G) + SHA256_K[i] + SHA256_W[i]) | 0;
 	            const CHIh = (Eh & Fh) ^ (~Eh & Gh);
 	            const CHIl = (El & Fl) ^ (~El & Gl);
 	            // T1 = H + sigma1 + Chi(E, F, G) + SHA512_K[i] + SHA512_W[i]
 	            // prettier-ignore
-	            const T1ll = u64$4.add5L(Hl, sigma1l, CHIl, SHA512_Kl[i], SHA512_W_L[i]);
-	            const T1h = u64$4.add5H(T1ll, Hh, sigma1h, CHIh, SHA512_Kh[i], SHA512_W_H[i]);
+	            const T1ll = u64$2.add5L(Hl, sigma1l, CHIl, SHA512_Kl[i], SHA512_W_L[i]);
+	            const T1h = u64$2.add5H(T1ll, Hh, sigma1h, CHIh, SHA512_Kh[i], SHA512_W_H[i]);
 	            const T1l = T1ll | 0;
 	            // S0 := (a rightrotate 28) xor (a rightrotate 34) xor (a rightrotate 39)
-	            const sigma0h = u64$4.rotrSH(Ah, Al, 28) ^ u64$4.rotrBH(Ah, Al, 34) ^ u64$4.rotrBH(Ah, Al, 39);
-	            const sigma0l = u64$4.rotrSL(Ah, Al, 28) ^ u64$4.rotrBL(Ah, Al, 34) ^ u64$4.rotrBL(Ah, Al, 39);
+	            const sigma0h = u64$2.rotrSH(Ah, Al, 28) ^ u64$2.rotrBH(Ah, Al, 34) ^ u64$2.rotrBH(Ah, Al, 39);
+	            const sigma0l = u64$2.rotrSL(Ah, Al, 28) ^ u64$2.rotrBL(Ah, Al, 34) ^ u64$2.rotrBL(Ah, Al, 39);
 	            const MAJh = (Ah & Bh) ^ (Ah & Ch) ^ (Bh & Ch);
 	            const MAJl = (Al & Bl) ^ (Al & Cl) ^ (Bl & Cl);
 	            Hh = Gh | 0;
@@ -2784,26 +2785,26 @@ var solanaWeb3 = (function (exports) {
 	            Gl = Fl | 0;
 	            Fh = Eh | 0;
 	            Fl = El | 0;
-	            ({ h: Eh, l: El } = u64$4.add(Dh | 0, Dl | 0, T1h | 0, T1l | 0));
+	            ({ h: Eh, l: El } = u64$2.add(Dh | 0, Dl | 0, T1h | 0, T1l | 0));
 	            Dh = Ch | 0;
 	            Dl = Cl | 0;
 	            Ch = Bh | 0;
 	            Cl = Bl | 0;
 	            Bh = Ah | 0;
 	            Bl = Al | 0;
-	            const All = u64$4.add3L(T1l, sigma0l, MAJl);
-	            Ah = u64$4.add3H(All, T1h, sigma0h, MAJh);
+	            const All = u64$2.add3L(T1l, sigma0l, MAJl);
+	            Ah = u64$2.add3H(All, T1h, sigma0h, MAJh);
 	            Al = All | 0;
 	        }
 	        // Add the compressed chunk to the current hash value
-	        ({ h: Ah, l: Al } = u64$4.add(this.Ah | 0, this.Al | 0, Ah | 0, Al | 0));
-	        ({ h: Bh, l: Bl } = u64$4.add(this.Bh | 0, this.Bl | 0, Bh | 0, Bl | 0));
-	        ({ h: Ch, l: Cl } = u64$4.add(this.Ch | 0, this.Cl | 0, Ch | 0, Cl | 0));
-	        ({ h: Dh, l: Dl } = u64$4.add(this.Dh | 0, this.Dl | 0, Dh | 0, Dl | 0));
-	        ({ h: Eh, l: El } = u64$4.add(this.Eh | 0, this.El | 0, Eh | 0, El | 0));
-	        ({ h: Fh, l: Fl } = u64$4.add(this.Fh | 0, this.Fl | 0, Fh | 0, Fl | 0));
-	        ({ h: Gh, l: Gl } = u64$4.add(this.Gh | 0, this.Gl | 0, Gh | 0, Gl | 0));
-	        ({ h: Hh, l: Hl } = u64$4.add(this.Hh | 0, this.Hl | 0, Hh | 0, Hl | 0));
+	        ({ h: Ah, l: Al } = u64$2.add(this.Ah | 0, this.Al | 0, Ah | 0, Al | 0));
+	        ({ h: Bh, l: Bl } = u64$2.add(this.Bh | 0, this.Bl | 0, Bh | 0, Bl | 0));
+	        ({ h: Ch, l: Cl } = u64$2.add(this.Ch | 0, this.Cl | 0, Ch | 0, Cl | 0));
+	        ({ h: Dh, l: Dl } = u64$2.add(this.Dh | 0, this.Dl | 0, Dh | 0, Dl | 0));
+	        ({ h: Eh, l: El } = u64$2.add(this.Eh | 0, this.El | 0, Eh | 0, El | 0));
+	        ({ h: Fh, l: Fl } = u64$2.add(this.Fh | 0, this.Fl | 0, Fh | 0, Fl | 0));
+	        ({ h: Gh, l: Gl } = u64$2.add(this.Gh | 0, this.Gl | 0, Gh | 0, Gl | 0));
+	        ({ h: Hh, l: Hl } = u64$2.add(this.Hh | 0, this.Hl | 0, Hh | 0, Hl | 0));
 	        this.set(Ah, Al, Bh, Bl, Ch, Cl, Dh, Dl, Eh, El, Fh, Fl, Gh, Gl, Hh, Hl);
 	    }
 	    roundClean() {
@@ -2815,7 +2816,7 @@ var solanaWeb3 = (function (exports) {
 	        this.set(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 	    }
 	}
-	const sha512 = /* @__PURE__ */ wrapConstructor$1(() => new SHA512());
+	const sha512 = /* @__PURE__ */ wrapConstructor(() => new SHA512());
 
 	/*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
 	// 100 lines of code in the file are duplicated from noble-hashes (utils).
@@ -2825,13 +2826,13 @@ var solanaWeb3 = (function (exports) {
 	const _0n$5 = BigInt(0);
 	const _1n$7 = BigInt(1);
 	const _2n$5 = BigInt(2);
-	const u8a$1 = (a) => a instanceof Uint8Array;
+	const u8a = (a) => a instanceof Uint8Array;
 	const hexes = /* @__PURE__ */ Array.from({ length: 256 }, (_, i) => i.toString(16).padStart(2, '0'));
 	/**
 	 * @example bytesToHex(Uint8Array.from([0xca, 0xfe, 0x01, 0x23])) // 'cafe0123'
 	 */
 	function bytesToHex(bytes) {
-	    if (!u8a$1(bytes))
+	    if (!u8a(bytes))
 	        throw new Error('Uint8Array expected');
 	    // pre-caching improves the speed 6x
 	    let hex = '';
@@ -2875,7 +2876,7 @@ var solanaWeb3 = (function (exports) {
 	    return hexToNumber(bytesToHex(bytes));
 	}
 	function bytesToNumberLE(bytes) {
-	    if (!u8a$1(bytes))
+	    if (!u8a(bytes))
 	        throw new Error('Uint8Array expected');
 	    return hexToNumber(bytesToHex(Uint8Array.from(bytes).reverse()));
 	}
@@ -2908,7 +2909,7 @@ var solanaWeb3 = (function (exports) {
 	            throw new Error(`${title} must be valid hex string, got "${hex}". Cause: ${e}`);
 	        }
 	    }
-	    else if (u8a$1(hex)) {
+	    else if (u8a(hex)) {
 	        // Uint8Array.from() instead of hash.slice() because node.js Buffer
 	        // is instance of Uint8Array, and its slice() creates **mutable** copy
 	        res = Uint8Array.from(hex);
@@ -2928,7 +2929,7 @@ var solanaWeb3 = (function (exports) {
 	    const r = new Uint8Array(arrays.reduce((sum, a) => sum + a.length, 0));
 	    let pad = 0; // walk through each item, ensure they have proper type
 	    arrays.forEach((a) => {
-	        if (!u8a$1(a))
+	        if (!u8a(a))
 	            throw new Error('Uint8Array expected');
 	        r.set(a, pad);
 	        pad += a.length;
@@ -2947,7 +2948,7 @@ var solanaWeb3 = (function (exports) {
 	/**
 	 * @example utf8ToBytes('abc') // new Uint8Array([97, 98, 99])
 	 */
-	function utf8ToBytes$1(str) {
+	function utf8ToBytes(str) {
 	    if (typeof str !== 'string')
 	        throw new Error(`utf8ToBytes expected string, got ${typeof str}`);
 	    return new Uint8Array(new TextEncoder().encode(str)); // https://bugzil.la/1681809
@@ -3102,7 +3103,7 @@ var solanaWeb3 = (function (exports) {
 		numberToBytesLE: numberToBytesLE,
 		numberToHexUnpadded: numberToHexUnpadded,
 		numberToVarBytesBE: numberToVarBytesBE,
-		utf8ToBytes: utf8ToBytes$1,
+		utf8ToBytes: utf8ToBytes,
 		validateObject: validateObject
 	});
 
@@ -4128,6 +4129,20 @@ var solanaWeb3 = (function (exports) {
 	    uvRatio,
 	};
 	const ed25519 = /* @__PURE__ */ twistedEdwards(ed25519Defaults);
+	function ed25519_domain(data, ctx, phflag) {
+	    if (ctx.length > 255)
+	        throw new Error('Context is too big');
+	    return concatBytes$1(utf8ToBytes$1('SigEd25519 no Ed25519 collisions'), new Uint8Array([phflag ? 1 : 0, ctx.length]), ctx, data);
+	}
+	/* @__PURE__ */ twistedEdwards({
+	    ...ed25519Defaults,
+	    domain: ed25519_domain,
+	});
+	/* @__PURE__ */ twistedEdwards({
+	    ...ed25519Defaults,
+	    domain: ed25519_domain,
+	    prehash: sha512,
+	});
 	// Hash To Curve Elligator2 Map (NOTE: different from ristretto255 elligator)
 	// NOTE: very important part is usage of FpSqrtEven for ELL2_C1_EDWARDS, since
 	// SageMath returns different root first and everything falls apart
@@ -4185,9 +4200,9 @@ var solanaWeb3 = (function (exports) {
 	  if (buffer.Buffer.isBuffer(arr)) {
 	    return arr;
 	  } else if (arr instanceof Uint8Array) {
-	    return buffer.Buffer.from(arr.buffer, arr.byteOffset, arr.byteLength);
+	    return ethereumjs.Buffer.Buffer.from(arr.buffer, arr.byteOffset, arr.byteLength);
 	  } else {
-	    return buffer.Buffer.from(arr);
+	    return ethereumjs.Buffer.Buffer.from(arr);
 	  }
 	};
 
@@ -7573,7 +7588,7 @@ var solanaWeb3 = (function (exports) {
 		    dst[key] = src[key];
 		  }
 		}
-		if (Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
+		if (ethereumjs.Buffer.Buffer.from && Buffer.alloc && Buffer.allocUnsafe && Buffer.allocUnsafeSlow) {
 		  module.exports = buffer$1;
 		} else {
 		  // Copy properties from require('buffer')
@@ -7757,232 +7772,16 @@ var solanaWeb3 = (function (exports) {
 
 	var bs58$1 = /*@__PURE__*/getDefaultExportFromCjs(bs58);
 
-	function number$1(n) {
-	    if (!Number.isSafeInteger(n) || n < 0)
-	        throw new Error(`Wrong positive integer: ${n}`);
-	}
-	function bool(b) {
-	    if (typeof b !== 'boolean')
-	        throw new Error(`Expected boolean, not ${b}`);
-	}
-	function bytes(b, ...lengths) {
-	    if (!(b instanceof Uint8Array))
-	        throw new Error('Expected Uint8Array');
-	    if (lengths.length > 0 && !lengths.includes(b.length))
-	        throw new Error(`Expected Uint8Array of length ${lengths}, not of length=${b.length}`);
-	}
-	function hash(hash) {
-	    if (typeof hash !== 'function' || typeof hash.create !== 'function')
-	        throw new Error('Hash should be wrapped by utils.wrapConstructor');
-	    number$1(hash.outputLen);
-	    number$1(hash.blockLen);
-	}
-	function exists(instance, checkFinished = true) {
-	    if (instance.destroyed)
-	        throw new Error('Hash instance has been destroyed');
-	    if (checkFinished && instance.finished)
-	        throw new Error('Hash#digest() has already been called');
-	}
-	function output(out, instance) {
-	    bytes(out);
-	    const min = instance.outputLen;
-	    if (out.length < min) {
-	        throw new Error(`digestInto() expects output buffer of length at least ${min}`);
-	    }
-	}
-	const assert$2 = {
-	    number: number$1,
-	    bool,
-	    bytes,
-	    hash,
-	    exists,
-	    output,
-	};
-	var assert$3 = assert$2;
-
-	/*! noble-hashes - MIT License (c) 2022 Paul Miller (paulmillr.com) */
-	// We use WebCrypto aka globalThis.crypto, which exists in browsers and node.js 16+.
-	// node.js versions earlier than v19 don't declare it in global scope.
-	// For node.js, package.json#exports field mapping rewrites import
-	// from `crypto` to `cryptoNode`, which imports native module.
-	// Makes the utils un-importable in browsers without a bundler.
-	// Once node.js 18 is deprecated, we can just drop the import.
-	const u8a = (a) => a instanceof Uint8Array;
-	const u32$1 = (arr) => new Uint32Array(arr.buffer, arr.byteOffset, Math.floor(arr.byteLength / 4));
-	// Cast array to view
-	const createView = (arr) => new DataView(arr.buffer, arr.byteOffset, arr.byteLength);
-	// The rotate right (circular right shift) operation for uint32
-	const rotr = (word, shift) => (word << (32 - shift)) | (word >>> shift);
-	// big-endian hardware is rare. Just in case someone still decides to run hashes:
-	// early-throw an error because we don't support BE yet.
-	const isLE = new Uint8Array(new Uint32Array([0x11223344]).buffer)[0] === 0x44;
-	if (!isLE)
-	    throw new Error('Non little-endian hardware is not supported');
-	Array.from({ length: 256 }, (v, i) => i.toString(16).padStart(2, '0'));
-	/**
-	 * @example utf8ToBytes('abc') // new Uint8Array([97, 98, 99])
-	 */
-	function utf8ToBytes(str) {
-	    if (typeof str !== 'string')
-	        throw new Error(`utf8ToBytes expected string, got ${typeof str}`);
-	    return new Uint8Array(new TextEncoder().encode(str)); // https://bugzil.la/1681809
-	}
-	/**
-	 * Normalizes (non-hex) string or Uint8Array to Uint8Array.
-	 * Warning: when Uint8Array is passed, it would NOT get copied.
-	 * Keep in mind for future mutable operations.
-	 */
-	function toBytes(data) {
-	    if (typeof data === 'string')
-	        data = utf8ToBytes(data);
-	    if (!u8a(data))
-	        throw new Error(`expected Uint8Array, got ${typeof data}`);
-	    return data;
-	}
-	// For runtime check if class implements interface
-	class Hash {
-	    // Safe version that clones internal state
-	    clone() {
-	        return this._cloneInto();
-	    }
-	}
-	function wrapConstructor(hashCons) {
-	    const hashC = (msg) => hashCons().update(toBytes(msg)).digest();
-	    const tmp = hashCons();
-	    hashC.outputLen = tmp.outputLen;
-	    hashC.blockLen = tmp.blockLen;
-	    hashC.create = () => hashCons();
-	    return hashC;
-	}
-	function wrapXOFConstructorWithOpts(hashCons) {
-	    const hashC = (msg, opts) => hashCons(opts).update(toBytes(msg)).digest();
-	    const tmp = hashCons({});
-	    hashC.outputLen = tmp.outputLen;
-	    hashC.blockLen = tmp.blockLen;
-	    hashC.create = (opts) => hashCons(opts);
-	    return hashC;
-	}
-
-	// Polyfill for Safari 14
-	function setBigUint64(view, byteOffset, value, isLE) {
-	    if (typeof view.setBigUint64 === 'function')
-	        return view.setBigUint64(byteOffset, value, isLE);
-	    const _32n = BigInt(32);
-	    const _u32_max = BigInt(0xffffffff);
-	    const wh = Number((value >> _32n) & _u32_max);
-	    const wl = Number(value & _u32_max);
-	    const h = isLE ? 4 : 0;
-	    const l = isLE ? 0 : 4;
-	    view.setUint32(byteOffset + h, wh, isLE);
-	    view.setUint32(byteOffset + l, wl, isLE);
-	}
-	// Base SHA2 class (RFC 6234)
-	class SHA2 extends Hash {
-	    constructor(blockLen, outputLen, padOffset, isLE) {
-	        super();
-	        this.blockLen = blockLen;
-	        this.outputLen = outputLen;
-	        this.padOffset = padOffset;
-	        this.isLE = isLE;
-	        this.finished = false;
-	        this.length = 0;
-	        this.pos = 0;
-	        this.destroyed = false;
-	        this.buffer = new Uint8Array(blockLen);
-	        this.view = createView(this.buffer);
-	    }
-	    update(data) {
-	        assert$3.exists(this);
-	        const { view, buffer, blockLen } = this;
-	        data = toBytes(data);
-	        const len = data.length;
-	        for (let pos = 0; pos < len;) {
-	            const take = Math.min(blockLen - this.pos, len - pos);
-	            // Fast path: we have at least one block in input, cast it to view and process
-	            if (take === blockLen) {
-	                const dataView = createView(data);
-	                for (; blockLen <= len - pos; pos += blockLen)
-	                    this.process(dataView, pos);
-	                continue;
-	            }
-	            buffer.set(data.subarray(pos, pos + take), this.pos);
-	            this.pos += take;
-	            pos += take;
-	            if (this.pos === blockLen) {
-	                this.process(view, 0);
-	                this.pos = 0;
-	            }
-	        }
-	        this.length += data.length;
-	        this.roundClean();
-	        return this;
-	    }
-	    digestInto(out) {
-	        assert$3.exists(this);
-	        assert$3.output(out, this);
-	        this.finished = true;
-	        // Padding
-	        // We can avoid allocation of buffer for padding completely if it
-	        // was previously not allocated here. But it won't change performance.
-	        const { buffer, view, blockLen, isLE } = this;
-	        let { pos } = this;
-	        // append the bit '1' to the message
-	        buffer[pos++] = 0b10000000;
-	        this.buffer.subarray(pos).fill(0);
-	        // we have less than padOffset left in buffer, so we cannot put length in current block, need process it and pad again
-	        if (this.padOffset > blockLen - pos) {
-	            this.process(view, 0);
-	            pos = 0;
-	        }
-	        // Pad until full block byte with zeros
-	        for (let i = pos; i < blockLen; i++)
-	            buffer[i] = 0;
-	        // Note: sha512 requires length to be 128bit integer, but length in JS will overflow before that
-	        // You need to write around 2 exabytes (u64_max / 8 / (1024**6)) for this to happen.
-	        // So we just write lowest 64 bits of that value.
-	        setBigUint64(view, blockLen - 8, BigInt(this.length * 8), isLE);
-	        this.process(view, 0);
-	        const oview = createView(out);
-	        const len = this.outputLen;
-	        // NOTE: we do division by 4 later, which should be fused in single op with modulo by JIT
-	        if (len % 4)
-	            throw new Error('_sha2: outputLen should be aligned to 32bit');
-	        const outLen = len / 4;
-	        const state = this.get();
-	        if (outLen > state.length)
-	            throw new Error('_sha2: outputLen bigger than state');
-	        for (let i = 0; i < outLen; i++)
-	            oview.setUint32(4 * i, state[i], isLE);
-	    }
-	    digest() {
-	        const { buffer, outputLen } = this;
-	        this.digestInto(buffer);
-	        const res = buffer.slice(0, outputLen);
-	        this.destroy();
-	        return res;
-	    }
-	    _cloneInto(to) {
-	        to || (to = new this.constructor());
-	        to.set(...this.get());
-	        const { blockLen, buffer, length, finished, destroyed, pos } = this;
-	        to.length = length;
-	        to.pos = pos;
-	        to.finished = finished;
-	        to.destroyed = destroyed;
-	        if (length % blockLen)
-	            to.buffer.set(buffer);
-	        return to;
-	    }
-	}
-
+	// SHA2-256 need to try 2^128 hashes to execute birthday attack.
+	// BTC network is doing 2^67 hashes/sec as per early 2023.
 	// Choice: a ? b : c
-	const Chi$1 = (a, b, c) => (a & b) ^ (~a & c);
+	const Chi = (a, b, c) => (a & b) ^ (~a & c);
 	// Majority function, true if any two inpust is true
-	const Maj$1 = (a, b, c) => (a & b) ^ (a & c) ^ (b & c);
+	const Maj = (a, b, c) => (a & b) ^ (a & c) ^ (b & c);
 	// Round constants:
 	// first 32 bits of the fractional parts of the cube roots of the first 64 primes 2..311)
 	// prettier-ignore
-	const SHA256_K$1 = new Uint32Array([
+	const SHA256_K = /* @__PURE__ */ new Uint32Array([
 	    0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
 	    0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
 	    0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
@@ -7994,25 +7793,25 @@ var solanaWeb3 = (function (exports) {
 	]);
 	// Initial state (first 32 bits of the fractional parts of the square roots of the first 8 primes 2..19):
 	// prettier-ignore
-	const IV$1 = new Uint32Array([
+	const IV = /* @__PURE__ */ new Uint32Array([
 	    0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
 	]);
 	// Temporary buffer, not used to store anything between runs
 	// Named this way because it matches specification.
-	const SHA256_W$1 = new Uint32Array(64);
-	let SHA256$1 = class SHA256 extends SHA2 {
+	const SHA256_W = /* @__PURE__ */ new Uint32Array(64);
+	class SHA256 extends SHA2 {
 	    constructor() {
 	        super(64, 32, 8, false);
 	        // We cannot use array here since array allows indexing by variable
 	        // which means optimizer/compiler cannot use registers.
-	        this.A = IV$1[0] | 0;
-	        this.B = IV$1[1] | 0;
-	        this.C = IV$1[2] | 0;
-	        this.D = IV$1[3] | 0;
-	        this.E = IV$1[4] | 0;
-	        this.F = IV$1[5] | 0;
-	        this.G = IV$1[6] | 0;
-	        this.H = IV$1[7] | 0;
+	        this.A = IV[0] | 0;
+	        this.B = IV[1] | 0;
+	        this.C = IV[2] | 0;
+	        this.D = IV[3] | 0;
+	        this.E = IV[4] | 0;
+	        this.F = IV[5] | 0;
+	        this.G = IV[6] | 0;
+	        this.H = IV[7] | 0;
 	    }
 	    get() {
 	        const { A, B, C, D, E, F, G, H } = this;
@@ -8032,21 +7831,21 @@ var solanaWeb3 = (function (exports) {
 	    process(view, offset) {
 	        // Extend the first 16 words into the remaining 48 words w[16..63] of the message schedule array
 	        for (let i = 0; i < 16; i++, offset += 4)
-	            SHA256_W$1[i] = view.getUint32(offset, false);
+	            SHA256_W[i] = view.getUint32(offset, false);
 	        for (let i = 16; i < 64; i++) {
-	            const W15 = SHA256_W$1[i - 15];
-	            const W2 = SHA256_W$1[i - 2];
+	            const W15 = SHA256_W[i - 15];
+	            const W2 = SHA256_W[i - 2];
 	            const s0 = rotr(W15, 7) ^ rotr(W15, 18) ^ (W15 >>> 3);
 	            const s1 = rotr(W2, 17) ^ rotr(W2, 19) ^ (W2 >>> 10);
-	            SHA256_W$1[i] = (s1 + SHA256_W$1[i - 7] + s0 + SHA256_W$1[i - 16]) | 0;
+	            SHA256_W[i] = (s1 + SHA256_W[i - 7] + s0 + SHA256_W[i - 16]) | 0;
 	        }
 	        // Compression function main loop, 64 rounds
 	        let { A, B, C, D, E, F, G, H } = this;
 	        for (let i = 0; i < 64; i++) {
 	            const sigma1 = rotr(E, 6) ^ rotr(E, 11) ^ rotr(E, 25);
-	            const T1 = (H + sigma1 + Chi$1(E, F, G) + SHA256_K$1[i] + SHA256_W$1[i]) | 0;
+	            const T1 = (H + sigma1 + Chi(E, F, G) + SHA256_K[i] + SHA256_W[i]) | 0;
 	            const sigma0 = rotr(A, 2) ^ rotr(A, 13) ^ rotr(A, 22);
-	            const T2 = (sigma0 + Maj$1(A, B, C)) | 0;
+	            const T2 = (sigma0 + Maj(A, B, C)) | 0;
 	            H = G;
 	            G = F;
 	            F = E;
@@ -8068,34 +7867,18 @@ var solanaWeb3 = (function (exports) {
 	        this.set(A, B, C, D, E, F, G, H);
 	    }
 	    roundClean() {
-	        SHA256_W$1.fill(0);
+	        SHA256_W.fill(0);
 	    }
 	    destroy() {
 	        this.set(0, 0, 0, 0, 0, 0, 0, 0);
 	        this.buffer.fill(0);
-	    }
-	};
-	// Constants from https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.180-4.pdf
-	class SHA224 extends SHA256$1 {
-	    constructor() {
-	        super();
-	        this.A = 0xc1059ed8 | 0;
-	        this.B = 0x367cd507 | 0;
-	        this.C = 0x3070dd17 | 0;
-	        this.D = 0xf70e5939 | 0;
-	        this.E = 0xffc00b31 | 0;
-	        this.F = 0x68581511 | 0;
-	        this.G = 0x64f98fa7 | 0;
-	        this.H = 0xbefa4fa4 | 0;
-	        this.outputLen = 28;
 	    }
 	}
 	/**
 	 * SHA2-256 hash function
 	 * @param message - data that would be hashed
 	 */
-	const sha256$1 = wrapConstructor(() => new SHA256$1());
-	wrapConstructor(() => new SHA224());
+	const sha256 = /* @__PURE__ */ wrapConstructor(() => new SHA256());
 
 	var lib = {};
 
@@ -8780,13 +8563,13 @@ var solanaWeb3 = (function (exports) {
 	const textDecoder = new ResolvedTextDecoder("utf-8", { fatal: true });
 	function baseEncode(value) {
 	    if (typeof value === "string") {
-	        value = Buffer.from(value, "utf8");
+	        value = ethereumjs.Buffer.Buffer.from(value, "utf8");
 	    }
-	    return bs58_1.default.encode(Buffer.from(value));
+	    return bs58_1.default.encode(ethereumjs.Buffer.Buffer.from(value));
 	}
 	lib.baseEncode = baseEncode;
 	function baseDecode(value) {
-	    return Buffer.from(bs58_1.default.decode(value));
+	    return ethereumjs.Buffer.Buffer.from(bs58_1.default.decode(value));
 	}
 	lib.baseDecode = baseDecode;
 	const INITIAL_LENGTH = 1024;
@@ -8831,24 +8614,24 @@ var solanaWeb3 = (function (exports) {
 	    }
 	    writeU64(value) {
 	        this.maybeResize();
-	        this.writeBuffer(Buffer.from(new bn_js_1.default(value).toArray("le", 8)));
+	        this.writeBuffer(ethereumjs.Buffer.Buffer.from(new bn_js_1.default(value).toArray("le", 8)));
 	    }
 	    writeU128(value) {
 	        this.maybeResize();
-	        this.writeBuffer(Buffer.from(new bn_js_1.default(value).toArray("le", 16)));
+	        this.writeBuffer(ethereumjs.Buffer.Buffer.from(new bn_js_1.default(value).toArray("le", 16)));
 	    }
 	    writeU256(value) {
 	        this.maybeResize();
-	        this.writeBuffer(Buffer.from(new bn_js_1.default(value).toArray("le", 32)));
+	        this.writeBuffer(ethereumjs.Buffer.Buffer.from(new bn_js_1.default(value).toArray("le", 32)));
 	    }
 	    writeU512(value) {
 	        this.maybeResize();
-	        this.writeBuffer(Buffer.from(new bn_js_1.default(value).toArray("le", 64)));
+	        this.writeBuffer(ethereumjs.Buffer.Buffer.from(new bn_js_1.default(value).toArray("le", 64)));
 	    }
 	    writeBuffer(buffer) {
-	        // Buffer.from is needed as this.buf.subarray can return plain Uint8Array in browser
+	        // ethereumjs.Buffer.Buffer.from is needed as this.buf.subarray can return plain Uint8Array in browser
 	        this.buf = Buffer.concat([
-	            Buffer.from(this.buf.subarray(0, this.length)),
+	            ethereumjs.Buffer.Buffer.from(this.buf.subarray(0, this.length)),
 	            buffer,
 	            Buffer.alloc(INITIAL_LENGTH),
 	        ]);
@@ -8856,12 +8639,12 @@ var solanaWeb3 = (function (exports) {
 	    }
 	    writeString(str) {
 	        this.maybeResize();
-	        const b = Buffer.from(str, "utf8");
+	        const b = ethereumjs.Buffer.Buffer.from(str, "utf8");
 	        this.writeU32(b.length);
 	        this.writeBuffer(b);
 	    }
 	    writeFixedArray(array) {
-	        this.writeBuffer(Buffer.from(array));
+	        this.writeBuffer(ethereumjs.Buffer.Buffer.from(array));
 	    }
 	    writeArray(array, fn) {
 	        this.maybeResize();
@@ -9344,7 +9127,7 @@ var solanaWeb3 = (function (exports) {
 	  /* eslint-disable require-await */
 	  static async createWithSeed(fromPublicKey, seed, programId) {
 	    const buffer$1 = buffer.Buffer.concat([fromPublicKey.toBuffer(), buffer.Buffer.from(seed), programId.toBuffer()]);
-	    const publicKeyBytes = sha256$1(buffer$1);
+	    const publicKeyBytes = sha256(buffer$1);
 	    return new PublicKey(publicKeyBytes);
 	  }
 
@@ -9361,7 +9144,7 @@ var solanaWeb3 = (function (exports) {
 	      buffer$1 = buffer.Buffer.concat([buffer$1, toBuffer(seed)]);
 	    });
 	    buffer$1 = buffer.Buffer.concat([buffer$1, programId.toBuffer(), buffer.Buffer.from('ProgramDerivedAddress')]);
-	    const publicKeyBytes = sha256$1(buffer$1);
+	    const publicKeyBytes = sha256(buffer$1);
 	    if (isOnCurve(publicKeyBytes)) {
 	      throw new Error(`Invalid seeds, address must fall off the curve`);
 	    }
@@ -9523,7 +9306,7 @@ var solanaWeb3 = (function (exports) {
 	 * @ignore */
 	function uint8ArrayToBuffer(b) {
 	    checkUint8Array(b);
-	    return buffer_1.Buffer.from(b.buffer, b.byteOffset, b.length);
+	    return ethereumjs.Buffer.Buffer.from(b.buffer, b.byteOffset, b.length);
 	}
 	Layout$1.uint8ArrayToBuffer = uint8ArrayToBuffer;
 	/**
@@ -12531,6 +12314,8 @@ var solanaWeb3 = (function (exports) {
 	  }
 	};
 
+	/** @internal */
+
 	/**
 	 * Transaction signature as base-58 encoded string
 	 */
@@ -12620,20 +12405,25 @@ var solanaWeb3 = (function (exports) {
 	// For backward compatibility; an unfortunate consequence of being
 	// forced to over-export types by the documentation generator.
 	// See https://github.com/solana-labs/solana/pull/25820
+
 	/**
 	 * Blockhash-based transactions have a lifetime that are defined by
 	 * the blockhash they include. Any transaction whose blockhash is
 	 * too old will be rejected.
 	 */
+
 	/**
 	 * Use these options to construct a durable nonce transaction.
 	 */
+
 	/**
 	 * Nonce information to be used to build an offline Transaction.
 	 */
+
 	/**
 	 * @internal
 	 */
+
 	/**
 	 * Transaction class
 	 */
@@ -13146,29 +12936,31 @@ var solanaWeb3 = (function (exports) {
 	   *
 	   * @param {boolean} [requireAllSignatures=true] Require a fully signed Transaction
 	   */
-	  verifySignatures(requireAllSignatures) {
-	    return this._verifySignatures(this.serializeMessage(), requireAllSignatures === undefined ? true : requireAllSignatures);
+	  verifySignatures(requireAllSignatures = true) {
+	    const signatureErrors = this._getMessageSignednessErrors(this.serializeMessage(), requireAllSignatures);
+	    return !signatureErrors;
 	  }
 
 	  /**
 	   * @internal
 	   */
-	  _verifySignatures(signData, requireAllSignatures) {
+	  _getMessageSignednessErrors(message, requireAllSignatures) {
+	    const errors = {};
 	    for (const {
 	      signature,
 	      publicKey
 	    } of this.signatures) {
 	      if (signature === null) {
 	        if (requireAllSignatures) {
-	          return false;
+	          (errors.missing ||= []).push(publicKey);
 	        }
 	      } else {
-	        if (!verify(signature, signData, publicKey.toBytes())) {
-	          return false;
+	        if (!verify(signature, message, publicKey.toBytes())) {
+	          (errors.invalid ||= []).push(publicKey);
 	        }
 	      }
 	    }
-	    return true;
+	    return errors.invalid || errors.missing ? errors : undefined;
 	  }
 
 	  /**
@@ -13187,8 +12979,18 @@ var solanaWeb3 = (function (exports) {
 	      verifySignatures: true
 	    }, config);
 	    const signData = this.serializeMessage();
-	    if (verifySignatures && !this._verifySignatures(signData, requireAllSignatures)) {
-	      throw new Error('Signature verification failed');
+	    if (verifySignatures) {
+	      const sigErrors = this._getMessageSignednessErrors(signData, requireAllSignatures);
+	      if (sigErrors) {
+	        let errorMessage = 'Signature verification failed.';
+	        if (sigErrors.invalid) {
+	          errorMessage += `\nInvalid signature for public key${sigErrors.invalid.length === 1 ? '' : '(s)'} [\`${sigErrors.invalid.map(p => p.toBase58()).join('`, `')}\`].`;
+	        }
+	        if (sigErrors.missing) {
+	          errorMessage += `\nMissing signature for public key${sigErrors.missing.length === 1 ? '' : '(s)'} [\`${sigErrors.missing.map(p => p.toBase58()).join('`, `')}\`].`;
+	        }
+	        throw new Error(errorMessage);
+	      }
 	    }
 	    return this._serialize(signData);
 	  }
@@ -13649,7 +13451,7 @@ var solanaWeb3 = (function (exports) {
 	 */
 	function toBigIntLE(buf) {
 	    {
-	        const reversed = Buffer.from(buf);
+	        const reversed = ethereumjs.Buffer.Buffer.from(buf);
 	        reversed.reverse();
 	        const hex = reversed.toString('hex');
 	        if (hex.length === 0) {
@@ -13683,7 +13485,7 @@ var solanaWeb3 = (function (exports) {
 	function toBufferLE(num, width) {
 	    {
 	        const hex = num.toString(16);
-	        const buffer = Buffer.from(hex.padStart(width * 2, '0').slice(0, width * 2), 'hex');
+	        const buffer = ethereumjs.Buffer.Buffer.from(hex.padStart(width * 2, '0').slice(0, width * 2), 'hex');
 	        buffer.reverse();
 	        return buffer;
 	    }
@@ -13698,7 +13500,7 @@ var solanaWeb3 = (function (exports) {
 	function toBufferBE(num, width) {
 	    {
 	        const hex = num.toString(16);
-	        return Buffer.from(hex.padStart(width * 2, '0').slice(0, width * 2), 'hex');
+	        return ethereumjs.Buffer.Buffer.from(hex.padStart(width * 2, '0').slice(0, width * 2), 'hex');
 	    }
 	}
 	browser$1.toBufferBE = toBufferBE;
@@ -13728,7 +13530,7 @@ var solanaWeb3 = (function (exports) {
 	  };
 	  return bigIntLayout;
 	};
-	const u64$2 = bigInt(8);
+	const u64 = bigInt(8);
 
 	/**
 	 * Create account system transaction params
@@ -14069,7 +13871,7 @@ var solanaWeb3 = (function (exports) {
 	  },
 	  Transfer: {
 	    index: 2,
-	    layout: struct([u32('instruction'), u64$2('lamports')])
+	    layout: struct([u32('instruction'), u64('lamports')])
 	  },
 	  CreateWithSeed: {
 	    index: 3,
@@ -14105,7 +13907,7 @@ var solanaWeb3 = (function (exports) {
 	  },
 	  TransferWithSeed: {
 	    index: 11,
-	    layout: struct([u32('instruction'), u64$2('lamports'), rustString('seed'), publicKey('programId')])
+	    layout: struct([u32('instruction'), u64('lamports'), rustString('seed'), publicKey('programId')])
 	  },
 	  UpgradeNonceAccount: {
 	    index: 12,
@@ -17717,7 +17519,7 @@ var solanaWeb3 = (function (exports) {
 		      });
 		      this.socket.addEventListener("message", function (_ref) {
 		        var message = _ref.data;
-		        if (message instanceof ArrayBuffer) message = Buffer.from(message).toString();
+		        if (message instanceof ArrayBuffer) message = ethereumjs.Buffer.Buffer.from(message).toString();
 
 		        try {
 		          message = JSON.parse(message);
@@ -18005,7 +17807,7 @@ var solanaWeb3 = (function (exports) {
 	}
 	const LookupTableMetaLayout = {
 	  index: 1,
-	  layout: struct([u32('typeIndex'), u64$2('deactivationSlot'), nu64('lastExtendedSlot'), u8('lastExtendedStartIndex'), u8(),
+	  layout: struct([u32('typeIndex'), u64('deactivationSlot'), nu64('lastExtendedSlot'), u8('lastExtendedStartIndex'), u8(),
 	  // option
 	  seq(publicKey(), offset(u8(), -1), 'authority')])
 	};
@@ -18254,6 +18056,7 @@ var solanaWeb3 = (function (exports) {
 	 */
 
 	// Deprecated as of v1.5.5
+
 	/**
 	 * A subset of Commitment levels, which are at least optimistically confirmed
 	 * <pre>
@@ -18261,6 +18064,7 @@ var solanaWeb3 = (function (exports) {
 	 *   'finalized': Query the most recent block which has been finalized by the cluster
 	 * </pre>
 	 */
+
 	/**
 	 * Filter for largest accounts query
 	 * <pre>
@@ -18268,70 +18072,92 @@ var solanaWeb3 = (function (exports) {
 	 *   'nonCirculating': Return the largest accounts that are not part of the circulating supply
 	 * </pre>
 	 */
+
 	/**
 	 * Configuration object for changing `getAccountInfo` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getBalance` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getBlock` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getBlock` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getStakeMinimumDelegation` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getBlockHeight` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getEpochInfo` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getInflationReward` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getLatestBlockhash` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `isBlockhashValid` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getSlot` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getSlotLeader` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getTransaction` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getTransaction` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getLargestAccounts` query behavior
 	 */
+
 	/**
 	 * Configuration object for changing `getSupply` request behavior
 	 */
+
 	/**
 	 * Configuration object for changing query behavior
 	 */
+
 	/**
 	 * Information describing a cluster node
 	 */
+
 	/**
 	 * Information describing a vote account
 	 */
+
 	/**
 	 * A collection of cluster vote accounts
 	 */
+
 	/**
 	 * Network Inflation
 	 * (see https://docs.solana.com/implemented-proposals/ed_overview)
 	 */
+
 	const GetInflationGovernorResult = type({
 	  foundation: number(),
 	  foundationTerm: number(),
@@ -18630,7 +18456,7 @@ var solanaWeb3 = (function (exports) {
 	        if (too_many_requests_retries === 0) {
 	          break;
 	        }
-	        console.log(`Server responded with ${res.status} ${res.statusText}.  Retrying after ${waitTime}ms delay...`);
+	        console.error(`Server responded with ${res.status} ${res.statusText}.  Retrying after ${waitTime}ms delay...`);
 	        await sleep(waitTime);
 	        waitTime *= 2;
 	      }
@@ -20059,7 +19885,9 @@ var solanaWeb3 = (function (exports) {
 	    return res.result;
 	  }
 
-	  /** @deprecated Instead, call `confirmTransaction` and pass in {@link TransactionConfirmationStrategy} */ // eslint-disable-next-line no-dupe-class-members
+	  /** @deprecated Instead, call `confirmTransaction` and pass in {@link TransactionConfirmationStrategy} */
+	  // eslint-disable-next-line no-dupe-class-members
+
 	  // eslint-disable-next-line no-dupe-class-members
 	  async confirmTransaction(strategy, commitment) {
 	    let rawSignature;
@@ -20854,21 +20682,28 @@ var solanaWeb3 = (function (exports) {
 	  /**
 	   * @deprecated Instead, call `getBlock` using a `GetVersionedBlockConfig` by
 	   * setting the `maxSupportedTransactionVersion` property.
-	   */ // eslint-disable-next-line no-dupe-class-members
+	   */
+	  // eslint-disable-next-line no-dupe-class-members
+
 	  /**
 	   * @deprecated Instead, call `getBlock` using a `GetVersionedBlockConfig` by
 	   * setting the `maxSupportedTransactionVersion` property.
 	   */
 	  // eslint-disable-next-line no-dupe-class-members
+
 	  /**
 	   * Fetch a processed block from the cluster.
 	   */
 	  // eslint-disable-next-line no-dupe-class-members
+
 	  // eslint-disable-next-line no-dupe-class-members
+
 	  // eslint-disable-next-line no-dupe-class-members
+
 	  /**
 	   * Fetch a processed block from the cluster.
-	   */ // eslint-disable-next-line no-dupe-class-members
+	   */
+	  // eslint-disable-next-line no-dupe-class-members
 	  async getBlock(slot, rawConfig) {
 	    const {
 	      commitment,
@@ -21007,10 +20842,13 @@ var solanaWeb3 = (function (exports) {
 
 	  /**
 	   * Fetch a confirmed or finalized transaction from the cluster.
-	   */ // eslint-disable-next-line no-dupe-class-members
+	   */
+	  // eslint-disable-next-line no-dupe-class-members
+
 	  /**
 	   * Fetch a confirmed or finalized transaction from the cluster.
-	   */ // eslint-disable-next-line no-dupe-class-members
+	   */
+	  // eslint-disable-next-line no-dupe-class-members
 	  async getTransaction(signature, rawConfig) {
 	    const {
 	      commitment,
@@ -21089,12 +20927,15 @@ var solanaWeb3 = (function (exports) {
 	   * Fetch transaction details for a batch of confirmed transactions.
 	   * Similar to {@link getParsedTransactions} but returns a {@link
 	   * VersionedTransactionResponse}.
-	   */ // eslint-disable-next-line no-dupe-class-members
+	   */
+	  // eslint-disable-next-line no-dupe-class-members
+
 	  /**
 	   * Fetch transaction details for a batch of confirmed transactions.
 	   * Similar to {@link getParsedTransactions} but returns a {@link
 	   * VersionedTransactionResponse}.
-	   */ // eslint-disable-next-line no-dupe-class-members
+	   */
+	  // eslint-disable-next-line no-dupe-class-members
 	  async getTransactions(signatures, commitmentOrConfig) {
 	    const {
 	      commitment,
@@ -21520,10 +21361,13 @@ var solanaWeb3 = (function (exports) {
 
 	  /**
 	   * Simulate a transaction
-	   */ // eslint-disable-next-line no-dupe-class-members
+	   */
+	  // eslint-disable-next-line no-dupe-class-members
+
 	  /**
 	   * Simulate a transaction
-	   */ // eslint-disable-next-line no-dupe-class-members
+	   */
+	  // eslint-disable-next-line no-dupe-class-members
 	  async simulateTransaction(transactionOrMessage, configOrSigners, includeAccounts) {
 	    if ('message' in transactionOrMessage) {
 	      const versionedTx = transactionOrMessage;
@@ -21575,7 +21419,6 @@ var solanaWeb3 = (function (exports) {
 	        if (!transaction.signature) {
 	          throw new Error('!signature'); // should never happen
 	        }
-
 	        const signature = transaction.signature.toString('base64');
 	        if (!this._blockhashInfo.simulatedSignatures.includes(signature) && !this._blockhashInfo.transactionSignatures.includes(signature)) {
 	          // The signature of this transaction has not been seen before with the
@@ -21636,10 +21479,13 @@ var solanaWeb3 = (function (exports) {
 
 	  /**
 	   * Send a signed transaction
-	   */ // eslint-disable-next-line no-dupe-class-members
+	   */
+	  // eslint-disable-next-line no-dupe-class-members
+
 	  /**
 	   * Sign and send a transaction
-	   */ // eslint-disable-next-line no-dupe-class-members
+	   */
+	  // eslint-disable-next-line no-dupe-class-members
 	  async sendTransaction(transaction, signersOrOptions, options) {
 	    if ('version' in transaction) {
 	      if (signersOrOptions && Array.isArray(signersOrOptions)) {
@@ -21664,7 +21510,6 @@ var solanaWeb3 = (function (exports) {
 	        if (!transaction.signature) {
 	          throw new Error('!signature'); // should never happen
 	        }
-
 	        const signature = transaction.signature.toString('base64');
 	        if (!this._blockhashInfo.transactionSignatures.includes(signature)) {
 	          // The signature of this transaction has not been seen before with the
@@ -22048,7 +21893,6 @@ var solanaWeb3 = (function (exports) {
 	  args) {
 	    const clientSubscriptionId = this._nextClientSubscriptionId++;
 	    const hash = fastStableStringify$1([subscriptionConfig.method, args], true /* isArrayProp */);
-
 	    const existingSubscription = this._subscriptionsByHash[hash];
 	    if (existingSubscription === undefined) {
 	      this._subscriptionsByHash[hash] = {
@@ -22131,7 +21975,6 @@ var solanaWeb3 = (function (exports) {
 	    'base64' /* encoding */, filters ? {
 	      filters: filters
 	    } : undefined /* extra */);
-
 	    return this._makeSubscription({
 	      callback,
 	      method: 'programSubscribe',
@@ -22156,7 +21999,6 @@ var solanaWeb3 = (function (exports) {
 	      mentions: [filter.toString()]
 	    } : filter], commitment || this._commitment || 'finalized' // Apply connection/server default.
 	    );
-
 	    return this._makeSubscription({
 	      callback,
 	      method: 'logsSubscribe',
@@ -22337,7 +22179,6 @@ var solanaWeb3 = (function (exports) {
 	  onSignature(signature, callback, commitment) {
 	    const args = this._buildArgs([signature], commitment || this._commitment || 'finalized' // Apply connection/server default.
 	    );
-
 	    const clientSubscriptionId = this._makeSubscription({
 	      callback: (notification, context) => {
 	        if (notification.type === 'status') {
@@ -22376,7 +22217,6 @@ var solanaWeb3 = (function (exports) {
 	      ...options,
 	      commitment: options && options.commitment || this._commitment || 'finalized' // Apply connection/server default.
 	    };
-
 	    const args = this._buildArgs([signature], commitment, undefined /* encoding */, extra);
 	    const clientSubscriptionId = this._makeSubscription({
 	      callback: (notification, context) => {
@@ -22549,7 +22389,7 @@ var solanaWeb3 = (function (exports) {
 	const LOOKUP_TABLE_INSTRUCTION_LAYOUTS = Object.freeze({
 	  CreateLookupTable: {
 	    index: 0,
-	    layout: struct([u32('instruction'), u64$2('recentSlot'), u8('bumpSeed')])
+	    layout: struct([u32('instruction'), u64('recentSlot'), u8('bumpSeed')])
 	  },
 	  FreezeLookupTable: {
 	    index: 1,
@@ -22557,7 +22397,7 @@ var solanaWeb3 = (function (exports) {
 	  },
 	  ExtendLookupTable: {
 	    index: 2,
-	    layout: struct([u32('instruction'), u64$2(), seq(publicKey(), offset(u32(), -8), 'addresses')])
+	    layout: struct([u32('instruction'), u64(), seq(publicKey(), offset(u32(), -8), 'addresses')])
 	  },
 	  DeactivateLookupTable: {
 	    index: 3,
@@ -22918,7 +22758,7 @@ var solanaWeb3 = (function (exports) {
 	  },
 	  SetComputeUnitPrice: {
 	    index: 3,
-	    layout: struct([u8('instruction'), u64$2('microLamports')])
+	    layout: struct([u8('instruction'), u64('microLamports')])
 	  }
 	});
 
@@ -23072,75 +22912,16 @@ var solanaWeb3 = (function (exports) {
 	}
 	Ed25519Program.programId = new PublicKey('Ed25519SigVerify111111111111111111111111111');
 
-	const U32_MASK64 = BigInt(2 ** 32 - 1);
-	const _32n = BigInt(32);
-	// We are not using BigUint64Array, because they are extremely slow as per 2022
-	function fromBig(n, le = false) {
-	    if (le)
-	        return { h: Number(n & U32_MASK64), l: Number((n >> _32n) & U32_MASK64) };
-	    return { h: Number((n >> _32n) & U32_MASK64) | 0, l: Number(n & U32_MASK64) | 0 };
-	}
-	function split(lst, le = false) {
-	    let Ah = new Uint32Array(lst.length);
-	    let Al = new Uint32Array(lst.length);
-	    for (let i = 0; i < lst.length; i++) {
-	        const { h, l } = fromBig(lst[i], le);
-	        [Ah[i], Al[i]] = [h, l];
-	    }
-	    return [Ah, Al];
-	}
-	const toBig = (h, l) => (BigInt(h >>> 0) << _32n) | BigInt(l >>> 0);
-	// for Shift in [0, 32)
-	const shrSH = (h, l, s) => h >>> s;
-	const shrSL = (h, l, s) => (h << (32 - s)) | (l >>> s);
-	// Right rotate for Shift in [1, 32)
-	const rotrSH = (h, l, s) => (h >>> s) | (l << (32 - s));
-	const rotrSL = (h, l, s) => (h << (32 - s)) | (l >>> s);
-	// Right rotate for Shift in (32, 64), NOTE: 32 is special case.
-	const rotrBH = (h, l, s) => (h << (64 - s)) | (l >>> (s - 32));
-	const rotrBL = (h, l, s) => (h >>> (s - 32)) | (l << (64 - s));
-	// Right rotate for shift===32 (just swaps l&h)
-	const rotr32H = (h, l) => l;
-	const rotr32L = (h, l) => h;
-	// Left rotate for Shift in [1, 32)
-	const rotlSH = (h, l, s) => (h << s) | (l >>> (32 - s));
-	const rotlSL = (h, l, s) => (l << s) | (h >>> (32 - s));
-	// Left rotate for Shift in (32, 64), NOTE: 32 is special case.
-	const rotlBH = (h, l, s) => (l << (s - 32)) | (h >>> (64 - s));
-	const rotlBL = (h, l, s) => (h << (s - 32)) | (l >>> (64 - s));
-	// JS uses 32-bit signed integers for bitwise operations which means we cannot
-	// simple take carry out of low bit sum by shift, we need to use division.
-	// Removing "export" has 5% perf penalty -_-
-	function add(Ah, Al, Bh, Bl) {
-	    const l = (Al >>> 0) + (Bl >>> 0);
-	    return { h: (Ah + Bh + ((l / 2 ** 32) | 0)) | 0, l: l | 0 };
-	}
-	// Addition with more than 2 elements
-	const add3L = (Al, Bl, Cl) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0);
-	const add3H = (low, Ah, Bh, Ch) => (Ah + Bh + Ch + ((low / 2 ** 32) | 0)) | 0;
-	const add4L = (Al, Bl, Cl, Dl) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0) + (Dl >>> 0);
-	const add4H = (low, Ah, Bh, Ch, Dh) => (Ah + Bh + Ch + Dh + ((low / 2 ** 32) | 0)) | 0;
-	const add5L = (Al, Bl, Cl, Dl, El) => (Al >>> 0) + (Bl >>> 0) + (Cl >>> 0) + (Dl >>> 0) + (El >>> 0);
-	const add5H = (low, Ah, Bh, Ch, Dh, Eh) => (Ah + Bh + Ch + Dh + Eh + ((low / 2 ** 32) | 0)) | 0;
-	// prettier-ignore
-	const u64 = {
-	    fromBig, split, toBig,
-	    shrSH, shrSL,
-	    rotrSH, rotrSL, rotrBH, rotrBL,
-	    rotr32H, rotr32L,
-	    rotlSH, rotlSL, rotlBH, rotlBL,
-	    add, add3L, add3H, add4L, add4H, add5H, add5L,
-	};
-	var u64$1 = u64;
-
+	// SHA3 (keccak) is based on a new design: basically, the internal state is bigger than output size.
+	// It's called a sponge function.
 	// Various per round constants calculations
 	const [SHA3_PI, SHA3_ROTL, _SHA3_IOTA] = [[], [], []];
-	const _0n$1 = BigInt(0);
-	const _1n$2 = BigInt(1);
-	const _2n$1 = BigInt(2);
-	const _7n = BigInt(7);
-	const _256n = BigInt(256);
-	const _0x71n = BigInt(0x71);
+	const _0n$1 = /* @__PURE__ */ BigInt(0);
+	const _1n$2 = /* @__PURE__ */ BigInt(1);
+	const _2n$1 = /* @__PURE__ */ BigInt(2);
+	const _7n = /* @__PURE__ */ BigInt(7);
+	const _256n = /* @__PURE__ */ BigInt(256);
+	const _0x71n = /* @__PURE__ */ BigInt(0x71);
 	for (let round = 0, R = _1n$2, x = 1, y = 0; round < 24; round++) {
 	    // Pi
 	    [x, y] = [y, (2 * x + 3 * y) % 5];
@@ -23152,14 +22933,14 @@ var solanaWeb3 = (function (exports) {
 	    for (let j = 0; j < 7; j++) {
 	        R = ((R << _1n$2) ^ ((R >> _7n) * _0x71n)) % _256n;
 	        if (R & _2n$1)
-	            t ^= _1n$2 << ((_1n$2 << BigInt(j)) - _1n$2);
+	            t ^= _1n$2 << ((_1n$2 << /* @__PURE__ */ BigInt(j)) - _1n$2);
 	    }
 	    _SHA3_IOTA.push(t);
 	}
-	const [SHA3_IOTA_H, SHA3_IOTA_L] = u64$1.split(_SHA3_IOTA, true);
+	const [SHA3_IOTA_H, SHA3_IOTA_L] = /* @__PURE__ */ split(_SHA3_IOTA, true);
 	// Left rotation (without 0, 32, 64)
-	const rotlH = (h, l, s) => s > 32 ? u64$1.rotlBH(h, l, s) : u64$1.rotlSH(h, l, s);
-	const rotlL = (h, l, s) => s > 32 ? u64$1.rotlBL(h, l, s) : u64$1.rotlSL(h, l, s);
+	const rotlH = (h, l, s) => (s > 32 ? rotlBH(h, l, s) : rotlSH(h, l, s));
+	const rotlL = (h, l, s) => (s > 32 ? rotlBL(h, l, s) : rotlSL(h, l, s));
 	// Same as keccakf1600, but allows to skip some rounds
 	function keccakP(s, rounds = 24) {
 	    const B = new Uint32Array(5 * 2);
@@ -23220,7 +23001,7 @@ var solanaWeb3 = (function (exports) {
 	        this.finished = false;
 	        this.destroyed = false;
 	        // Can be passed from user as dkLen
-	        assert$3.number(outputLen);
+	        number$1(outputLen);
 	        // 1600 = 5x5 matrix of 64bit.  1600 bits === 200 bytes
 	        if (0 >= this.blockLen || this.blockLen >= 200)
 	            throw new Error('Sha3 supports only keccak-f1600 function');
@@ -23233,7 +23014,7 @@ var solanaWeb3 = (function (exports) {
 	        this.pos = 0;
 	    }
 	    update(data) {
-	        assert$3.exists(this);
+	        exists(this);
 	        const { blockLen, state } = this;
 	        data = toBytes(data);
 	        const len = data.length;
@@ -23259,8 +23040,8 @@ var solanaWeb3 = (function (exports) {
 	        this.keccak();
 	    }
 	    writeInto(out) {
-	        assert$3.exists(this, false);
-	        assert$3.bytes(out);
+	        exists(this, false);
+	        bytes(out);
 	        this.finish();
 	        const bufferOut = this.state;
 	        const { blockLen } = this;
@@ -23281,11 +23062,11 @@ var solanaWeb3 = (function (exports) {
 	        return this.writeInto(out);
 	    }
 	    xof(bytes) {
-	        assert$3.number(bytes);
+	        number$1(bytes);
 	        return this.xofInto(new Uint8Array(bytes));
 	    }
 	    digestInto(out) {
-	        assert$3.output(out, this);
+	        output(out, this);
 	        if (this.finished)
 	            throw new Error('digest() was already called');
 	        this.writeInto(out);
@@ -23316,133 +23097,11 @@ var solanaWeb3 = (function (exports) {
 	    }
 	}
 	const gen = (suffix, blockLen, outputLen) => wrapConstructor(() => new Keccak(blockLen, suffix, outputLen));
-	gen(0x06, 144, 224 / 8);
-	/**
-	 * SHA3-256 hash function
-	 * @param message - that would be hashed
-	 */
-	gen(0x06, 136, 256 / 8);
-	gen(0x06, 104, 384 / 8);
-	gen(0x06, 72, 512 / 8);
-	gen(0x01, 144, 224 / 8);
 	/**
 	 * keccak-256 hash function. Different from SHA3-256.
 	 * @param message - that would be hashed
 	 */
-	const keccak_256 = gen(0x01, 136, 256 / 8);
-	gen(0x01, 104, 384 / 8);
-	gen(0x01, 72, 512 / 8);
-	const genShake = (suffix, blockLen, outputLen) => wrapXOFConstructorWithOpts((opts = {}) => new Keccak(blockLen, suffix, opts.dkLen === undefined ? outputLen : opts.dkLen, true));
-	genShake(0x1f, 168, 128 / 8);
-	genShake(0x1f, 136, 256 / 8);
-
-	// SHA2-256 need to try 2^128 hashes to execute birthday attack.
-	// BTC network is doing 2^67 hashes/sec as per early 2023.
-	// Choice: a ? b : c
-	const Chi = (a, b, c) => (a & b) ^ (~a & c);
-	// Majority function, true if any two inpust is true
-	const Maj = (a, b, c) => (a & b) ^ (a & c) ^ (b & c);
-	// Round constants:
-	// first 32 bits of the fractional parts of the cube roots of the first 64 primes 2..311)
-	// prettier-ignore
-	const SHA256_K = /* @__PURE__ */ new Uint32Array([
-	    0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
-	    0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
-	    0xe49b69c1, 0xefbe4786, 0x0fc19dc6, 0x240ca1cc, 0x2de92c6f, 0x4a7484aa, 0x5cb0a9dc, 0x76f988da,
-	    0x983e5152, 0xa831c66d, 0xb00327c8, 0xbf597fc7, 0xc6e00bf3, 0xd5a79147, 0x06ca6351, 0x14292967,
-	    0x27b70a85, 0x2e1b2138, 0x4d2c6dfc, 0x53380d13, 0x650a7354, 0x766a0abb, 0x81c2c92e, 0x92722c85,
-	    0xa2bfe8a1, 0xa81a664b, 0xc24b8b70, 0xc76c51a3, 0xd192e819, 0xd6990624, 0xf40e3585, 0x106aa070,
-	    0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
-	    0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2
-	]);
-	// Initial state (first 32 bits of the fractional parts of the square roots of the first 8 primes 2..19):
-	// prettier-ignore
-	const IV = /* @__PURE__ */ new Uint32Array([
-	    0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a, 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19
-	]);
-	// Temporary buffer, not used to store anything between runs
-	// Named this way because it matches specification.
-	const SHA256_W = /* @__PURE__ */ new Uint32Array(64);
-	class SHA256 extends SHA2$1 {
-	    constructor() {
-	        super(64, 32, 8, false);
-	        // We cannot use array here since array allows indexing by variable
-	        // which means optimizer/compiler cannot use registers.
-	        this.A = IV[0] | 0;
-	        this.B = IV[1] | 0;
-	        this.C = IV[2] | 0;
-	        this.D = IV[3] | 0;
-	        this.E = IV[4] | 0;
-	        this.F = IV[5] | 0;
-	        this.G = IV[6] | 0;
-	        this.H = IV[7] | 0;
-	    }
-	    get() {
-	        const { A, B, C, D, E, F, G, H } = this;
-	        return [A, B, C, D, E, F, G, H];
-	    }
-	    // prettier-ignore
-	    set(A, B, C, D, E, F, G, H) {
-	        this.A = A | 0;
-	        this.B = B | 0;
-	        this.C = C | 0;
-	        this.D = D | 0;
-	        this.E = E | 0;
-	        this.F = F | 0;
-	        this.G = G | 0;
-	        this.H = H | 0;
-	    }
-	    process(view, offset) {
-	        // Extend the first 16 words into the remaining 48 words w[16..63] of the message schedule array
-	        for (let i = 0; i < 16; i++, offset += 4)
-	            SHA256_W[i] = view.getUint32(offset, false);
-	        for (let i = 16; i < 64; i++) {
-	            const W15 = SHA256_W[i - 15];
-	            const W2 = SHA256_W[i - 2];
-	            const s0 = rotr$1(W15, 7) ^ rotr$1(W15, 18) ^ (W15 >>> 3);
-	            const s1 = rotr$1(W2, 17) ^ rotr$1(W2, 19) ^ (W2 >>> 10);
-	            SHA256_W[i] = (s1 + SHA256_W[i - 7] + s0 + SHA256_W[i - 16]) | 0;
-	        }
-	        // Compression function main loop, 64 rounds
-	        let { A, B, C, D, E, F, G, H } = this;
-	        for (let i = 0; i < 64; i++) {
-	            const sigma1 = rotr$1(E, 6) ^ rotr$1(E, 11) ^ rotr$1(E, 25);
-	            const T1 = (H + sigma1 + Chi(E, F, G) + SHA256_K[i] + SHA256_W[i]) | 0;
-	            const sigma0 = rotr$1(A, 2) ^ rotr$1(A, 13) ^ rotr$1(A, 22);
-	            const T2 = (sigma0 + Maj(A, B, C)) | 0;
-	            H = G;
-	            G = F;
-	            F = E;
-	            E = (D + T1) | 0;
-	            D = C;
-	            C = B;
-	            B = A;
-	            A = (T1 + T2) | 0;
-	        }
-	        // Add the compressed chunk to the current hash value
-	        A = (A + this.A) | 0;
-	        B = (B + this.B) | 0;
-	        C = (C + this.C) | 0;
-	        D = (D + this.D) | 0;
-	        E = (E + this.E) | 0;
-	        F = (F + this.F) | 0;
-	        G = (G + this.G) | 0;
-	        H = (H + this.H) | 0;
-	        this.set(A, B, C, D, E, F, G, H);
-	    }
-	    roundClean() {
-	        SHA256_W.fill(0);
-	    }
-	    destroy() {
-	        this.set(0, 0, 0, 0, 0, 0, 0, 0);
-	        this.buffer.fill(0);
-	    }
-	}
-	/**
-	 * SHA2-256 hash function
-	 * @param message - data that would be hashed
-	 */
-	const sha256 = /* @__PURE__ */ wrapConstructor$1(() => new SHA256());
+	const keccak_256 = /* @__PURE__ */ gen(0x01, 136, 256 / 8);
 
 	/*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
 	// Short Weierstrass curve. The formula is: y² = x³ + ax + b
@@ -24375,14 +24034,14 @@ var solanaWeb3 = (function (exports) {
 	}
 
 	// HMAC (RFC 2104)
-	class HMAC extends Hash$1 {
-	    constructor(hash, _key) {
+	class HMAC extends Hash {
+	    constructor(hash$1, _key) {
 	        super();
 	        this.finished = false;
 	        this.destroyed = false;
-	        hash$1(hash);
-	        const key = toBytes$1(_key);
-	        this.iHash = hash.create();
+	        hash(hash$1);
+	        const key = toBytes(_key);
+	        this.iHash = hash$1.create();
 	        if (typeof this.iHash.update !== 'function')
 	            throw new Error('Expected instance of class which extends utils.Hash');
 	        this.blockLen = this.iHash.blockLen;
@@ -24390,12 +24049,12 @@ var solanaWeb3 = (function (exports) {
 	        const blockLen = this.blockLen;
 	        const pad = new Uint8Array(blockLen);
 	        // blockLen can be bigger than outputLen
-	        pad.set(key.length > blockLen ? hash.create().update(key).digest() : key);
+	        pad.set(key.length > blockLen ? hash$1.create().update(key).digest() : key);
 	        for (let i = 0; i < pad.length; i++)
 	            pad[i] ^= 0x36;
 	        this.iHash.update(pad);
 	        // By doing update (processing of first block) of outer hash here we can re-use it between multiple calls via clone
-	        this.oHash = hash.create();
+	        this.oHash = hash$1.create();
 	        // Undo internal XOR && apply outer XOR
 	        for (let i = 0; i < pad.length; i++)
 	            pad[i] ^= 0x36 ^ 0x5c;
@@ -24403,13 +24062,13 @@ var solanaWeb3 = (function (exports) {
 	        pad.fill(0);
 	    }
 	    update(buf) {
-	        exists$1(this);
+	        exists(this);
 	        this.iHash.update(buf);
 	        return this;
 	    }
 	    digestInto(out) {
-	        exists$1(this);
-	        bytes$1(out, this.outputLen);
+	        exists(this);
+	        bytes(out, this.outputLen);
 	        this.finished = true;
 	        this.iHash.digestInto(out);
 	        this.oHash.update(out);
@@ -25212,7 +24871,7 @@ var solanaWeb3 = (function (exports) {
 	    if (custodianPubkey) {
 	      keys.push({
 	        pubkey: custodianPubkey,
-	        isSigner: false,
+	        isSigner: true,
 	        isWritable: false
 	      });
 	    }
@@ -25260,7 +24919,7 @@ var solanaWeb3 = (function (exports) {
 	    if (custodianPubkey) {
 	      keys.push({
 	        pubkey: custodianPubkey,
-	        isSigner: false,
+	        isSigner: true,
 	        isWritable: false
 	      });
 	    }
@@ -25425,7 +25084,7 @@ var solanaWeb3 = (function (exports) {
 	    if (custodianPubkey) {
 	      keys.push({
 	        pubkey: custodianPubkey,
-	        isSigner: false,
+	        isSigner: true,
 	        isWritable: false
 	      });
 	    }
@@ -26116,7 +25775,9 @@ var solanaWeb3 = (function (exports) {
 	/**
 	 * @deprecated Calling `sendAndConfirmRawTransaction()` without a `confirmationStrategy`
 	 * is no longer supported and will be removed in a future version.
-	 */ // eslint-disable-next-line no-redeclare
+	 */
+	// eslint-disable-next-line no-redeclare
+
 	// eslint-disable-next-line no-redeclare
 	async function sendAndConfirmRawTransaction(connection, rawTransaction, confirmationStrategyOrConfirmOptions, maybeConfirmOptions) {
 	  let confirmationStrategy;
