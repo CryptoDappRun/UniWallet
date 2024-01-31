@@ -7,6 +7,7 @@ Bitcoin,Dogecoin,Litecoin,Ethereum,Tron,Binance,Huobi,Fantom,Polygon,Avalanche,C
 <img src="img/DOGE.png" width="25" height="25" > 
 <img src="img/LTC.png" width="25" height="25" > 
 <img src="img/1.png" width="25" height="25" alt="eth"> 
+<img src="img/SOL.png" width="25" height="25" alt="sol"> 
 <img src="img/TRON.png" width="25" height="25" alt="trx"> 
 <img src="img/56.png" width="25" height="25" alt="bnb">
 <img src="img/250.png" width="25" height="25" alt="ftm">
