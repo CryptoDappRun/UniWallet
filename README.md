@@ -33,7 +33,9 @@ Features:
 - Import Private key
 - Import Private key without save to device
 - All private keys are encrypted and stored on your device.
-- 24-word Mnemonic
+- 24-words Mnemonic
+- Multi account each blockchain
+- Specified transaction fee
 - 0.5% fee
 
 
