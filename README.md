@@ -1,19 +1,16 @@
 # UniWallet
- A non-custodial multi-wallet designed to support Bitcoin,Dogecoin,Ethereum,Litecoin, Binance Smart Chain, Avalanche, Cronos and various other blockchains. It offers non-custodial storage for cryptocurrencies,Send Base Coin and Tokens.
+ A non-custodial multi-wallet designed to support Bitcoin,Dogecoin,Ethereum,Litecoin, Binance Smart Chain,Tron and various other blockchains. It offers non-custodial storage for cryptocurrencies,Send Base Coin and Tokens.
 
 Support Blockchains:<br>
-Bitcoin,Dogecoin,Litecoin,Ethereum,Solana,Tron,Binance,Huobi,Fantom,Polygon,Avalanche,Cronos,Moonbeam,Moonriver.<br><br>
+Bitcoin,Dogecoin,Litecoin,Ethereum,Solana,Tron,Polygon<br><br>
 <img src="img/BTC.png" width="25" height="25" > 
 <img src="img/DOGE.png" width="25" height="25" > 
 <img src="img/LTC.png" width="25" height="25" > 
 <img src="img/1.png" width="25" height="25" alt="eth"> 
-<img src="img/SOL.png" width="25" height="25" alt="sol"> 
 <img src="img/TRON.png" width="25" height="25" alt="trx"> 
 <img src="img/56.png" width="25" height="25" alt="bnb">
-<img src="img/250.png" width="25" height="25" alt="ftm">
 <img src="img/137.png" width="25" height="25" alt="matic"> 
-<img src="img/43114.png" width="25" height="25" alt="matic">
-<img src="img/25.png" width="25" height="25" alt="matic">
+
 
 <img src="img/windows.png?raw=true"><img src="img/macos.png?raw=true"><img src="img/ios.png?raw=true"><img src="img/android.png?raw=true"><img src="img/linux.png?raw=true">
 ### Web version:
@@ -36,7 +33,7 @@ Features:
 - 24-words Mnemonic
 - Multi account each blockchain
 - Specified transaction fee
-- 0.5% fee
+- 0.5% fee(Bitcoin,Dogecoin,Litecoin)
 
 
 ### Run on local computer
