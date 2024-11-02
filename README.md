@@ -28,7 +28,6 @@ Features:
 - Send Bitcoin and Bitcoin-like coin.
 - Send EVM base coin and tokens
 - Import Private key
-- Import Private key without save to device
 - All private keys are encrypted and stored on your device.
 - 24-words Mnemonic
 - Multi account each blockchain
