@@ -1,0 +1,787 @@
+let avalancheTokens={
+    "name": "AVAX DeFi Tokens",
+    "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x60781C2586D68229fde47564546784ab3fACA982/logo.png",
+    "keywords": [
+        "avalanche",
+        "defi",
+        "dex"
+    ],
+    "version": {
+        "major": 5,
+        "minor": 13,
+        "patch": 0,
+        "1st is Main coin": 0,
+        "2st is Wrap Main coin": 0,
+        "3st is coin": 0
+    },
+    "timestamp": "2021-10-31T04:17:05+00:00",
+    "adapters": [
+        {
+            "name": "SushiSwap",
+            "address": "0x1A4286C0D01b5A68765E4e3237cf35C0dC020975"
+            
+            },  
+             {
+            "name": "Pangolin",
+            "address": "0xd5E0c5A5DBA8088fdC946C05Ff6f2262D562a35b"
+            
+            },    
+             {
+            "name": "Lydia",
+            "address": "0x90a972725795147EF796b5541E97f63f486F458c"
+            
+            }        
+
+
+        ],
+
+
+    "tokens": [
+        {
+            "address": "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
+            "chainId": 43114,
+            "name": "AVAX",
+            "symbol": "AVAX",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x60781C2586D68229fde47564546784ab3fACA982/logo.png"
+        },        
+        {
+            "address": "0x60781C2586D68229fde47564546784ab3fACA982",
+            "chainId": 43114,
+            "name": "Pangolin",
+            "symbol": "PNG",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x60781C2586D68229fde47564546784ab3fACA982/logo.png"
+        },
+        {
+            "address": "0x0F6FC13d26EeA45d3cdA81bCBcb0b7bE711BA3fE",
+            "chainId": 43114,
+            "name": "Moon",
+            "symbol": "MOON",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/avaware/avaware/main/logo.png"
+        },
+        {
+            "address": "0x78ea17559B3D2CF85a7F9C2C704eda119Db5E6dE",
+            "chainId": 43114,
+            "name": "Avaware",
+            "symbol": "AVE",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/avaware/avaware/main/logo.png"
+        },
+        {
+            "address": "0xc7198437980c041c805A1EDcbA50c1Ce5db95118",
+            "chainId": 43114,
+            "name": "USDTe",
+            "symbol": "USDTe",
+            "decimals": 6,
+            "logoURI": "https://raw.githubusercontent.com/avaware/avaware/main/logo.png"
+        },
+        {
+            "address": "0xdb333724fAE72b4253FC3d44c8270CBBC86d147b",
+            "chainId": 43114,
+            "name": "Cabbage.Cash",
+            "symbol": "CABAG",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/qualitycabbage/token/main/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x3711c397B6c8F7173391361e27e67d72F252cAad",
+            "decimals": 18,
+            "name": "COMPLUS",
+            "symbol": "COM",
+            "logoURI": "https://raw.githubusercontent.com/complusnetwork/default-token-list/master/src/ava/0x3711c397B6c8F7173391361e27e67d72F252cAad/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x488F73cddDA1DE3664775fFd91623637383D6404",
+            "decimals": 18,
+            "name": "YetiSwap",
+            "symbol": "YTS",
+            "logoURI": "https://raw.githubusercontent.com/YetiSwap/yetiswap.app/master/src/assets/image/YTSCoin.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x008E26068B3EB40B443d3Ea88c1fF99B789c10F7",
+            "decimals": 18,
+            "name": "Zero.Exchange Token",
+            "symbol": "ZERO"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xCa7730D239f9fCA6d9683B0a62ed1A6c660D7CbA",
+            "decimals": 18,
+            "name": "Freebitcoins",
+            "symbol": "FREE",
+            "logoURI": "https://raw.githubusercontent.com/FreeBitcoins-com/tokens/main/assets/0xCa7730D239f9fCA6d9683B0a62ed1A6c660D7CbA/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xC38f41A296A4493Ff429F1238e030924A1542e50",
+            "decimals": 18,
+            "name": "Snowball",
+            "symbol": "SNOB",
+            "logoURI": "https://raw.githubusercontent.com/Snowball-Finance/Assets/main/Uphill%20snowball.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x1F1FE1eF06ab30a791d6357FdF0a7361B39b1537",
+            "decimals": 9,
+            "name": "sled.finance",
+            "symbol": "SFI",
+            "logoURI": "https://raw.githubusercontent.com/sled-finance/media/main/sled_token_fl.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x6e7f5C0b9f4432716bDd0a77a3601291b9D9e985",
+            "decimals": 9,
+            "name": "Spore",
+            "symbol": "SPORE",
+            "logoURI": "https://raw.githubusercontent.com/sporeproject/Spore-frontend/master/src/utils/SPORE.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xe896CDeaAC9615145c0cA09C8Cd5C25bced6384c",
+            "decimals": 18,
+            "name": "Penguin Finance",
+            "symbol": "PEFI",
+            "logoURI": "https://raw.githubusercontent.com/Penguin-Finance/png-files/main/pefiv2_250x250.png"
+        },
+        {
+            "address": "0xf925F63445F01A53A441C0b6b1D9580C60551860",
+            "chainId": 43114,
+            "name": "Crypto Fren",
+            "symbol": "FREN",
+            "decimals": 18,
+            "logoURI": "https://ibb.co/bNjv8Hk"
+        },
+        {
+            "address": "0xC931f61B1534EB21D8c11B24f3f5Ab2471d4aB50",
+            "chainId": 43114,
+            "name": "Blocknet",
+            "symbol": "aaBLOCK",
+            "decimals": 8,
+            "logoURI": "https://github.com/blocknetdx/documentation/blob/master/docs/img/icons/Blocknet_symbol_dark_RGB.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x4C9B4E1AC6F24CdE3660D5E4Ef1eBF77C710C084",
+            "decimals": 18,
+            "name": "Lydia Finance",
+            "symbol": "LYD",
+            "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x4C9B4E1AC6F24CdE3660D5E4Ef1eBF77C710C084/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x846D50248BAf8b7ceAA9d9B53BFd12d7D7FBB25a",
+            "decimals": 18,
+            "name": "Verso",
+            "symbol": "VSO",
+            "logoURI": "https://raw.githubusercontent.com/VersoOfficial/pr/master/icon_blue.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x1ECd47FF4d9598f89721A2866BFEb99505a413Ed",
+            "decimals": 18,
+            "name": "AV Me",
+            "symbol": "AVME",
+            "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x1ECd47FF4d9598f89721A2866BFEb99505a413Ed/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xE9D00cBC5f02614d7281D742E6E815A47ce31107",
+            "decimals": 9,
+            "name": "Crack.Fi",
+            "symbol": "CRACK",
+            "logoURI": "https://raw.githubusercontent.com/crackfi/logo/master/crackfi_png.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x65378b697853568dA9ff8EaB60C13E1Ee9f4a654",
+            "decimals": 18,
+            "name": "Husky Avalanche",
+            "symbol": "HUSKY",
+            "logoURI": "https://raw.githubusercontent.com/safepoint-be/project-husky/main/img/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xD606199557c8Ab6F4Cc70bD03FaCc96ca576f142",
+            "decimals": 18,
+            "name": "Gondola",
+            "symbol": "GDL",
+            "logoURI": "https://raw.githubusercontent.com/gondola-finance/frontend-v2/master/src/assets/icons/colour.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x81440C939f2C1E34fc7048E518a637205A632a74",
+            "decimals": 18,
+            "name": "Cycle Protocol",
+            "symbol": "CYCLE",
+            "logoURI": "https://raw.githubusercontent.com/CycleProtocol/assets/master/cycle-logo-round-small.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xd1c3f94DE7e5B45fa4eDBBA472491a9f4B166FC4",
+            "decimals": 18,
+            "name": "Avalaunch",
+            "symbol": "XAVA",
+            "logoURI": "https://raw.githubusercontent.com/avalaunch-app/xava-protocol/master/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x8349088C575cA45f5A63947FEAeaEcC41136fA01",
+            "decimals": 9,
+            "name": "TeslaBitcoin",
+            "symbol": "TESLABTC",
+            "logoURI": "https://raw.githubusercontent.com/crackfi/tesla_btc_logo/master/Tesla_Bitcoin_logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x4aBBc3275f8419685657C2DD69b8ca2e26F23F8E",
+            "decimals": 9,
+            "name": "diamondtoken.world",
+            "symbol": "Diamond",
+            "logoURI": "https://raw.githubusercontent.com/virtualdiamondtoken/site/main/logo.png"
+         },
+         {
+             "chainId": 43114,
+             "address": "0x76076880e1EBBcE597e6E15c47386cd34de4930F",
+             "decimals": 18,
+             "name": "Canopus",
+             "symbol": "OPUS",
+             "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x76076880e1EBBcE597e6E15c47386cd34de4930F/logo.png"
+        },
+        {
+             "chainId": 43114,
+             "address": "0x8D88e48465F30Acfb8daC0b3E35c9D6D7d36abaf",
+             "decimals": 18,
+             "name": "Canary",
+             "symbol": "CNR",
+             "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x8D88e48465F30Acfb8daC0b3E35c9D6D7d36abaf/logo.png"
+        },
+        {
+             "chainId": 43114,
+             "address": "0xa5E59761eBD4436fa4d20E1A27cBa29FB2471Fc6",
+             "decimals": 18,
+             "name": "Sherpa",
+             "symbol": "SHERPA",
+             "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xa5E59761eBD4436fa4d20E1A27cBa29FB2471Fc6/logo.png"
+        },
+        {
+             "chainId": 43114,
+             "address": "0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17",
+             "decimals": 18,
+             "name": "DeFi Yield Protocol",
+             "symbol": "DYP",
+             "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x961C8c0B1aaD0c0b10a51FeF6a867E3091BCef17/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xd6070ae98b8069de6B494332d1A1a81B6179D960",
+            "decimals": 18,
+            "name": "Beefy Finance",
+            "symbol": "BIFI",
+            "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xd6070ae98b8069de6B494332d1A1a81B6179D960/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x264c1383EA520f73dd837F915ef3a732e204a493",
+            "decimals": 18,
+            "name": "Binance",
+            "symbol": "BNB",
+            "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0x264c1383EA520f73dd837F915ef3a732e204a493/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xB1466d4cf0DCfC0bCdDcf3500F473cdACb88b56D",
+            "decimals": 18,
+            "name": "Weble Ecosystem Token",
+            "symbol": "WET",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xB1466d4cf0DCfC0bCdDcf3500F473cdACb88b56D/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x59414b3089ce2AF0010e7523Dea7E2b35d776ec7",
+            "decimals": 18,
+            "name": "Yield Yak",
+            "symbol": "YAK",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x59414b3089ce2AF0010e7523Dea7E2b35d776ec7/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5",
+            "decimals": 18,
+            "name": "BENQI",
+            "symbol": "QI",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x9E037dE681CaFA6E661e6108eD9c2bd1AA567Ecd",
+            "decimals": 18,
+            "name": "AllianceBlock Token",
+            "symbol": "WALBT",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x9E037dE681CaFA6E661e6108eD9c2bd1AA567Ecd/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x21c5402C3B7d40C89Cc472C9dF5dD7E51BbAb1b1",
+            "decimals": 18,
+            "name": "Tundra Token",
+            "symbol": "TUNDRA",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x21c5402C3B7d40C89Cc472C9dF5dD7E51BbAb1b1/logo.png"
+        },
+        {
+            "address": "0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8",
+            "chainId": 43114,
+            "name": "Gaj Finance",
+            "symbol": "GAJ",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x595c8481c48894771CE8FaDE54ac6Bf59093F9E8/logo.png"
+        },
+        {
+            "address": "0x094bd7B2D99711A1486FB94d4395801C6d0fdDcC",
+            "chainId": 43114,
+            "name": "Teddy Cash Token",
+            "symbol": "TEDDY",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x094bd7B2D99711A1486FB94d4395801C6d0fdDcC/logo.png"
+        },
+        {
+            "address": "0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd",
+            "chainId": 43114,
+            "name": "Joe Token",
+            "symbol": "JOE",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x6e84a6216eA6dACC71eE8E6b0a5B7322EEbC0fDd/logo.png"
+        },
+        {
+            "address": "0xE1C110E1B1b4A1deD0cAf3E42BfBdbB7b5d7cE1C",
+            "chainId": 43114,
+            "name": "Elk",
+            "symbol": "ELK",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xE1C110E1B1b4A1deD0cAf3E42BfBdbB7b5d7cE1C/logo.png"
+        },
+        {
+            "address": "0x9Fda7cEeC4c18008096C2fE2B85F05dc300F94d0",
+            "chainId": 43114,
+            "name": "MarginSwap",
+            "symbol": "MFI",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x9Fda7cEeC4c18008096C2fE2B85F05dc300F94d0/logo.png"
+        },
+        {
+            "address": "0xAcD7B3D9c10e97d0efA418903C0c7669E702E4C0",
+            "chainId": 43114,
+            "name": "Eleven.finance",
+            "symbol": "ELE",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xAcD7B3D9c10e97d0efA418903C0c7669E702E4C0/logo.png"
+        },
+        {
+            "address": "0x440aBbf18c54b2782A4917b80a1746d3A2c2Cce1",
+            "chainId": 43114,
+            "name": "SHIBAVAX",
+            "symbol": "SHIBX",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x440aBbf18c54b2782A4917b80a1746d3A2c2Cce1/logo.png"
+        },
+        {
+            "address": "0x9eF758aC000a354479e538B8b2f01b917b8e89e7",
+            "chainId": 43114,
+            "name": "xDollar",
+            "symbol": "XDO",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/xDollar-Finance/logo/master/xdo-128x128.png"
+        },
+        {
+            "address": "0xDd453dBD253fA4E5e745047d93667Ce9DA93bbCF",
+            "chainId": 43114,
+            "name": "ZABU",
+            "symbol": "ZABU",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/zabufinance/Assets/main/Zabu300x300.png"
+        },
+        {
+            "address": "0xD67de0e0a0Fd7b15dC8348Bb9BE742F3c5850454",
+            "chainId": 43114,
+            "name": "Frax Share - Anyswap",
+            "symbol": "FXS",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xD67de0e0a0Fd7b15dC8348Bb9BE742F3c5850454/logo.png"
+        },
+        {
+            "address": "0xF44Fb887334Fa17d2c5c0F970B5D320ab53eD557",
+            "chainId": 43114,
+            "name": "Starter",
+            "symbol": "START",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xF44Fb887334Fa17d2c5c0F970B5D320ab53eD557/logo.png"
+        },
+        {
+            "address": "0xc7B5D72C836e718cDA8888eaf03707fAef675079",
+            "chainId": 43114,
+            "name": "TrustSwap Token",
+            "symbol": "SWAP.e",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xc7B5D72C836e718cDA8888eaf03707fAef675079/logo.png"
+        },
+        {
+            "address": "0x62a4f3280C02C8Cc3E9ff984e4aaD94f8F7fEA26",
+            "chainId": 43114,
+            "name": "BABYPangolin",
+            "symbol": "BABYPangolin",
+            "decimals": 9,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x62a4f3280C02C8Cc3E9ff984e4aaD94f8F7fEA26/logo.png"
+        },
+        {
+            "address": "0xc12e249FaBe1c5Eb7C558E5F50D187687a244E31",
+            "chainId": 43114,
+            "name": "Blue Token",
+            "symbol": "BLUE",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xc12e249FaBe1c5Eb7C558E5F50D187687a244E31/logo.png"
+        },
+        {
+            "address": "0x999c891262ce01f1C1AFD1D46260E4c1E508B243",
+            "chainId": 43114,
+            "name": "Give Token",
+            "symbol": "GIVE",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x999c891262ce01f1C1AFD1D46260E4c1E508B243/logo.png"
+        },
+        {
+            "address": "0x6AFD5A1ea4b793CC1526d6Dc7e99A608b356eF7b",
+            "chainId": 43114,
+            "name": "STORM Token",
+            "symbol": "STORM",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x6AFD5A1ea4b793CC1526d6Dc7e99A608b356eF7b/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xf57b80A574297892B64E9a6c997662889b04a73a",
+            "decimals": 18,
+            "name": "EXP Token",
+            "symbol": "EXP",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xf57b80A574297892B64E9a6c997662889b04a73a/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x8A9B36393633aD77ceb8aebC7768815627B93557",
+            "decimals": 18,
+            "name": "SphereSwap Token",
+            "symbol": "SPHERE.e",
+            "logoURI": "https://raw.githubusercontent.com/SphereSwap/SphereSwapData/main/logo/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x01C2086faCFD7aA38f69A6Bd8C91BEF3BB5adFCa",
+            "decimals": 18,
+            "name": "YAY Games",
+            "symbol": "YAY",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x01C2086faCFD7aA38f69A6Bd8C91BEF3BB5adFCa/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x397bBd6A0E41bdF4C3F971731E180Db8Ad06eBc1",
+            "decimals": 6,
+            "name": "Avaxtars Token",
+            "symbol": "AVXT",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x397bBd6A0E41bdF4C3F971731E180Db8Ad06eBc1/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xae9d2385Ff2E2951Dd4fA061e74c4d3deDD24347",
+            "decimals": 8,
+            "name": "TOK",
+            "symbol": "TOK",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xae9d2385Ff2E2951Dd4fA061e74c4d3deDD24347/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xb54f16fB19478766A268F172C9480f8da1a7c9C3",
+            "decimals": 9,
+            "name": "Time",
+            "symbol": "TIME",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xb54f16fB19478766A268F172C9480f8da1a7c9C3/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x90842eb834cFD2A1DB0b1512B254a18E4D396215",
+            "decimals": 9,
+            "name": "Good Bridging",
+            "symbol": "GB",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x90842eb834cFD2A1DB0b1512B254a18E4D396215/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x0ebd9537A25f56713E34c45b38F421A1e7191469",
+            "decimals": 18,
+            "name": "OpenOcean",
+            "symbol": "OOE",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x0ebd9537A25f56713E34c45b38F421A1e7191469/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x3709E8615E02C15B096f8a9B460ccb8cA8194e86",
+            "decimals": 18,
+            "name": "Vee Finance",
+            "symbol": "VEE",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x3709E8615E02C15B096f8a9B460ccb8cA8194e86/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x938FE3788222A74924E062120E7BFac829c719Fb",
+            "decimals": 18,
+            "name": "Ape In",
+            "symbol": "APEIN",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x938FE3788222A74924E062120E7BFac829c719Fb/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xbe6D6323eA233fD1DBe1fF66c5252170c69fb6c7",
+            "decimals": 18,
+            "name": "ZUBAX",
+            "symbol": "ZUBAX",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xbe6D6323eA233fD1DBe1fF66c5252170c69fb6c7/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x69A61f38Df59CBB51962E69C54D39184E21C27Ec",
+            "decimals": 18,
+            "name": "Partyswap",
+            "symbol": "PARTY",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x69A61f38Df59CBB51962E69C54D39184E21C27Ec/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xd039C9079ca7F2a87D632A9C0d7cEa0137bAcFB5",
+            "decimals": 9,
+            "name": "APE-X",
+            "symbol": "APE-X",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xd039C9079ca7F2a87D632A9C0d7cEa0137bAcFB5/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xfC108f21931576a21D0b4b301935DAc80d9E5086",
+            "decimals": 18,
+            "name": "Iron Finance ICE",
+            "symbol": "IronICE",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xfC108f21931576a21D0b4b301935DAc80d9E5086/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xdDAaAD7366B455AfF8E7c82940C43CEB5829B604",
+            "decimals": 12,
+            "name": "MiniYAK",
+            "symbol": "mYAK",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xdDAaAD7366B455AfF8E7c82940C43CEB5829B604/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xA384Bc7Cdc0A93e686da9E7B8C0807cD040F4E0b",
+            "decimals": 18,
+            "name": "WOWSwap",
+            "symbol": "WOW",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xA384Bc7Cdc0A93e686da9E7B8C0807cD040F4E0b/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xCE1bFFBD5374Dac86a2893119683F4911a2F7814",
+            "decimals": 18,
+            "name": "Spell Token",
+            "symbol": "SPELL",
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xCE1bFFBD5374Dac86a2893119683F4911a2F7814/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x70B907f3F7231bE122100dac51C1995e6804E346",
+            "decimals": 6,
+            "name": "True Reflect Token",
+            "symbol": "TRT",
+            "logoURI": "https://raw.githubusercontent.com/TrueReflect-Lead-Design/Logo/main/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x8d4A8522f2FB040d4755757C05d99976C0D29fCE",
+            "decimals": 9,
+            "name": "Tjoma.Finance",
+            "symbol": "TJOMA",
+            "logoURI": "https://raw.githubusercontent.com/sled-finance/tjoma-media/master/logo.png"
+        },
+        {
+          "chainId": 43114,
+          "address": "0xdE61d83F83950fDe967BD2C68B1a9f64694F85Ff",
+          "name": "JENKEM",
+          "symbol": "JENKEM",
+          "decimals": 18,
+          "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xdE61d83F83950fDe967BD2C68B1a9f64694F85Ff/logo.png"
+        },
+        {
+          "chainId": 43114,
+          "address": "0xBf9D7eCC6D5f09B9a10b8a39921E6f9cbA3c5D48",
+          "name": "ICEDOGE",
+          "symbol": "ICEDOGE",
+          "decimals": 9,
+          "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xBf9D7eCC6D5f09B9a10b8a39921E6f9cbA3c5D48/logo.png"
+        },
+        {
+          "chainId": 43114,
+          "address": "0xb27c8941a7Df8958A1778c0259f76D1F8B711C35",
+          "name": "Kalao Token",
+          "symbol": "KLO",
+          "decimals": 18,
+          "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xb27c8941a7Df8958A1778c0259f76D1F8B711C35/logo.png"
+        },
+        {
+          "chainId": 43114,
+          "address": "0xB147656604217a03Fe2c73c4838770DF8d9D21B8",
+          "name": "Blizzard",
+          "symbol": "BLIZZ",
+          "decimals": 18,
+          "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xB147656604217a03Fe2c73c4838770DF8d9D21B8/logo.png"
+        },
+        {
+          "chainId": 43114,
+          "address": "0x3ACa5545e76746A3Fe13eA66B24BC0eBcC51E6b4",
+          "name": "Everest Token",
+          "symbol": "EVRT",
+          "decimals": 18,
+          "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x3ACa5545e76746A3Fe13eA66B24BC0eBcC51E6b4/logo.png"
+        },
+        {
+          "chainId": 43114,
+          "address": "0x97Cd1CFE2ed5712660bb6c14053C0EcB031Bff7d",
+          "name": "Rai Reflex Index",
+          "symbol": "RAI",
+          "decimals": 18,
+          "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x97Cd1CFE2ed5712660bb6c14053C0EcB031Bff7d/logo.png"
+        },
+        {
+          "chainId": 43114,
+          "address": "0x027dbcA046ca156De9622cD1e2D907d375e53aa7",
+          "name": "Ampleforth",
+          "symbol": "AMPL",
+          "decimals": 9,
+          "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x027dbcA046ca156De9622cD1e2D907d375e53aa7/logo.png"
+        },
+        {
+          "chainId": 43114,
+          "address": "0x8B1d98A91F853218ddbb066F20b8c63E782e2430",
+          "name": "OrcaDAO",
+          "symbol": "ORCA",
+          "decimals": 18,
+          "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x8B1d98A91F853218ddbb066F20b8c63E782e2430/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x544c42fBB96B39B21DF61cf322b5EDC285EE7429",
+            "name": "InsurAce",
+            "symbol": "INSUR",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x544c42fBB96B39B21DF61cf322b5EDC285EE7429/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xee0f5c0c2c8cFB1473d441868C174de3F3736F70",
+            "name": "BABYPANGOLIN",
+            "symbol": "BPNG",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xee0f5c0c2c8cFB1473d441868C174de3F3736F70/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x6C6f910A79639dcC94b4feEF59Ff507c2E843929",
+            "name": "Ankr Avalanche Reward Earning Bond",
+            "symbol": "aAVAXb",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x6C6f910A79639dcC94b4feEF59Ff507c2E843929/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0xB00F1ad977a949a3CCc389Ca1D1282A2946963b0",
+            "name": "BooFinance",
+            "symbol": "BOOFI",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/BooFinance/assets/main/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x45C13620B55C35A5f539d26E88247011Eb10fDbd",
+            "name": "Hurricane Token",
+            "symbol": "HCT",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x45C13620B55C35A5f539d26E88247011Eb10fDbd/logo.png"
+        },
+        {
+            "chainId": 43114,
+            "address": "0x45CdaF3Fd17BD31d9830Fa977159162DD2431683",
+            "name": "KIOO",
+            "symbol": "KIOO",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x45CdaF3Fd17BD31d9830Fa977159162DD2431683/logo.png"
+        },
+        {
+            "address": "0x214DB107654fF987AD859F34125307783fC8e387",
+            "chainId": 43114,
+            "name": "Frax Share",
+            "symbol": "FXS",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x214DB107654fF987AD859F34125307783fC8e387/logo.png"
+        },
+        {
+            "address": "0xb2a85C5ECea99187A977aC34303b80AcbDdFa208",
+            "chainId": 43114,
+            "name": "ROCO",
+            "symbol": "ROCO",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xb2a85C5ECea99187A977aC34303b80AcbDdFa208/logo.png"
+        },
+        {
+            "address": "0xeA6887e4a9CdA1B77E70129E5Fba830CdB5cdDef",
+            "chainId": 43114,
+            "name": "IMX",
+            "symbol": "IMX",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0xeA6887e4a9CdA1B77E70129E5Fba830CdB5cdDef/logo.png"
+        },
+        {
+            "address": "0x340fE1D898ECCAad394e2ba0fC1F93d27c7b717A",
+            "chainId": 43114,
+            "name": "Orbs",
+            "symbol": "ORBS",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x340fE1D898ECCAad394e2ba0fC1F93d27c7b717A/logo.png"
+        },
+        {
+            "address": "0x937E077aBaEA52d3abf879c9b9d3f2eBd15BAA21",
+            "chainId": 43114,
+            "name": "Oh Finance",
+            "symbol": "OH",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x937E077aBaEA52d3abf879c9b9d3f2eBd15BAA21/logo.png"
+        },
+    {
+            "address": "0x9F87C6c30F4b23C7B51Aa7465A9e0A836514700D",
+            "chainId": 43114,
+            "name": "AVATerra",
+            "symbol": "TERRA",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x9F87C6c30F4b23C7B51Aa7465A9e0A836514700D/logo.png"
+        },
+        {
+            "address": "0x5BcDE17c50652aD6148C970F10Bf06647137A7E4",
+            "chainId": 43114,
+            "name": "LOAlexandria",
+            "symbol": "LOA",
+            "decimals": 18,
+            "logoURI": "https://raw.githubusercontent.com/pangolindex/tokens/main/assets/0x5BcDE17c50652aD6148C970F10Bf06647137A7E4/logo.png"
+        }
+    ]
+}
+
+
+
