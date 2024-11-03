@@ -46,13 +46,13 @@ let TronTokens={
 
 "tokens":[
     {
-        "address": "1000226",
+        "address": "1",
         "decimals": 0,
-        "displaySymbol": "TERC",
+        "displaySymbol": "trx",
         "logo": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/tron/assets/1000226/logo.png",
-        "name": "TRONEuropeRewardCoin",
-        "symbol": "TERC.TRX",
-        "website": "https://tron-europe.org/"
+        "name": "trx",
+        "symbol": "trx",
+        "website": "https://tron.org/"
     },
     {
         "address": "1001090",
